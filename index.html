@@ -9,13 +9,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="styles.css">
 
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+    <!-- jquery plugin -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" 
+    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="styles.css">
     <title>Drip Kustom</title>
 </head>
 
-<body class="sm:px-10 lg:px-20">
-    <header class="py-5">
+<body>
+    <header class="py-5 sm:px-10 lg:px-20">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0">
             <nav class="relative z-50 flex justify-between items-center">
                 <div class="flex items-center md:gap-x-24">
@@ -74,7 +85,7 @@
         </div>
     </header>
 
-    <main>
+    <main class="sm:px-10 lg:px-20">
         <section class="hero1">
             <div>
                 <div class="hero1-div-div hidden lg:flex">
@@ -157,10 +168,134 @@
             </div>
             
         </section>
-        <section></section>
+
+        <section class="hero3 py-8 lg:py-16">
+                <div class="slider">
+                    <div class="owl-carousel owl-theme owl-loaded">
+                      <div class="owl-stage-outer">
+                        <div class="slider-header mb-10">
+                            <h1 class="text-start font-semibold lg:text-6xl text-3xl mb-6 mx-4 lg:mx-0">
+                                BESTSELLERS
+                            </h1>
+                        </div>
+                        <div class="owl-stage">                
+                          <article class="owl-item" style="border-radius: 10px;">
+                            <figure>
+                                <div class="slider-card">
+                                    <img src="images/one-black-sneaker-shoe-isolated-white_93675-131266.avif" alt="">
+                                    <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                        <div class="font-semibold">
+                                            <h3>Air Max</h3>
+                                            <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                                        </div>
+                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>  
+                            </figure>
+                          </article>
+                
+                          <article class="owl-item" style="border-radius: 10px;">
+                            <figure>
+                                <div class="slider-card">
+                                    <img src="images/fashion-shoes-sneakers_1203-7529.avif" alt="">
+                                    <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                        <div class="font-semibold">
+                                            <h3>Travix</h3>
+                                            <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                                        </div>
+                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>  
+                            </figure>
+                          </article>
+                
+                          <article class="owl-item" style="border-radius: 10px;">
+                            <figure>
+                                <div class="slider-card">
+                                    <img src="images/shoes_1203-8153.avif" alt="">
+                                    <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                        <div class="font-semibold">
+                                            <h3>High Tops</h3>
+                                            <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                                        </div>
+                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>  
+                            </figure>
+                          </article>
+                
+                          <article class="owl-item" style="border-radius: 10px;">
+                            <figure>
+                                <div class="slider-card">
+                                    <img src="images/sport-running-shoes_1203-3414.avif" alt="">
+                                    <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                        <div class="font-semibold">
+                                            <h3>Running Shoe</h3>
+                                            <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                                        </div>
+                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>  
+                            </figure>
+                          </article>
+                
+                          <article class="owl-item" style="border-radius: 10px;">
+                            <figure>
+                                <div class="slider-card">
+                                    <img src="images/white-high-top-sneakers-unisex-footwear-fashion_53876-106036.avif" alt="">
+                                    <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                        <div class="font-semibold">
+                                            <h3>High AF1</h3>
+                                            <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                                        </div>
+                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                    </div>
+                                </div>  
+                            </figure>
+                          </article>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            
+        </section>
         <section></section>
     </main>
+    <footer class="mt-10 lg:mt-28 px-6 lg:px-0">
+        <div class="footer-content lg:px-20 lg:pt-24 flex flex-col text-center lg:flex-row lg:justify-between lg:text-left">
+            <ul class="pt-10  lg:pt-0">
+                <div>
+                    <a href="index.html">DRIP-KUSTOM</a>
+                </div>
+                <p>Building Your Amazing <br> Kustom Shoes</p>
+            </ul>
+            <ul>
+                <h5>Company</h5>
+                <li>About Us</li>
+                <li>Partners</li>
+                <li>Contact Us</li>
+            </ul>
+            <ul>
+                <h5>Resources</h5>
+                <li>Guides</li>
+                <li>Customer Stories</li>
+            </ul>
+            <ul>
+                <h5>Social Media</h5>
+                <li>LinkedIn</li>
+                <li>Facebook</li>
+                <li>Instagram</li>
+                <li>Twitter</li>
+            </ul>
+        </div>
+        <div class="copyright pb-4 text-center">
+            © DRIPKUSTOM. All Rights Reserved
+        </div>
+    </footer>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    
     <script>
        
         
@@ -203,6 +338,29 @@
         });
         closeBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle("hidden");
+        });
+
+        $(document).ready(function(){
+        $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:10,
+            autoplay: true,
+            autoplayTimeout:2000,
+            autoplayHoverPause: true,
+            // nav:true,
+            // navText: ['<i class="fa fa-chevron-left"></i>', '<i class="fa fa-chevron-right"></i>'],
+            responsive:{
+                0:{
+                    items:1,stagePadding: 50,
+                },
+                500:{
+                    items:2
+                },
+                1000:{
+                    items:3
+                }
+            }
+        })
         });
     </script>
 </body>

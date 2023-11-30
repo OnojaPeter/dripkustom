@@ -26,6 +26,14 @@
     width: 180px; 
     font-size: 30px;
 }
+main {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+.footer-content, header {
+    max-width: 1440px;
+    margin: 0 auto;
+}
 
 /* hero1 */
 .hero1 {
@@ -164,10 +172,47 @@ height: 38vh;
 
 
 
+.slider-card {
+    /* max-width: 400px; */
+    width: 100%;
+    margin: auto;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.shoe-details{
+    height: 50px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    margin: 0 30px;
+    background-color: red;
+}
 
 
 
 
+/* footer */
+footer {
+    background: #F6F6F6;
+}
+footer h5, footer a {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0em;
+    margin-bottom: 8px;
+}
+footer li, footer p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 24px;
+    letter-spacing: 0em;
+    margin-top: 24px;
+}
+footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
+    padding-bottom: 72px;
+}
 
 
 
