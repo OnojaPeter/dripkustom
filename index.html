@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+
+    <title>Drip Kustom</title>
+</head>
+
+<body class="sm:px-10 lg:px-20">
+    <header class="py-5">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0">
+            <nav class="relative z-50 flex justify-between items-center">
+                <div class="flex items-center md:gap-x-24">
+                    <a aria-label="Home" href="#" class="font-bold">
+                        DRIP-KUSTOM
+                    </a>
+                    <div class="hidden md:flex md:gap-x-6" >
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#features">
+                            Home
+                        </a>
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#features">
+                            About
+                        </a>
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#testimonials">
+                            Testimonials
+                        </a>
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#pricing">
+                            Contact
+                        </a>
+                    </div>
+                    <div class="mobileMenu gap-6 lg:gap-0 hidden md:gap-x-6 flex-col flex" id="mobileMenu">
+                        <button id="closeBtn" class="close-btn mt-3">×</button>
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#features">
+                            Home
+                        </a>
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#features">
+                            About
+                        </a>
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#testimonials">
+                            Testimonials
+                        </a>
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#pricing">
+                            Contact
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center gap-x-5 md:gap-x-8">
+                    <div class="hidden md:block">
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/login">
+                            Sign in
+                        </a>
+                    </div>
+                    <div class="-mr-1 md:hidden" id="hamburgerButton">
+                        <div data-headlessui-state="">
+                            <button class="relative z-10 flex h-8 w-8 items-center justify-center ui-not-focus-visible:outline-none" aria-label="Toggle Navigation" type="button" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:ri:">
+                                <svg aria-hidden="true"class="h-3.5 w-3.5 overflow-visible stroke-slate-700" fill="none" stroke-width="2" stroke-linecap="round"> <path d="M0 1H14M0 7H14M0 13H14" class="origin-center transition"></path> <path d="M2 2L12 12M12 2L2 12" class="origin-center transition scale-90 opacity-0"> </path>
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- <div
+                            style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px; display: none;">
+                        </div> -->
+                    </div>
+                <!-- </div> -->
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero1">
+            <div>
+                <div class="hero1-div-div hidden lg:flex">
+                    <div class="">
+                        <div class="hero1-text absolute mt-10 text-left text-white font-semibold ml-4">
+                            <h1 class="text-6xl">NEW <br> COLLECTION</h1>
+                            <a class="absolute text-left -bottom-64" href=""><button>GO ON</button></a>
+                        </div>
+                        <!-- <div class="hero1-text absolute mt-10 text-left text-white font-semibold"><h1 class="text-6xl">NEW <br> COLLECTION</h1></div> -->
+                        <!-- <a class="absolute text-left bottom-28" href=""><button>GO ON</button></a> -->
+                        <img class=" full-height" src="images/model-wearing-purple-sneakers-women-s-apparel_53876-97173.avif" alt="">
+                    </div>
+                    <div class="lg:flex lg:flex-col lg:justify-between">
+                        <img class="medium-height" src="images/sports-shoe-pair-design-illustration-generated-by-ai_188544-19642.avif" alt="">
+                        <img class="medium-height " src="images/sports-shoe-competition-abstract-multi-color-background-generated-by-ai_188544-19600.avif" alt="">
+                    </div>
+                    <div class="">
+                        <img class=" full-height" src="images/long-picture-5.avif" alt="">
+                        <!-- <img class=" full-height" src="images/close-up-basketball-shoes_23-2150847276.avif" alt=""> -->
+                    </div>
+                </div>
+                <div class="mobile-img block lg:hidden slideshow-container">
+                    <div class="mySlides fade">
+                        <img class=" full-height" src="images/model-wearing-purple-sneakers-women-s-apparel_53876-97173.avif" alt="">
+                    </div>
+                    <div class="mySlides fade">
+                        <img class="full-height" src="images/long-picture-3.avif" alt="">
+                    </div>
+                    <div class="mySlides fade">
+                        <img class="full-height " src="images/long-picture-4.avif" alt="">
+                    </div>
+                    <div class="mySlides fade">
+                        <img class=" full-height" src="images/long-picture-5.avif" alt="">
+                    </div>
+                        
+                    <!-- Next and previous buttons -->
+                    <a class="prev lg:hidden " onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next lg:hidden " onclick="plusSlides(1)">&#10095;</a>
+
+                    <!-- The dots/circles -->
+                    <div style="text-align:center" class="lg:hidden dot-div">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                        <span class="dot" onclick="currentSlide(4)"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="hero2  py-16 lg:py-24">
+            <div>
+                <h1 class="text-start font-semibold lg:text-6xl text-3xl mb-6 mx-4 lg:mx-0">ABOUT US</h1>
+
+                <div class="flex flex-col items-center justify-center lg:flex-row-reverse gap-x-6">
+                    <div class="lg:w-1/2 text-left">
+                        <div class="flex flex-col lg:items-start mx-4 lg:mx-0">
+                            <h2 class="font-semibold lg:text-3xl text-2xl">
+                                Building Amazing Kustom shoes for you.
+                            </h2>
+                            <p class="lg:mt-5 mt-3">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui excepturi sed magni animi culpa quo delectus aspernatur laudantium odio obcaecati molestiae, architecto dolores!
+                                Nisi itaque animi placeat cumque quos ad excepturi, reprehenderit, possimus ipsum temporibus hic atque, a dolorem cupiditate cum omnis accusamus! Explicabo, tempore.
+                            </p>
+                            <p class="mt-3">
+                                Quisquam sit harum perferendis beatae voluptatem. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            </p>
+                            <div class="mt-6">
+                                <a href="#">
+                                    <button class="btn">LEARN MORE</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center lg:justify-end lg-12 lg:mt-0 lg:w-1/2 mt-12 rounded-xl lg:overflow-hidden">
+                        <img src="images/view-skateboard-with-retro-memorabilia_23-2150583933.avif">
+                    </div>
+                </div>
+                
+            </div>
+            
+        </section>
+        <section></section>
+        <section></section>
+    </main>
+
+    <script>
+       
+        
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+        showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+        showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        }
+
+        const hamburgerButton = document.getElementById('hamburgerButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeBtn = document.getElementById('closeBtn');
+
+        hamburgerButton.addEventListener('click', () => {
+            // alert("working")
+            mobileMenu.classList.toggle("hidden");
+        });
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+    </script>
+</body>
+
+</html>
