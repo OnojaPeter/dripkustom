@@ -228,23 +228,36 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
 
 
  /*ABOUT WEBPAGE*/
-.about-header {
-    position: relative;
+.about-header-mobile {
+  position: relative;
+    height: 20vh;
+    width: 100vw; background-color: red;
+}
+.about-header-mobile img{
+  width: 100%;
+  height: 20vh;
+  object-fit: cover;
+}
+/* .about-header {
+    position: relative; background-color: green;
     height: 40vh;
     width: 100vw;
-    /* background-image: url(images/header-picture1.jpg); */
-    /* background-repeat: no-repeat; */
-}
+} */
 .about-header img {
     width: 100%;
-    height: 40vh;
+    /* height: 40vh; */
     object-fit: cover;
 }
 
 
 
 .blur-bg {
-    height: 40vh;
-    width: 100vw;
+    /* height: 40vh; */
+    width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
 }
+/* .blur-bg-mobile {
+  height: 20vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+} */
