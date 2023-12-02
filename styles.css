@@ -191,6 +191,7 @@ height: 38vh;
     border-top-left-radius: 5px;
     margin: 0 30px;
     background-color: red;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -226,4 +227,24 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
 
 
 
- 
+ /*ABOUT WEBPAGE*/
+.about-header {
+    position: relative;
+    height: 40vh;
+    width: 100vw;
+    /* background-image: url(images/header-picture1.jpg); */
+    /* background-repeat: no-repeat; */
+}
+.about-header img {
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+}
+
+
+
+.blur-bg {
+    height: 40vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+}
