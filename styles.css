@@ -276,3 +276,14 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
 }
+
+.filter-section div ul {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #717171;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+.filter-section div li {
+  border-bottom: 2px solid #717171;
+  cursor: pointer;
+}

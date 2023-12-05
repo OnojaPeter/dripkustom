@@ -15,19 +15,52 @@
     <section>
         <h1 class="font-semibold lg:text-5xl md:text-4xl text-3xl">COLLECTIONS</h1>
     </section>
-    <section class="filter-section lg:hidden ">
+    <section class="filter-section lg:hidden mt-3">
         <div class="flex gap-3">
-            <span>
-                <button>Filters</button>
-                <i class="fa fa-filter" aria-hidden="true"></i>
-            </span>
-            <span>
-                <button>Sort by popularity</button>
-                <i class="fa fa-angle-down" aria-hidden="true"></i></span>
+            <div>
+                <span id="filter">
+                    <button>Filters</button>
+                    <i class="fa fa-filter" aria-hidden="true"></i>
+                </span>
+                <ul class="hidden" id="filter-menu">
+                    <li>
+                        <input type="checkbox" id="filterCheckbox1" name="filterCheckboxes">
+                        <label for="filterCheckbox1">Product type</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="filterCheckbox2" name="filterCheckboxes">
+                        <label for="filterCheckbox2">Collection</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="filterCheckbox3" name="filterCheckboxes">
+                        <label for="filterCheckbox3">Kustom</label>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <span id="sort-by">
+                    <button>Sort by popularity</button>
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </span>
+                <ul class="hidden" id="sort-menu">
+                    <li>
+                        <input type="checkbox" id="sortCheckbox1" name="sortCheckboxes">
+                        <label for="sortCheckbox1">Latest</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="sortCheckbox2" name="sortCheckboxes">
+                        <label for="sortCheckbox2">Popularity</label>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="sortCheckbox3" name="sortCheckboxes">
+                        <label for="sortCheckbox3">Price</label>
+                    </li>
+                </ul>
+            </div>
         </div>
     </section>
-    <main class="flex xl:gap-x-14 lg:gap-x-10 md:gap-x-8 gap-x-0 collections mt-10">
-        <section class="px-3 sidenav w-3/12 h-screen hidden lg:block" style="background-color: #ccc;">
+    <main class="flex xl:gap-x-14 lg:gap-x-10 md:gap-x-8 gap-x-0 collections mt-8">
+        <section class="px-4 sidenav w-3/12 h-screen hidden lg:block pt-4" style="background-color: #ccc;">
             <div>
                 <span class="flex flex-row items-center gap-3">
                     <h2 class="font-semibold">PRODUCT TYPE</h2>
@@ -40,9 +73,9 @@
                     <li>Reebok</li>
                 </ul>
             </div>
-            <div>
+            <div class="pt-3">
                 <span class="flex flex-row items-center gap-3">
-                    <h2 class="font-semibold">PRODUCT TYPE</h2>
+                    <h2 class="font-semibold">COLLECTION</h2>
                     <i class="fa fa-angle-down font-semibold" aria-hidden="true"></i></span>
                 </span>
                 <ul>
@@ -52,9 +85,9 @@
                     <li>Reebok</li>
                 </ul>
             </div>
-            <div>
+            <div class="pt-3">
                 <span class="flex flex-row items-center gap-3">
-                    <h2 class="font-semibold">PRODUCT TYPE</h2>
+                    <h2 class="font-semibold">KUSTOM</h2>
                     <i class="fa fa-angle-down font-semibold" aria-hidden="true"></i></span>
                 </span>
                 <ul>
@@ -160,6 +193,22 @@
         </section>
     </main>
 
+    <script>
+        const filter = document.getElementById("filter");
+        const filterMenu = document.getElementById("filter-menu");
+
+        const sortBy = document.getElementById("sort-by");
+        const sortByMenu = document.getElementById("sort-menu");
+
+        filter.addEventListener('click', () => {
+            // alert("working");
+            filterMenu.classList.toggle("hidden");
+        });
+        sortBy.addEventListener('click', () => {
+            // alert("working");
+            sortByMenu.classList.toggle("hidden");
+        });
+    </script>
 </body>
 </html>
 
