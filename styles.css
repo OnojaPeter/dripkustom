@@ -251,7 +251,7 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 16px;
-  width: 230px;
+  width: 200px;
   /* height: 300px; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
