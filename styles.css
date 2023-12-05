@@ -287,3 +287,43 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
   border-bottom: 2px solid #717171;
   cursor: pointer;
 }
+
+
+
+
+/* shoe page */
+.shoe-add-to-cart {
+  background: #717171;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+.shoe-buy-1-click {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: black;
+  padding: 5px 15px;
+  border-radius: 5px;
+  border: 2px solid #717171;
+}
+
+/* Hide the default checkbox */
+.shoe-size input[type="checkbox"] {
+  display: none;
+}
+
+/* Style the label to create a box with number inside */
+.shoe-size label {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+/* Style for checked label */
+.shoe-size input[type="checkbox"]:checked + label {
+  border: 2px solid #717171;
+}

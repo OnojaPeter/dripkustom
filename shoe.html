@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="styles.css">
+    <title>Drip Kustom</title>
+</head>
+<body>
+    <main class="px-3 sm:px-10 lg:px-20  lg:mt-20">
+        <section class="  pb-8 lg:pb-12" id="about">
+            <div>
+                <div class="flex flex-col  justify-center lg:flex-row gap-x-6">
+                    <div class="flex justify-center lg:justify-end lg-12 lg:mt-0 lg:w-[40%] lg:h-[40%] mt-12 rounded-xl lg:overflow-hidden">
+                        <img src="images/fashion-shoes-sneakers_1203-7529.avif">
+                    </div>
+                    
+                    <div class="lg:w-1/2 text-left">
+                        <div class="flex flex-col lg:items-start mx-4 lg:mx-0">
+                            <div class="">
+                                <h3 class="lg:text-5xl text-3xl font-semibold">Ash Air Max</h3>
+                                <p class=" lg:text-3xl text-2xl">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                            </div>
+                            <p class="lg:mt-5 mt-3">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui excepturi sed magni animi culpa quo delectus aspernatur laudantium odio obcaecati molestiae, architecto dolores!
+                                Nisi itaque animi placeat cumque quos ad excepturi, reprehenderit, possimus ipsum temporibus hic atque, a dolorem cupiditate cum omnis accusamus! Explicabo, tempore.
+                            </p>
+                            <p class="mt-3">
+                                Quisquam sit harum perferendis beatae voluptatem. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                            </p>
+                            <div class="shoe-size mt-2">
+                                <p class="text-lg">size:</p>
+                                <ul class="flex flex-wrap">
+                                    <li>
+                                        <input type="checkbox" id="checkbox1" name="groupOfCheckboxes" class="number-checkbox">
+                                        <label for="checkbox1">1</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox2" name="groupOfCheckboxes" class="number-checkbox">
+                                        <label for="checkbox2">2</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox3" name="groupOfCheckboxes" class="number-checkbox">
+                                        <label for="checkbox3">3</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox4" name="groupOfCheckboxes" class="number-checkbox">
+                                        <label for="checkbox4">4</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox5" name="groupOfCheckboxes" class="number-checkbox">
+                                        <label for="checkbox5">5</label>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="checkbox6" name="groupOfCheckboxes" class="number-checkbox">
+                                        <label for="checkbox6">6</label>
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                            <div class="flex items-center mt-5">
+                                <button id="decreaseBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                                    </svg>
+                                </button>
+                                <input id="numberInput" type="number" value="1" class="bg-gray-200 text-center w-16 py-2 px-4 text-gray-800 appearance-none"/>
+                                <button id="increaseBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="mt-6 font-semibold gap-2 lg:gap-4 flex">
+                                <a href="#" class="shoe-add-to-cart">
+                                    <button class="btn">Add to Cart</button>
+                                </a>
+                                <a href="#" class="shoe-buy-1-click">
+                                    <button class="btn">Buy by 1 Click</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </section>
+    </main>
+
+
+    <script>
+        const checkboxes = document.querySelectorAll('.number-checkbox');
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    checkboxes.forEach(otherCheckbox => {
+                        if (otherCheckbox !== this) {
+                            otherCheckbox.checked = false;
+                        }
+                    });
+                }
+            });
+        });
+
+        const decreaseBtn = document.getElementById('decreaseBtn');
+        const increaseBtn = document.getElementById('increaseBtn');
+        const numberInput = document.getElementById('numberInput');
+
+        decreaseBtn.addEventListener('click', () => {
+            if (numberInput.value > 1) {
+            numberInput.stepDown();
+        }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            numberInput.stepUp();
+        });
+
+        numberInput.addEventListener('input', () => {
+        if (numberInput.value < 1 || isNaN(numberInput.value)) {
+            numberInput.value = 1;
+        }
+        });
+
+
+    </script>
+</body>
+</html>
