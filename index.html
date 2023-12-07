@@ -95,6 +95,9 @@
                             Sign up
                         </button>
                     </div>
+                    <div class="">
+                        <i class="fa fa-cart-arrow-down fa-lg lg:fa-2x" id="cart"></i>
+                    </div>
                     <div class="-mr-1 md:hidden" id="hamburgerButton">
                         <div data-headlessui-state="">
                             <button class="relative z-10 flex h-8 w-8 items-center justify-center ui-not-focus-visible:outline-none" aria-label="Toggle Navigation" type="button" aria-expanded="false" data-headlessui-state="" id="headlessui-popover-button-:ri:">
@@ -147,6 +150,26 @@
       
             <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md">Sign Up</button>
           </form>
+        </div>
+    </div>
+    <div id="cartModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-8 md:px-10 rounded-md relative">
+            <button id="closeCartModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <div>
+                <h2 class="font-bold text-2xl">Your cart</h2>
+                <img class="bg-white" src="images/cart.jpg" alt="cart image">
+                <p class="font-semibold text-center mb-10">Cart is empty</p>
+                <a href="collections.html" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
+                    <button>Continue shopping</button>
+                </a>
+            </div>
+
+            <!-- <img class="bg-white" src="images/cart.jpg" alt=""> -->
         </div>
     </div>
 
@@ -377,6 +400,11 @@
         closeLoginModal.addEventListener('click', () => {
             loginModal.classList.add('hidden');
         });
+        loginModal.addEventListener('click', (event) => {
+            if (event.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
 
         const signupButton = document.getElementById('signupButton');
         const desktopSignupButton = document.getElementById('desktopSignupButton');
@@ -394,12 +422,27 @@
             signupModal.classList.add('hidden');
         });
 
-        window.addEventListener('click', (event) => {
+        signupModal.addEventListener('click', (event) => {
             if (event.target === signupModal) {
                 signupModal.classList.add('hidden');
             }
-            if(event.target === loginModal) {
-                loginModal.classList.add('hidden');
+        });
+
+        const cart = document.getElementById('cart');
+        const cartModal = document.getElementById('cartModal');
+        const closeCartModal = document.getElementById('closeCartModal');
+
+        cart.addEventListener('click', () => {
+            cartModal.classList.toggle('hidden');
+        });
+
+        closeCartModal.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+        });
+
+        cartModal.addEventListener('click', (event) => {
+            if (event.target === cartModal) {
+                cartModal.classList.add('hidden');
             }
         });
         
