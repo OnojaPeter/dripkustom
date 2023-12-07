@@ -73,13 +73,27 @@
                         <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#contact">
                             Contact
                         </a>
+                        <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 bg-blue-500 text-white" id="loginButton">
+                            <button class="" >
+                                Login
+                            </button>
+                        </a>
+                        <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 bg-blue-500 text-white" id="signupButton">
+                            <button class="" >
+                                Sign-up
+                            </button>
+                        </a>
+                        
                     </div>
                 </div>
                 <div class="flex items-center gap-x-5 md:gap-x-8">
                     <div class="hidden md:block">
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/login">
-                            Sign in
-                        </a>
+                        <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopLoginButton">
+                            Login
+                        </button>
+                        <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopSignupButton">
+                            Sign up
+                        </button>
                     </div>
                     <div class="-mr-1 md:hidden" id="hamburgerButton">
                         <div data-headlessui-state="">
@@ -88,14 +102,53 @@
                                 </svg>
                             </button>
                         </div>
-                        <!-- <div
-                            style="position: fixed; top: 1px; left: 1px; width: 1px; height: 0px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; border-width: 0px; display: none;">
-                        </div> -->
                     </div>
-                <!-- </div> -->
+                </div>
             </nav>
         </div>
     </header>
+    <div id="loginModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-8 md:px-10 rounded-md relative">
+            <button id="closeLoginModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+          <form>
+            <label for="username" class="block mb-2">Username:</label>
+            <input type="text" id="username" name="username" class="block w-full border rounded-md mb-4 p-2">
+      
+            <label for="password" class="block mb-2">Password:</label>
+            <input type="password" id="password" name="password" class="block w-full border rounded-md mb-4 p-2">
+      
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Login</button>
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Sign up</button>
+          </form>
+        </div>
+    </div>
+    <div id="signupModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div class="bg-white p-8 md:px-10 rounded-md relative">
+          <button id="closeSignupModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          <form class="w-[100%] md:w-80">
+            <label for="fullName" class="block mb-2">Username:</label>
+            <input type="text" id="fullName" name="fullName" class="block w-full border rounded-md mb-4 p-2">
+      
+            <label for="email" class="block mb-2">Email:</label>
+            <input type="email" id="email" name="email" class="block w-full border rounded-md mb-4 p-2">
+      
+            <label for="password" class="block mb-2">Password:</label>
+            <input type="password" id="password" name="password" class="block w-full border rounded-md mb-4 p-2">
+      
+            <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md">Sign Up</button>
+          </form>
+        </div>
+    </div>
 
     <main class="sm:px-10 lg:px-20">
         <section class="hero1">
@@ -310,7 +363,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     
     <script>
-       
+        const loginButton = document.getElementById('loginButton');
+        const desktopLoginButton = document.getElementById('desktopLoginButton');
+        const loginModal = document.getElementById('loginModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+
+        desktopLoginButton.addEventListener('click', () => {
+            loginModal.classList.toggle('hidden');
+        });
+        loginButton.addEventListener('click', () => {
+            loginModal.classList.toggle('hidden');
+        });
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.classList.add('hidden');
+        });
+
+        const signupButton = document.getElementById('signupButton');
+        const desktopSignupButton = document.getElementById('desktopSignupButton');
+        const signupModal = document.getElementById('signupModal');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+
+        desktopSignupButton.addEventListener('click', () => {
+            signupModal.classList.toggle('hidden');
+        });
+        signupButton.addEventListener('click', () => {
+            signupModal.classList.toggle('hidden');
+        });
+
+        closeSignupModal.addEventListener('click', () => {
+            signupModal.classList.add('hidden');
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === signupModal) {
+                signupModal.classList.add('hidden');
+            }
+            if(event.target === loginModal) {
+                loginModal.classList.add('hidden');
+            }
+        });
         
         let slideIndex = 1;
         showSlides(slideIndex);
