@@ -163,16 +163,13 @@ height: 38vh;
 
   /* hero2 */
 
-.hero3 a {
-    border: 2px solid black ;
+/* .hero3 a {
     color: white;
-    padding:8px 16px;
     background-color: rgba(0, 0, 0, 0.6);
 }
 .hero3 a:hover {
     background-color: rgba(0, 0, 0, 0.8);
-    font-size: 17px;
-}
+} */
 
 
 
@@ -190,7 +187,7 @@ height: 38vh;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
     margin: 0 30px;
-    background-color: red;
+    background-color: black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
