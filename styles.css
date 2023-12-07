@@ -335,3 +335,17 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
   width: 90%;
   border-radius: 5px;
 }
+
+
+/* THANK YOU PAGE */
+.thank-you-section {
+  width: 100%;
+  background-image: url(images/header2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.thank-you-blur {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
