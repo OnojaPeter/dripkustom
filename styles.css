@@ -271,7 +271,8 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
 }
 
 .filter-section div span {
-  border: 2px solid #717171;
+  /* border: 2px solid #717171; */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
   border-radius: 5px;
   padding: 2px 5px;
 }
@@ -281,14 +282,15 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
 }
 
 .filter-section div ul {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 2px solid #717171;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  /* border: 2px solid #717171; */
   border-radius: 5px;
   padding: 2px 5px;
 }
 .filter-section div li {
-  border-bottom: 2px solid #717171;
+  /* border-bottom: 2px solid #717171; */
   cursor: pointer;
+  padding: 5px 0px;
 }
 
 
