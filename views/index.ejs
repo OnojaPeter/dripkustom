@@ -18,10 +18,11 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
     <!-- jquery plugin -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" 
     integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
     <title>Drip Kustom</title>
 </head>
 
@@ -30,7 +31,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0">
             <nav class="relative z-50 flex justify-between items-center">
                 <div class="flex items-center md:gap-x-24">
-                    <a aria-label="Home" href="index.html" class="font-bold">
+                    <a aria-label="Home" href="/" class="font-bold">
                         DRIP-KUSTOM
                     </a>
                     <div class="hidden md:flex md:gap-x-6" >
@@ -153,17 +154,47 @@
         </div>
     </div>
     <div id="cartModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-8 md:px-10 rounded-md relative">
+        <div class="bg-white p-8 md:px-10 rounded-md relative lg:w-[50%]">
             <button id="closeCartModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
-            <div>
+            <div id="cartReload">
                 <h2 class="font-bold text-2xl">Your cart</h2>
-                <img class="bg-white" src="images/cart.jpg" alt="cart image">
+                <% if (cartItems.length > 0) { %>
+                    <% cartItems.forEach(function(cartItem) { %>
+                        <div class="mb-4 flex lg:flex ">
+                            <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[80%] lg:w-[50%]">
+                                <img class="h-20 w-[70%] sm:h-28 sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[50%] rounded-md" src="<%= cartItem.image %>" alt="">
+                                <h2 class="mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-sm lg:text-lg"><%= cartItem.name %></h2>
+                            </div>
+                            <div class="lg:w-[50%] w-[40%] flex flex-col justify-between my-3 sm:my-4 md:my-5 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
+                                <span class="flex flex-row lg:flex-col">
+                                    <p>size:</p>
+                                    <p> 46</p>
+                                </span>
+                                <span class="flex flex-row">
+                                    <button class="decrease-btn" data-shoe-id="<%= cartItem._id %>">-</button>
+                                    <span class="quantity flex flex-row mx-2 md:mx-3 lg:mx-5" id="quantity_<%= cartItem._id %>"><%= cartItem.quantity %></span>
+                                    <button class="increase-btn" data-shoe-id="<%= cartItem._id %>">+</button>
+                                </span>
+                                <span class="price" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
+                                <!-- <span class="flex flex-row lg:flex-col gap-x-2">
+                                    <p>Quantity</p> 
+                                    <p>1</p>
+                                </span> -->
+                                <!-- <span>
+                                    <p class="font-semibold text-sm lg:text-2xl">$ 190</p>
+                                </span> -->
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
                 <p class="font-semibold text-center mb-10">Cart is empty</p>
+                <% } %>
                 <a href="collections.html" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
                     <button>Continue shopping</button>
                 </a>
@@ -182,28 +213,28 @@
                             <h1 class="text-6xl">NEW <br> COLLECTION</h1>
                             <a class="absolute text-left -bottom-64" href=""><button>GO ON</button></a>
                         </div>
-                        <img class=" full-height" src="images/448f6034839c033dcc19f2fdc5c55198.jpg" alt="">
+                        <img class=" full-height" src="/public/images/448f6034839c033dcc19f2fdc5c55198.jpg" alt="">
                     </div>
                     <div class="lg:flex lg:flex-col lg:justify-between">
-                        <img class="medium-height" src="images/90b3964e460e488bb4c550ae0791b26c.jpg" alt="">
-                        <img class="medium-height " src="images/20200919_222541.jpg" alt="">
+                        <img class="medium-height" src="/public/images/90b3964e460e488bb4c550ae0791b26c.jpg" alt="">
+                        <img class="medium-height " src="/public/images/20200919_222541.jpg" alt="">
                     </div>
                     <div class="">
-                        <img class=" full-height" src="images/315841470_577559271040290_3522613850781191166_n.jpg" alt="">
+                        <img class=" full-height" src="/public/images/315841470_577559271040290_3522613850781191166_n.jpg" alt="">
                     </div>
                 </div>
                 <div class="mobile-img block lg:hidden slideshow-container">
                     <div class="mySlides fade">
-                        <img class=" full-height" src="images/315841470_577559271040290_3522613850781191166_n.jpg" alt="">
+                        <img class=" full-height" src="/public/images/315841470_577559271040290_3522613850781191166_n.jpg" alt="">
                     </div>
                     <div class="mySlides fade">
-                        <img class="full-height" src="images/20210113_164837.jpg" alt="">
+                        <img class="full-height" src="/public/images/20210113_164837.jpg" alt="">
                     </div>
                     <div class="mySlides fade">
-                        <img class="full-height " src="images/20210314_225408.jpg" alt="">
+                        <img class="full-height " src="/public/images/20210314_225408.jpg" alt="">
                     </div>
                     <div class="mySlides fade">
-                        <img class=" full-height" src="images/172e1bd6d07474b8c1ad2f3404dc1fc3.jpg" alt="">
+                        <img class=" full-height" src="/public/images/172e1bd6d07474b8c1ad2f3404dc1fc3.jpg" alt="">
                     </div>
                         
                     <!-- Next and previous buttons -->
@@ -235,7 +266,7 @@
                             <figure>
                                 <div class="slider-card">
                                     <div class="slider-shoe">
-                                        <img src="images/3fe053f71dad15b98b32b0bb7005f825.jpg" alt="">
+                                        <img src="/public/images/3fe053f71dad15b98b32b0bb7005f825.jpg" alt="">
                                     </div>
                                     <div class="shoe-details flex items-center justify-between px-3 text-white">
                                         <div class="font-semibold">
@@ -252,7 +283,7 @@
                             <figure>
                                 <div class="slider-card">
                                     <div class="slider-shoe">
-                                        <img src="images/7d77740b692425fa411ddf2b45825f51.jpg" alt="">
+                                        <img src="/public/images/7d77740b692425fa411ddf2b45825f51.jpg" alt="">
                                     </div>
                                     <div class="shoe-details flex items-center justify-between px-3 text-white">
                                         <div class="font-semibold">
@@ -269,7 +300,7 @@
                             <figure>
                                 <div class="slider-card">
                                     <div class="slider-shoe">
-                                        <img src="images/4d3411998dd09287beeb434a5e435782.jpg" alt="">
+                                        <img src="/public/images/4d3411998dd09287beeb434a5e435782.jpg" alt="">
                                     </div>
                                     <div class="shoe-details flex items-center justify-between px-3 text-white">
                                         <div class="font-semibold">
@@ -286,7 +317,7 @@
                             <figure>
                                 <div class="slider-card">
                                     <div class="slider-shoe">
-                                        <img src="images/5eab1bcd63127160c50ba6723e5358d8.jpg" alt="">
+                                        <img src="/public/images/5eab1bcd63127160c50ba6723e5358d8.jpg" alt="">
                                     </div>
                                     <div class="shoe-details flex items-center justify-between px-3 text-white">
                                         <div class="font-semibold">
@@ -303,7 +334,7 @@
                             <figure>
                                 <div class="slider-card">
                                     <div class="slider-shoe">
-                                        <img src="images/4ff9167ec73af7436ba02f8135192578.jpg" alt="">
+                                        <img src="/public/images/4ff9167ec73af7436ba02f8135192578.jpg" alt="">
                                     </div>
                                     <div class="shoe-details flex items-center justify-between px-3 text-white">
                                         <div class="font-semibold">
@@ -370,9 +401,29 @@
                 </div>
             </div>
             <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0">
+
+                <% shoes.forEach(function(shoe) { %>
+                    <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
+                        <a href="shoe.html">
+                            <img class="h-32 lg:h-40" src="<%= shoe.image %>" alt="Product Image">
+                        </a>
+                        <div class="flex items-center justify-between">
+                            <div class="font-semibold">
+                                <h3><%= shoe.name %></h3>
+                                <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
+                            </div>
+                            <button class="addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
+                                <i class="fa fa-cart-arrow-down"></i>
+                            </button>
+                            <!-- <i class="fa fa-cart-arrow-down addToCartBtn" data-item-id="<%= shoe._id %>" aria-hidden="true"></i> -->
+                        </div>
+                    </div>
+                <% }); %>
+
+
                 <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
                     <a href="shoe.html">
-                        <img class="h-32 lg:h-40" src="images/7d77740b692425fa411ddf2b45825f51.jpg" alt="Product Image">
+                        <img class="h-32 lg:h-40" src="/public/images/7d77740b692425fa411ddf2b45825f51.jpg" alt="Product Image">
                     </a>
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
@@ -383,7 +434,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/3fe053f71dad15b98b32b0bb7005f825.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/3fe053f71dad15b98b32b0bb7005f825.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -393,7 +444,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/20201110_112950.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/20201110_112950.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -403,7 +454,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/20201110_112917.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/20201110_112917.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -413,7 +464,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/20201105_210955.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/20201105_210955.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -423,7 +474,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/20201110_112901.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/20201110_112901.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -433,7 +484,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/20200919_222541.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/20200919_222541.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -443,7 +494,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/172e1bd6d07474b8c1ad2f3404dc1fc3.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/172e1bd6d07474b8c1ad2f3404dc1fc3.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -453,7 +504,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/110d217ff1988b02aa662ca08cb8fb1c.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/110d217ff1988b02aa662ca08cb8fb1c.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -464,7 +515,7 @@
                 </div>
                 <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
                     <a href="shoe.html">
-                        <img class="h-32 lg:h-40" src="images/7d77740b692425fa411ddf2b45825f51.jpg" alt="Product Image">
+                        <img class="h-32 lg:h-40" src="/public/images/7d77740b692425fa411ddf2b45825f51.jpg" alt="Product Image">
                     </a>
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
@@ -475,7 +526,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/3fe053f71dad15b98b32b0bb7005f825.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/3fe053f71dad15b98b32b0bb7005f825.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -485,7 +536,7 @@
                     </div>
                 </div>
                 <div class="card w-[48%] md:w-[30%] lg:w-[24%]">
-                    <img class="h-32 lg:h-40" src="images/20201110_112950.jpg" alt="Product Image">
+                    <img class="h-32 lg:h-40" src="/public/images/20201110_112950.jpg" alt="Product Image">
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
                             <h3>Air Max</h3>
@@ -597,6 +648,92 @@
             }
         });
         
+        $(document).ready(function(){
+            // Click event for adding item to cart
+            $('.addToCartBtn').on('click', function(){
+                var shoeId = $(this).data('shoe-id');
+                addToCart(shoeId);
+                $('#cartReload').load(location.href + ' #cartReload');
+                // $("body").load(location.href ="#cartReload")
+                // console.log("just reloaded");
+            });
+
+            // Function to add item to cart using AJAX
+            function addToCart(shoeId){
+                $.ajax({
+                    url: '/add-to-cart',
+                    method: 'POST',
+                    data: { shoeId: shoeId },
+                    success: function(response){
+                        console.log(response.message); // Log the success message
+                        console.log(response.cartItems); // Log the updated cart data
+                        // $('#cartReload').html(response);
+                    },
+                    error: function(error){
+                        console.error('Error adding item to cart:', error);
+                    }
+                });
+                // $("body").load(location.href ="#cartReload")
+            }
+ 
+            document.getElementById('cartModal').addEventListener('click', function(event) {
+                const target = event.target;
+
+                // Check if the clicked element is an increase or decrease button
+                if (target.classList.contains('increase-btn')) {
+                    const shoeId = target.dataset.shoeId;
+                    const spanQuantity = document.getElementById(`quantity_${shoeId}`);
+                    const currentQuantity = parseInt(spanQuantity.textContent);
+
+                    // Increase quantity
+                    spanQuantity.textContent = currentQuantity + 1;
+
+                    // Send AJAX request or perform other operations
+                    updateQuantity(shoeId, currentQuantity + 1);
+                } else if (target.classList.contains('decrease-btn')) {
+                    const shoeId = target.dataset.shoeId;
+                    const spanQuantity = document.getElementById(`quantity_${shoeId}`);
+                    const currentQuantity = parseInt(spanQuantity.textContent);
+
+                    // Decrease quantity only if it's greater than 1
+                    if (currentQuantity > 1) {
+                        spanQuantity.textContent = currentQuantity - 1;
+
+                        // Send AJAX request or perform other operations
+                        updateQuantity(shoeId, currentQuantity - 1);
+                    }
+                } 
+                $('#cartReload').load(location.href + ' #cartReload');
+            });
+
+
+            function updateQuantity(shoeId, newQuantity) {
+    
+                $.ajax({
+                    url: '/update-quantity',
+                    method: 'POST',
+                    data: { shoeId: shoeId, quantity: newQuantity },
+                    success: function(response) {
+                        // Handle success if needed
+                        console.log(response); // Log the response or perform other actions
+                    },
+                    error: function(error) {
+                        // Handle error if needed
+                        console.error(error);
+                    }
+                });
+            }
+
+            
+        });
+
+
+
+
+
+
+
+
         let slideIndex = 1;
         showSlides(slideIndex);
 
