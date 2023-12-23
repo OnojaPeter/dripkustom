@@ -10,13 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <!-- owl carousel -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
+    <script src="https://kit.fontawesome.com/64af63ddf7.js" crossorigin="anonymous"></script>
     <!-- jquery plugin -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" 
@@ -96,8 +97,8 @@
                             Sign up
                         </button>
                     </div>
-                    <div class="">
-                        <i class="fa fa-cart-arrow-down fa-lg lg:fa-2x" id="cart"></i>
+                    <div class="" style="cursor: pointer;">
+                        <i class="fa-solid fa-cart-shopping fa-xl" id="cart"></i>
                     </div>
                     <div class="-mr-1 md:hidden" id="hamburgerButton">
                         <div data-headlessui-state="">
@@ -165,9 +166,14 @@
                 <h2 class="font-bold text-2xl">Your cart</h2>
                 <% if (cartItems.length > 0) { %>
                     <% cartItems.forEach(function(cartItem) { %>
-                        <div class="mb-4 flex lg:flex ">
-                            <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[80%] lg:w-[50%]">
-                                <img class="h-20 w-[70%] sm:h-28 sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[50%] rounded-md" src="<%= cartItem.image %>" alt="">
+                        <div class="mb-4 flex lg:flex">
+                            <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[80%] lg:w-[40%]">
+                                <div>
+                                    
+                                    <img class="h-20 w-[70%] sm:h-28 sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[50%] rounded-md" src="<%= cartItem.image %>" alt="">
+                                    <button class="remove-btn  text-red-700 font-semibold py-1 px-2 underline" data-shoe-id="<%= cartItem._id %>">Remove</button>
+                                </div>
+                               
                                 <h2 class="mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-sm lg:text-lg"><%= cartItem.name %></h2>
                             </div>
                             <div class="lg:w-[50%] w-[40%] flex flex-col justify-between my-3 sm:my-4 md:my-5 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
@@ -181,23 +187,22 @@
                                     <button class="increase-btn" data-shoe-id="<%= cartItem._id %>">+</button>
                                 </span>
                                 <span class="price" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
-                                <!-- <span class="flex flex-row lg:flex-col gap-x-2">
-                                    <p>Quantity</p> 
-                                    <p>1</p>
-                                </span> -->
-                                <!-- <span>
-                                    <p class="font-semibold text-sm lg:text-2xl">$ 190</p>
-                                </span> -->
                             </div>
                         </div>
+                        <!-- <a href="" class="text-center"><button>CHECKOUT</button></a> -->
                     <% }); %>
+                    <a href="" class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg"><button class="w-[100%] ">CHECKOUT</button></a>
                 <% } else { %>
-                <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
+                <div class="flex justify-center">
+                    <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
+                </div>
+                
                 <p class="font-semibold text-center mb-10">Cart is empty</p>
-                <% } %>
+                
                 <a href="collections.html" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
                     <button>Continue shopping</button>
                 </a>
+                <% } %>
             </div>
 
             <!-- <img class="bg-white" src="images/cart.jpg" alt=""> -->
@@ -413,7 +418,7 @@
                                 <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
                             </div>
                             <button class="addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
-                                <i class="fa fa-cart-arrow-down"></i>
+                                <i class="fa-solid fa-cart-shopping fa-lg"></i>
                             </button>
                             <!-- <i class="fa fa-cart-arrow-down addToCartBtn" data-item-id="<%= shoe._id %>" aria-hidden="true"></i> -->
                         </div>
@@ -552,6 +557,11 @@
                 </a>
             </div>
         </section>
+
+        <div id="notification" class="fixed bottom-0 right-0 mb-4 mr-4 bg-green-500 text-white px-4 py-2 rounded-md hidden">
+            Item added to cart!
+        </div>
+        
     </main>
     <footer class="mt-10 lg:mt-28 px-6 lg:px-0">
         <div class="footer-content lg:px-20 lg:pt-16 flex flex-col text-center lg:flex-row lg:justify-between lg:text-left">
@@ -649,31 +659,34 @@
         });
         
         $(document).ready(function(){
-            // Click event for adding item to cart
             $('.addToCartBtn').on('click', function(){
-                var shoeId = $(this).data('shoe-id');
+                const shoeId = $(this).data('shoe-id');
                 addToCart(shoeId);
                 $('#cartReload').load(location.href + ' #cartReload');
-                // $("body").load(location.href ="#cartReload")
                 // console.log("just reloaded");
             });
-
-            // Function to add item to cart using AJAX
             function addToCart(shoeId){
                 $.ajax({
                     url: '/add-to-cart',
                     method: 'POST',
                     data: { shoeId: shoeId },
                     success: function(response){
-                        console.log(response.message); // Log the success message
-                        console.log(response.cartItems); // Log the updated cart data
-                        // $('#cartReload').html(response);
+                        showNotification('Item added to cart!');
+                        // console.log(response.message); 
+                        // console.log(response.cartItems); 
                     },
                     error: function(error){
-                        console.error('Error adding item to cart:', error);
+                        // console.error('Error adding item to cart:', error);
                     }
                 });
-                // $("body").load(location.href ="#cartReload")
+            }
+            function showNotification(message) {
+                const notification = document.getElementById('notification');
+                notification.textContent = message;
+                notification.classList.remove('hidden');
+                setTimeout(() => {
+                    notification.classList.add('hidden');
+                }, 3000);
             }
  
             document.getElementById('cartModal').addEventListener('click', function(event) {
@@ -687,8 +700,6 @@
 
                     // Increase quantity
                     spanQuantity.textContent = currentQuantity + 1;
-
-                    // Send AJAX request or perform other operations
                     updateQuantity(shoeId, currentQuantity + 1);
                 } else if (target.classList.contains('decrease-btn')) {
                     const shoeId = target.dataset.shoeId;
@@ -699,7 +710,6 @@
                     if (currentQuantity > 1) {
                         spanQuantity.textContent = currentQuantity - 1;
 
-                        // Send AJAX request or perform other operations
                         updateQuantity(shoeId, currentQuantity - 1);
                     }
                 } 
@@ -715,17 +725,41 @@
                     data: { shoeId: shoeId, quantity: newQuantity },
                     success: function(response) {
                         // Handle success if needed
-                        console.log(response); // Log the response or perform other actions
+                        // console.log(response);
                     },
                     error: function(error) {
                         // Handle error if needed
-                        console.error(error);
+                        // console.error(error);
                     }
                 });
             }
 
-            
+            // $(document).ready(function() {
+            $('#cartReload').on('click', '.remove-btn', function() {
+                const shoeId = $(this).data('shoe-id');
+                // console.log(shoeId)
+                removeFromCart(shoeId);
+            });
+            function removeFromCart(shoeId){
+                console.log("inside remove from cart function ajax side");
+                $.ajax({
+                    url: '/remove-from-cart',
+                    method: 'POST',
+                    data: { shoeId: shoeId },
+                    success: function(response) {
+                        // console.log(response);
+                        $('#cartReload').load(location.href + ' #cartReload');
+                        console.log("just reloaded");
+                    },
+                    error: function(error) {
+                        console.error('Error removing item:', error);
+                    }
+                });
+            }
         });
+        // });
+            
+        // });
 
 
 

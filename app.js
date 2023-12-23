@@ -112,6 +112,25 @@ app.post('/update-quantity', async (req, res) => {
         res.status(500).json({ error: 'Error updating quantity' });
     }
 });
+// Backend route to remove an item from the cart
+app.post('/remove-from-cart',async (req, res) => {
+    // console.log("inside the actual removing shit");
+    const shoeId = req.body.shoeId;
+    const shoeIdObject = mongoose.Types.ObjectId.createFromHexString(shoeId);
+    // console.log(shoeId);
+    // console.log(shoeIdObject);
+
+    try {
+        const indexToRemove = cartItems.findIndex(shoe => shoe._id.equals(shoeIdObject));
+        // console.log(indexToRemove);
+    if (indexToRemove !== -1) {
+        cartItems.splice(indexToRemove, 1);
+        res.status(200).send('Item removed from cart');
+    }
+    } catch (error) {
+        res.status(404).send('Item not found in cart');
+    }
+});
 
 
 
