@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <!-- owl carousel -->
@@ -23,6 +23,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" 
     integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
+    <link rel="stylesheet" href="/public/css/output.css">
     <link rel="stylesheet" href="/public/css/styles.css">
     <title>Drip Kustom</title>
 </head>
@@ -36,22 +37,22 @@
                         DRIP-KUSTOM
                     </a>
                     <div class="hidden md:flex md:gap-x-6" >
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="index.html">
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
                             Home
                         </a>
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="collections.html">
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/collections">
                             Collections
                         </a>
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="about.html">
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
                             About
                         </a>
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="store-policy.html">
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/store-policy">
                             Store Policy
                         </a>
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="faqs.html">
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
                             Faqs
                         </a>
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#contact">
+                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/contact">
                             Contact
                         </a>
                     </div>
@@ -60,19 +61,19 @@
                         <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
                             Home
                         </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="collections.html">
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/collections">
                             Collections
                         </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="about.html">
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
                             About
                         </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="store-policy.html">
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/store-policy">
                             Store Policy
                         </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="faqs.html">
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
                             Faqs
                         </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="#contact">
+                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/contact">
                             Contact
                         </a>
                         <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 bg-blue-500 text-white" id="loginButton">
@@ -121,15 +122,16 @@
             </button>
 
           <form>
-            <label for="username" class="block mb-2">Username:</label>
-            <input type="text" id="username" name="username" class="block w-full border rounded-md mb-4 p-2">
+            <label for="loginUsername" class="block mb-2">Username:</label>
+            <input type="text" id="loginUsername" name="loginUsername" class="block w-full border rounded-md mb-4 p-2">
       
-            <label for="password" class="block mb-2">Password:</label>
-            <input type="password" id="password" name="password" class="block w-full border rounded-md mb-4 p-2">
+            <label for="loginPassword" class="block mb-2">Password:</label>
+            <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2">
       
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Login</button>
-            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Sign up</button>
+            <!-- <button  class="bg-blue-500 text-white py-2 px-4 rounded-md" id="signup-modal">Sign up</button> -->
           </form>
+          <button  class="underline py-2 px-4 rounded-md" id="signup-modal">Dont have an account? Sign up</button>
         </div>
     </div>
     <div id="signupModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -141,17 +143,18 @@
           </button>
 
           <form class="w-[100%] md:w-80">
-            <label for="fullName" class="block mb-2">Username:</label>
-            <input type="text" id="fullName" name="fullName" class="block w-full border rounded-md mb-4 p-2">
+            <label for="signupUsername" class="block mb-2">Username:</label>
+            <input type="text" id="signupUsername" name="signupUsername" class="block w-full border rounded-md mb-4 p-2">
       
             <label for="email" class="block mb-2">Email:</label>
             <input type="email" id="email" name="email" class="block w-full border rounded-md mb-4 p-2">
       
-            <label for="password" class="block mb-2">Password:</label>
-            <input type="password" id="password" name="password" class="block w-full border rounded-md mb-4 p-2">
+            <label for="signupPassword" class="block mb-2">Password:</label>
+            <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2">
       
             <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md">Sign Up</button>
           </form>
+          <button  class="underline py-2 px-4 rounded-md" id="login-modal">Already have an account? Sign in</button>
         </div>
     </div>
     <div id="cartModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -189,9 +192,8 @@
                                 <span class="price" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
                             </div>
                         </div>
-                        <!-- <a href="" class="text-center"><button>CHECKOUT</button></a> -->
                     <% }); %>
-                    <a href="" class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg"><button class="w-[100%] ">CHECKOUT</button></a>
+                    <a href="checkout" class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg"><button class="w-[100%] ">CHECKOUT</button></a>
                 <% } else { %>
                 <div class="flex justify-center">
                     <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
@@ -602,6 +604,8 @@
         const desktopLoginButton = document.getElementById('desktopLoginButton');
         const loginModal = document.getElementById('loginModal');
         const closeLoginModal = document.getElementById('closeLoginModal');
+        const signupModalFromLoginModal = document.getElementById('signup-modal')
+        const loginModalFromSignupModal = document.getElementById('login-modal')
 
         desktopLoginButton.addEventListener('click', () => {
             loginModal.classList.toggle('hidden');
@@ -628,6 +632,14 @@
         });
         signupButton.addEventListener('click', () => {
             signupModal.classList.toggle('hidden');
+        });
+        signupModalFromLoginModal.addEventListener('click', () => {
+            signupModal.classList.toggle('hidden');
+            loginModal.classList.add('hidden');
+        });
+        loginModalFromSignupModal.addEventListener('click', () => {
+            signupModal.classList.add('hidden');
+            loginModal.classList.toggle('hidden');
         });
 
         closeSignupModal.addEventListener('click', () => {
@@ -663,7 +675,7 @@
                 const shoeId = $(this).data('shoe-id');
                 addToCart(shoeId);
                 $('#cartReload').load(location.href + ' #cartReload');
-                // console.log("just reloaded");
+                // console.log("just reloaded"); localStorage.setItem("cartItems", cartItems);
             });
             function addToCart(shoeId){
                 $.ajax({
@@ -674,8 +686,26 @@
                         showNotification('Item added to cart!');
                         // console.log(response.message); 
                         // console.log(response.cartItems); 
-                    },
-                    error: function(error){
+                        // localStorage.setItem('cartItems', JSON.stringify(response.cartItems));
+                        // console.log(localStorage.getItem('cartItems'));
+
+                        // const storedCartItems = localStorage.getItem('cartItems');
+                        // console.log(storedCartItems)
+
+                        // Check if there are stored cart items
+                        // if (storedCartItems) {
+                            // Parse the stored string back into an array/object
+                            // const cartItems = JSON.parse(storedCartItems);
+
+                            // Now you can use cartItems in your application
+                            // console.log(cartItems); // For example, log the cart items
+                            // Use cartItems in your application logic...
+                        // } else {
+                            // console.log("nothing saved")
+                            // Handle the case where no cart items are stored
+                        // }
+                    // },
+                    // error: function(error){
                         // console.error('Error adding item to cart:', error);
                     }
                 });

@@ -1,3 +1,11 @@
+/* @import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities'; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -335,11 +343,11 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
 
 
 /* Checkout */
-.confirm-order-btn button {
+/* .confirm-order-btn button {
   background-color: #717171;
   width: 90%;
   border-radius: 5px;
-}
+} */
 
 
 /* THANK YOU PAGE */
@@ -354,4 +362,3 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
   width: 100%;
   background-color: rgba(0, 0, 0, 0.3);
 }
-
