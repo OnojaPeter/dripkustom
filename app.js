@@ -108,14 +108,11 @@ if (cartItems) {
     cartItems = [];
 }
 
-// Now cartItems contains the stored items from localStorage
-// console.log(cartItems);
 app.get('/', async (req, res) => {
     try {
         // localStorage.clear();
-        const shoes = await Shoe.find(); // Fetch items from MongoDB
+        const shoes = await Shoe.find();
         const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-// console.log("Retrieved cartItems:", retrievedCartItems);
         // console.log(cartItems);
         res.render('index', { shoes, cartItems:retrievedCartItems });
     } catch (error) {
@@ -125,47 +122,59 @@ app.get('/', async (req, res) => {
 });
 app.get('/about', async (req, res) => {
     try {
-        res.render('about');
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        // console.log(retrievedCartItems);
+        res.render('about', {cartItems: retrievedCartItems});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/faqs', async (req, res) => {
     try {
-        res.render('faqs');
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render('faqs', {cartItems: retrievedCartItems});
     } catch (error) {
         console.error('Error:', error);
     }
 });
-app.get('/shoe', async (req, res) => {
+app.get('/shoe/:id', async (req, res) => {
+    const shoeId = req.params.id;
+    // console.log(shoeId);
     try {
-        res.render('shoe');
+        const shoe = await Shoe.findById(shoeId);
+        // console.log(shoe);
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        // console.log(retrievedCartItems);
+        res.render('shoe', {shoe ,cartItems: retrievedCartItems});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/store-policy', async (req, res) => {
     try {
-        res.render('store-policy');
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render('store-policy', {cartItems: retrievedCartItems});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/thank-you', async (req, res) => {
     try {
-        res.render('thank-you');
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render('thank-you', {cartItems: retrievedCartItems});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/checkout', async (req, res) => {
     try {
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
         let totalPrice = 0;
-        cartItems.forEach((item) => {
+        retrievedCartItems.forEach((item) => {
             totalPrice += item.price * item.quantity;
         });
         // console.log(totalPrice);
-        res.render('checkout', { cartItems, totalPrice });
+        res.render('checkout', { cartItems: retrievedCartItems, totalPrice });
     } catch (error) {
         console.error('Error:', error);
     }

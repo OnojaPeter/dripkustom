@@ -212,19 +212,19 @@ height: 38vh;
 footer {
     background: #F6F6F6;
 }
-footer h5, footer a {
+footer h5 {
     font-size: 18px;
     font-weight: 700;
     line-height: 28px;
     letter-spacing: 0em;
     margin-bottom: 8px;
 }
-footer li, footer p {
-    font-size: 16px;
-    font-weight: 300;
-    line-height: 24px;
-    letter-spacing: 0em;
-    margin-top: 24px;
+footer .footer-links a, footer p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 24px;
+  letter-spacing: 0em;
+  margin-top: 15px;
 }
 footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
     padding-bottom: 72px;
