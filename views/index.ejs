@@ -367,23 +367,25 @@
                 </div>
                 <div class="flex gap-3">
                     <div>
+                       
+                        <!-- <button id="showAllBtn" class="category-btn">Show All</button>
+                        <button class="categoryBtn" id="nike">Nike</button>
+                        <button class="categoryBtn" id="adidas">Adidas</button> -->
+
                         <span id="filter">
                             <button>Filters</button>
                             <i class="fa fa-filter" aria-hidden="true"></i>
                         </span>
-                        <ul class="hidden" id="filter-menu">
-                            <li>
-                                <input type="checkbox" id="filterCheckbox1" name="filterCheckboxes">
-                                <label for="filterCheckbox1">Product type</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="filterCheckbox2" name="filterCheckboxes">
-                                <label for="filterCheckbox2">Collection</label>
-                            </li>
-                            <li>
-                                <input type="checkbox" id="filterCheckbox3" name="filterCheckboxes">
-                                <label for="filterCheckbox3">Kustom</label>
-                            </li>
+                        <!-- <select class="hidden selectedCategory" id="filter-menu">
+                            <option id="showAllBtn" class="category-btn" value="">Show All</option>
+                            <option class="categoryBtn" value="nike" id="nike">Nike</option>
+                            <option class="categoryBtn" value="adidas" id="adidas">Adidas</option>
+                            
+                        </select> -->
+                        <ul class="hidden selectedCategory" id="filter-menu">
+                            <li><button id="showAllBtn" class="category-btn">Show All</button></li>
+                            <li><button class="categoryBtn" id="nike" value="nike">Nike</button></li>
+                            <li><button class="categoryBtn" id="adidas" value="adidas">Adidas</button></li>
                         </ul>
                     </div>
                     <div>
@@ -394,20 +396,19 @@
                         <ul class="hidden" id="sort-menu">
                             <li>
                                 <input type="checkbox" id="sortCheckbox1" name="sortCheckboxes">
-                                <label for="sortCheckbox1">Latest</label>                    </li>
-                            <li>
-                                <input type="checkbox" id="sortCheckbox2" name="sortCheckboxes">
-                                <label for="sortCheckbox2">Popularity</label>
+                                <label for="sortCheckbox1">Latest</label>                    
                             </li>
                             <li>
-                                <input type="checkbox" id="sortCheckbox3" name="sortCheckboxes">
-                                <label for="sortCheckbox3">Price</label>
+                                <button class="sortByFilter" id="desc">Sort by Price (High to Low)</button>
+                            </li>
+                            <li>
+                                <button class="sortByFilter" id="asc">Sort by Price (Low to High)</button>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0">
+            <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0" id="shoeContainer">
 
                 <% shoes.forEach(function(shoe) { %>
                     <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
@@ -873,6 +874,51 @@
             // alert("working");
             sortByMenu.classList.toggle("hidden");
         });
+
+
+        let category = '';
+$('.categoryBtn').on('click', function() {
+    category = $(this).attr('id');
+    // const sortBy = $('#sort-menu').val();
+    // console.log(sortBy);
+    loadFilteredShoes(category);
+});
+$('#showAllBtn').on('click', function() {
+    category = '';
+    loadFilteredShoes(category);
+});
+$('.sortByFilter').on('click', function() {
+    // const category = '';
+    // const category = $('.selectedCategory').val();
+    const sortBy = $(this).attr('id');
+    if (category) {
+        // console.log(category);
+        loadFilteredShoes(category, sortBy); // Load filtered shoes with sort type if a category is selected
+    } else {
+        loadFilteredShoes('', sortBy); // If no category selected, sort all shoes
+    }
+    // console.log(category);
+    // loadFilteredShoes(category, sortBy);
+});
+
+
+function loadFilteredShoes(category, sortBy) {
+    $.ajax({
+        url: '/',
+        method: 'GET',
+        data: { category: category, sort: sortBy },
+        success: function(response) {
+            // console.log(response);
+            // Update the shoe container with the filtered content
+            $('#shoeContainer').html($(response).find('#shoeContainer').html());
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+
     </script>
 </body>
 

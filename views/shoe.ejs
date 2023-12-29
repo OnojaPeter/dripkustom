@@ -13,7 +13,7 @@
     <%- include ('partials/header') -%>
     <main class="px-3 sm:px-10 lg:px-20  ">
         <section class="mt-10  pb-8 lg:pb-12" id="about">
-            <div>               
+            <div class="shoe-info" data-shoe-id="<%= shoe._id %>">               
                     <div class="flex flex-col  justify-center lg:flex-row gap-x-6">
                         <div class="flex justify-center lg:justify-end lg-12 lg:mt-0 lg:w-[40%] lg:h-[40%] mt-12 rounded-xl lg:overflow-hidden">
                             <img src="<%= shoe.image %>">
@@ -71,6 +71,7 @@
                                     </ul>
                                     
                                 </div> -->
+                                
                                 <div class="flex items-center mt-5">
                                     <button id="decreaseBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -84,9 +85,14 @@
                                         </svg>
                                     </button>
                                 </div>
+                                <!-- <span class="flex flex-row">
+                                    <button class="decrease-btn" data-shoe-id="<%= shoe._id %>">-</button>
+                                    <span class="quantity flex flex-row mx-2 md:mx-3 lg:mx-5" id="quantity_<%= shoe._id %>"><%= shoe.quantity %></span>
+                                    <button class="increase-btn" data-shoe-id="<%= shoe._id %>">+</button>
+                                </span> -->
                                 
                                 <div class="mt-6 font-semibold gap-2 lg:gap-4 flex">
-                                    <button class="shoe-add-to-cart btn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
+                                    <button class="shoe-add-to-cart addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
                                         Add to Cart
                                     </button>
                                     <a href="#" class="shoe-buy-1-click">
@@ -121,21 +127,61 @@
         const increaseBtn = document.getElementById('increaseBtn');
         const numberInput = document.getElementById('numberInput');
 
+        const shoeInfo = document.querySelector('.shoe-info');
+const shoeId = shoeInfo.dataset.shoeId;
+        console.log(shoeId);
+        // console.log(target.dataset.shoeId);
+
         decreaseBtn.addEventListener('click', () => {
-            if (numberInput.value > 1) {
-            numberInput.stepDown();
-        }
-        });
+    if (numberInput.value > 1) {
+        numberInput.value = parseInt(numberInput.value) - 1;
+        updateQuantity(shoeId, numberInput.value);
+    }
+});
 
-        increaseBtn.addEventListener('click', () => {
-            numberInput.stepUp();
-        });
+increaseBtn.addEventListener('click', () => {
+    numberInput.value = parseInt(numberInput.value) + 1;
+    updateQuantity(shoeId, numberInput.value);
+});
 
-        numberInput.addEventListener('input', () => {
-        if (numberInput.value < 1 || isNaN(numberInput.value)) {
-            numberInput.value = 1;
+numberInput.addEventListener('input', () => {
+    if (numberInput.value < 1 || isNaN(numberInput.value)) {
+        numberInput.value = 1;
+    }
+    updateQuantity(shoeId, numberInput.value);
+});
+
+function updateQuantity(shoeId, newQuantity) {
+    $.ajax({
+        url: '/update-quantity',
+        method: 'POST',
+        data: { shoeId: shoeId, quantity: newQuantity },
+        success: function(response) {
+            // Handle success if needed
+            console.log("success");
+        },
+        error: function(error) {
+            // Handle error if needed
+            // console.error(error);
         }
-        });
+    });
+}
+
+        // decreaseBtn.addEventListener('click', () => {
+        //     if (numberInput.value > 1) {
+        //     numberInput.stepDown();
+        // }
+        // });
+
+        // increaseBtn.addEventListener('click', () => {
+        //     numberInput.stepUp();
+        // });
+
+        // numberInput.addEventListener('input', () => {
+        // if (numberInput.value < 1 || isNaN(numberInput.value)) {
+        //     numberInput.value = 1;
+        // }
+        // });
 
 
     </script>

@@ -75,13 +75,14 @@ const shoeSchema = new mongoose.Schema({
     image: String,
     name: String,
     price: Number,
+    category: String,
     // Add more fields as needed
 });
 const Shoe = mongoose.model('Shoe', shoeSchema);
 
 // const dummyItems = [
-//     { image: "/public/images/7d77740b692425fa411ddf2b45825f51.jpg",name: 'Item 1', price: 10 },
-//     { image: "/public/images/20201110_112950.jpg", name: 'Item 2', price: 20 },
+//     { image: "/public/images/7d77740b692425fa411ddf2b45825f51.jpg",name: 'Item 1', price: 80, category: "nike" },
+//     { image: "/public/images/20201110_112950.jpg", name: 'Item 2', price: 50, category: "adidas" },
 //     // Add more items as needed
 // ];
 // const populateDummyItems = async () => {
@@ -111,7 +112,23 @@ if (cartItems) {
 app.get('/', async (req, res) => {
     try {
         // localStorage.clear();
-        const shoes = await Shoe.find();
+        const { category, sort } = req.query;
+        // console.log(sort);
+        let shoes;
+        let sortCriteria = {};
+
+        if (sort === 'asc') {
+            sortCriteria = { price: 1 }; // Sort by price ascending
+        } else if (sort === 'desc') {
+            sortCriteria = { price: -1 }; // Sort by price descending
+        }
+
+        if (category) {
+            shoes = await Shoe.find({ category }).sort(sortCriteria);
+        } else {
+            shoes = await Shoe.find().sort(sortCriteria);
+        }
+        // const shoes = await Shoe.find();
         const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
         // console.log(cartItems);
         res.render('index', { shoes, cartItems:retrievedCartItems });

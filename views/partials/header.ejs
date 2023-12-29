@@ -298,6 +298,7 @@
 
             $('.addToCartBtn').on('click', function(){
                 const shoeId = $(this).data('shoe-id');
+                // console.log(shoeId)
                 addToCart(shoeId);
                 $('#cartReload').load(location.href + ' #cartReload');
                 // console.log("just reloaded"); localStorage.setItem("cartItems", cartItems);
