@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <!-- owl carousel -->
@@ -367,45 +367,52 @@
                 </div>
                 <div class="flex gap-3">
                     <div>
-                       
-                        <!-- <button id="showAllBtn" class="category-btn">Show All</button>
-                        <button class="categoryBtn" id="nike">Nike</button>
-                        <button class="categoryBtn" id="adidas">Adidas</button> -->
-
                         <span id="filter">
                             <button>Filters</button>
                             <i class="fa fa-filter" aria-hidden="true"></i>
                         </span>
-                        <!-- <select class="hidden selectedCategory" id="filter-menu">
-                            <option id="showAllBtn" class="category-btn" value="">Show All</option>
-                            <option class="categoryBtn" value="nike" id="nike">Nike</option>
-                            <option class="categoryBtn" value="adidas" id="adidas">Adidas</option>
-                            
-                        </select> -->
+
                         <ul class="hidden selectedCategory" id="filter-menu">
-                            <li><button id="showAllBtn" class="category-btn">Show All</button></li>
-                            <li><button class="categoryBtn" id="nike" value="nike">Nike</button></li>
-                            <li><button class="categoryBtn" id="adidas" value="adidas">Adidas</button></li>
+                            <li><button style="padding-right: 30px;" id="showAllBtn" class="category-btn categoryBtn">Show All</button></li>
+                            <li><button style="padding-right: 50px;" class="categoryBtn" id="nike" value="nike">Nike</button></li>
+                            <li><button style="padding-right: 40px;" class="categoryBtn" id="adidas" value="adidas">Adidas</button></li>
                         </ul>
                     </div>
                     <div>
                         <span id="sort-by">
-                            <button>Sort by popularity</button>
+                            <button>Sort by</button>
                             <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </span>
                         <ul class="hidden" id="sort-menu">
                             <li>
-                                <button class="sortByFilter" id="recent">Sort by Recently Added</button>                   
+                                <button class="sortByFilter" id="recent" value="Sort by Recently Added">Sort by Recently Added</button>                   
                             </li>
                             <li>
-                                <button class="sortByFilter" id="desc">Sort by Price (High to Low)</button>
+                                <button class="sortByFilter" id="desc" value="Sort by Price (High to Low)">Sort by Price (High to Low)</button>
                             </li>
                             <li>
-                                <button class="sortByFilter" id="asc">Sort by Price (Low to High)</button>
+                                <button class="sortByFilter" id="asc" value="Sort by Price (Low to High)">Sort by Price (Low to High)</button>
                             </li>
                         </ul>
                     </div>
+                    
                 </div>
+                <div class="flex " id="filter-sort">
+                    <div id="selectedFilterOptions" class="flex flex-wrap gap-2 mt-4">
+                        <!-- <div class="bg-blue-200 rounded-md px-2 py-1 flex items-center">
+                            <span class="text-blue-700">Nike</span>
+                            <button class="ml-2 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-700 hover:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M14.293 5.293a1 1 0 0 0-1.414 1.414L13.586 9l-1.707 1.707a1 1 0 1 0 1.414 1.414L15 10.414l1.707 1.707a1 1 0 0 0 1.414-1.414L16.414 9l1.707-1.707a1 1 0 0 0-1.414-1.414L15 7.586l-1.707-1.707a1 1 0 0 0-1.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div> -->
+                    </div>
+                    <div id="selectedSortOptions" class="flex flex-wrap gap-2 mt-4">
+                        <!-- Sorted options will be displayed here -->
+                    </div>
+                </div>
+                
             </div>
             <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0" id="shoeContainer">
 
@@ -419,7 +426,7 @@
                                 <h3><%= shoe.name %></h3>
                                 <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
                             </div>
-                            <button class="addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
+                            <button style="padding: 10px;" class="addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
                                 <i class="fa-solid fa-cart-shopping fa-lg"></i>
                             </button>
                         </div>
@@ -916,6 +923,82 @@ function loadFilteredShoes(category, sortBy) {
         }
     });
 }
+
+let selectedFilterOptions = [];
+let selectedSortOptions = [];
+
+// Click event listeners for filter buttons
+document.querySelectorAll('.categoryBtn').forEach(button => {
+    button.addEventListener('click', () => {
+        const value = button.value; // Get the value or text of the button
+        selectedFilterOptions = [value]; // Reset filter array with the clicked option
+        updateSelectedOptions('selectedFilterOptions'); // Update the displayed filter options
+    });
+});
+
+// Click event listeners for sort buttons
+document.querySelectorAll('.sortByFilter').forEach(button => {
+    button.addEventListener('click', () => {
+        const value = button.value; // Get the value or text of the button
+        selectedSortOptions = [value];
+        updateSelectedOptions('selectedSortOptions'); // Update the displayed sort options
+    });
+});
+function createCancelButton(targetDivId, option) {
+    const cancelBtn = document.createElement('button');
+    cancelBtn.textContent = 'X';
+    cancelBtn.classList.add('cancel-btn', 'bg-red-500', 'text-white', 'px-2', 'rounded-lg', 'focus:outline-none', 'ml-2');
+    cancelBtn.addEventListener('click', () => {
+        if (targetDivId === 'selectedFilterOptions') {
+            selectedFilterOptions = selectedFilterOptions.filter(item => item !== option);
+            // console.log(selectedFilterOptions);
+        } else {
+            selectedSortOptions = selectedSortOptions.filter(item => item !== option);
+        }
+        updateSelectedOptions(targetDivId);
+        // console.log(selectedFilterOptions);
+        resetFilters();
+    });
+    return cancelBtn;
+}
+
+    function resetFilters() {
+    if (selectedFilterOptions.length === 0 && selectedSortOptions.length === 0) {
+        loadFilteredShoes('', ''); // Pass empty values to retrieve all items
+    } else {
+        if (selectedFilterOptions.length > 0) {
+            // Reload shoes based on the remaining filter options
+            loadFilteredShoes(selectedFilterOptions.join(','), '');
+        } else if (selectedSortOptions.length > 0) {
+            // Reload shoes based on the remaining sort options
+            loadFilteredShoes('', selectedSortOptions[0]); // Pass the first sort option
+        }
+    }
+}
+
+
+// Function to update the displayed options
+function updateSelectedOptions(targetDivId) {
+    const selectedOptionsDiv = document.getElementById(targetDivId);
+    selectedOptionsDiv.innerHTML = ''; // Clear previous content
+
+    // Determine which array to display based on targetDivId
+    const selectedOptions = (targetDivId === 'selectedFilterOptions') ? selectedFilterOptions : selectedSortOptions;
+
+    // Create and append elements for each selected option
+    selectedOptions.forEach(option => {
+        const optionDiv = document.createElement('div');
+        // console.log(optionDiv);
+        optionDiv.textContent = option;
+        optionDiv.classList.add('selected-option', 'bg-gray-200', 'rounded-full', 'py-1', 'px-3', 'text-gray-700', 'text-sm', 'mr-3');
+        // console.log(optionDiv);
+        const cancelBtn = createCancelButton(targetDivId, option);
+        optionDiv.appendChild(cancelBtn);
+        selectedOptionsDiv.appendChild(optionDiv);
+    });
+}
+
+
 
 
     </script>

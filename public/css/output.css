@@ -546,6 +546,40 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 .fixed {
   position: fixed;
 }
@@ -653,8 +687,16 @@ video {
   margin-bottom: 1.5rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .ml-4 {
   margin-left: 1rem;
+}
+
+.mr-3 {
+  margin-right: 0.75rem;
 }
 
 .mr-4 {
@@ -729,6 +771,10 @@ video {
   height: 8rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .h-6 {
   height: 1.5rem;
 }
@@ -759,6 +805,10 @@ video {
 
 .w-3\/12 {
   width: 25%;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .w-6 {
@@ -897,6 +947,10 @@ video {
   overflow: visible;
 }
 
+.rounded-full {
+  border-radius: 9999px;
+}
+
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -942,6 +996,11 @@ video {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
+.bg-blue-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(191 219 254 / var(--tw-bg-opacity));
+}
+
 .bg-blue-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
@@ -965,6 +1024,11 @@ video {
 .bg-green-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
+}
+
+.bg-red-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .bg-white {
@@ -1126,6 +1190,11 @@ video {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.text-blue-700 {
+  --tw-text-opacity: 1;
+  color: rgb(29 78 216 / var(--tw-text-opacity));
 }
 
 .text-gray-500 {
@@ -1425,7 +1494,7 @@ footer {
   background: #F6F6F6;
 }
 
-footer h5, footer a {
+footer h5 {
   font-size: 18px;
   font-weight: 700;
   line-height: 28px;
@@ -1433,12 +1502,12 @@ footer h5, footer a {
   margin-bottom: 8px;
 }
 
-footer li, footer p {
+footer .footer-links a, footer p {
   font-size: 16px;
   font-weight: 300;
   line-height: 24px;
   letter-spacing: 0em;
-  margin-top: 24px;
+  margin-top: 15px;
 }
 
 footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
@@ -1511,6 +1580,8 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
   cursor: pointer;
   padding: 5px 0px;
 }
+
+/* #selectedFilterOptions, #selectedSortOptions */
 
 /* shoe page */
 
@@ -1589,6 +1660,11 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
 .hover\:bg-slate-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(241 245 249 / var(--tw-bg-opacity));
+}
+
+.hover\:text-blue-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(30 58 138 / var(--tw-text-opacity));
 }
 
 .hover\:text-gray-700:hover {
@@ -1805,10 +1881,6 @@ footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
 
   .lg\:mt-14 {
     margin-top: 3.5rem;
-  }
-
-  .lg\:mt-20 {
-    margin-top: 5rem;
   }
 
   .lg\:mt-28 {

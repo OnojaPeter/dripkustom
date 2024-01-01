@@ -207,7 +207,7 @@ app.post('/add-to-cart', async (req, res) => {
     const shoeId = req.body.shoeId;
     // console.log(shoeId);
     const shoeIdObject = shoeId;
-    // console.log(itemIdObject)
+    // console.log(shoeIdObject)
 
     try {
         const shoe = await Shoe.findById(shoeId);
@@ -221,7 +221,7 @@ app.post('/add-to-cart', async (req, res) => {
             // const existingItemIndex = cartItems.findIndex(shoe => shoe._id === shoeIdObject);
             const existingItemIndex = cartItems.findIndex(item => item._id === shoeIdObject);
 
-            console.log(existingItemIndex)
+            // console.log(existingItemIndex)
 
             if (existingItemIndex !== -1) {
                 // If item exists in cart, increment its quantity
