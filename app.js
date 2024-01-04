@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const { log } = require('util');
 const path = require("path");
+require('dotenv').config();
+
 
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
@@ -66,10 +68,19 @@ app.use('css', express.static('public/css', { 'extensions': ['css']}));
 
 
 app.set('view engine', 'ejs');
-
-mongoose.connect('mongodb://127.0.0.1:27017/drip');
+// mongoose.connect('mongodb://127.0.0.1:27017/drip');
 //{ useNewUrlParser: true, useUnifiedTopology: true }
+const uri = process.env.MONGODB_URI;
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+mongoose.connect(uri);
 
+const db = mongoose.connection;
+
+// Event listeners for connection status
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', () => {
+  console.log('Connected to MongoDB successfully!');
+});
 // Define a schema and model for items
 const shoeSchema = new mongoose.Schema({
     image: String,
@@ -84,8 +95,12 @@ const Shoe = mongoose.model('Shoe', shoeSchema);
 // const dummyItems = [
 //     { image: "/public/images/7d77740b692425fa411ddf2b45825f51.jpg",name: 'Nike 1', price: 80, category: "nike"},
 //     { image: "/public/images/20201110_112950.jpg", name: 'Nike 2', price: 50, category: "nike"},
+//     { image: "/public/images/20201105_210955.jpg", name: 'Nike 3', price: 40, category: "nike"},
+//     { image: "/public/images/20201110_112901.jpg", name: 'Nike 4', price: 45, category: "nike"},
 // { image: "/public/images/4ff9167ec73af7436ba02f8135192578.jpg", name: 'Adidas 1', price: 20, category: "adidas"},
 // { image: "/public/images/9d1e24162babca5f650de973eaec89c7.jpg", name: 'Adidas 2', price: 25, category: "adidas"},
+// { image: "/public/images/3fe053f71dad15b98b32b0bb7005f825.jpg", name: 'Adidas 3', price: 51, category: "adidas"},
+// { image: "/public/images/20201110_112917.jpg", name: 'Adidas 4', price: 22, category: "adidas"},
 //     // Add more items as needed
 // ];
 // const populateDummyItems = async () => {
@@ -116,7 +131,8 @@ app.get('/', async (req, res) => {
     try {
         // localStorage.clear();
         const { category, sort } = req.query;
-        // console.log(sort);
+        // const { offset = 0, limit = 10 } = req.query;
+        // console.log(offset);
         let shoes;
         let sortCriteria = {};
 
@@ -130,6 +146,7 @@ app.get('/', async (req, res) => {
 
         if (category) {
             shoes = await Shoe.find({ category }).sort(sortCriteria);
+            console.log(shoes)
         } else {
             shoes = await Shoe.find().sort(sortCriteria);
         }

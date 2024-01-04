@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <!-- owl carousel -->
@@ -52,9 +52,9 @@
                         <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
                             Faqs
                         </a>
-                        <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/contact">
+                        <!-- <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/contact">
                             Contact
-                        </a>
+                        </a> -->
                     </div>
                     <div class="mobileMenu gap-6 lg:gap-0 hidden md:gap-x-6 flex-col flex" id="mobileMenu">
                         <button id="closeBtn" class="close-btn mt-3">×</button>
@@ -73,9 +73,9 @@
                         <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
                             Faqs
                         </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/contact">
+                        <!-- <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/contact">
                             Contact
-                        </a>
+                        </a> -->
                         <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 bg-blue-500 text-white" id="loginButton">
                             <button class="" >
                                 Login
@@ -94,9 +94,9 @@
                         <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopLoginButton">
                             Login
                         </button>
-                        <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopSignupButton">
+                        <!-- <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopSignupButton">
                             Sign up
-                        </button>
+                        </button> -->
                     </div>
                     <div class="" style="cursor: pointer;">
                         <i class="fa-solid fa-cart-shopping fa-xl" id="cart"></i>
@@ -158,28 +158,28 @@
         </div>
     </div>
     <div id="cartModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-8 md:px-10 rounded-md relative lg:w-[50%]">
+        <div class="bg-white p-8 md:px-10 rounded-md relative w-[70%] lg:w-[50%]">
             <button id="closeCartModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
-            <div id="cartReload">
+            <div id="cartReload" style="height: 400px; overflow-y: auto;">
                 <h2 class="font-bold text-2xl">Your cart</h2>
                 <% if (cartItems.length > 0) { %>
                     <% cartItems.forEach(function(cartItem) { %>
-                        <div class="mb-4 flex lg:flex">
-                            <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[80%] lg:w-[40%]">
-                                <div>
+                        <div class="mb-4 flex lg:flex justify-between">
+                            <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[40%] lg:w-[40%]">
+                                <div class="w-[100%]">
                                     
                                     <img class="h-20 w-[70%] sm:h-28 sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[50%] rounded-md" src="<%= cartItem.image %>" alt="">
                                     <button class="remove-btn  text-red-700 font-semibold py-1 px-2 underline" data-shoe-id="<%= cartItem._id %>">Remove</button>
                                 </div>
                                
-                                <h2 class="mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-sm lg:text-lg"><%= cartItem.name %></h2>
+                                <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-sm lg:text-lg"><%= cartItem.name %></h2>
                             </div>
-                            <div class="lg:w-[50%] w-[40%] flex flex-col justify-between my-3 sm:my-4 md:my-5 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
+                            <div class="lg:w-[40%] w-[40%] flex flex-col justify-between my-3 sm:my-4 md:my-5 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
                                 <span class="flex flex-row lg:flex-col">
                                     <p>size:</p>
                                     <p> 46</p>
@@ -399,25 +399,19 @@
                 </div>
                 <div class="flex " id="filter-sort">
                     <div id="selectedFilterOptions" class="flex flex-wrap gap-2 mt-4">
-                        <!-- <div class="bg-blue-200 rounded-md px-2 py-1 flex items-center">
-                            <span class="text-blue-700">Nike</span>
-                            <button class="ml-2 focus:outline-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-700 hover:text-blue-900" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M14.293 5.293a1 1 0 0 0-1.414 1.414L13.586 9l-1.707 1.707a1 1 0 1 0 1.414 1.414L15 10.414l1.707 1.707a1 1 0 0 0 1.414-1.414L16.414 9l1.707-1.707a1 1 0 0 0-1.414-1.414L15 7.586l-1.707-1.707a1 1 0 0 0-1.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div> -->
+                        
                     </div>
                     <div id="selectedSortOptions" class="flex flex-wrap gap-2 mt-4">
-                        <!-- Sorted options will be displayed here -->
+                        
                     </div>
                 </div>
                 
             </div>
-            <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0" id="shoeContainer">
+            <div class="" id="shoeContainer">
 
+                <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0" id="shoeCard">
                 <% shoes.forEach(function(shoe) { %>
-                    <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
+                    <div class="card hidden w-[48%] md:w-[30%] lg:w-[24%]">
                         <a href="/shoe/<%= shoe._id %>">
                             <img class="h-32 lg:h-40" src="<%= shoe.image %>" alt="Product Image">
                         </a>
@@ -432,9 +426,9 @@
                         </div>
                     </div>
                 <% }); %>
+                </div>
 
-
-                <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
+                <!-- <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
                     <a href="shoe.html">
                         <img class="h-32 lg:h-40" src="/public/images/7d77740b692425fa411ddf2b45825f51.jpg" alt="Product Image">
                     </a>
@@ -558,11 +552,9 @@
                         <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
                     </div>
                 </div>
-            </div>
-            <div class="text-center mt-4">
-                <a href="">
-                    <button class="px-6 py-2 bg-blue-500 text-white rounded-lg">VIEW MORE</button>
-                </a>
+            </div> -->
+            <div class="text-center w-[100%] mt-4">               
+                <button id="load-more" class="px-6 py-2 bg-blue-500 text-white rounded-lg load-more">VIEW MORE</button>               
             </div>
         </section>
 
@@ -633,9 +625,9 @@
         const signupModal = document.getElementById('signupModal');
         const closeSignupModal = document.getElementById('closeSignupModal');
 
-        desktopSignupButton.addEventListener('click', () => {
-            signupModal.classList.toggle('hidden');
-        });
+        // desktopSignupButton.addEventListener('click', () => {
+        //     signupModal.classList.toggle('hidden');
+        // });
         signupButton.addEventListener('click', () => {
             signupModal.classList.toggle('hidden');
         });
@@ -677,6 +669,23 @@
         });
         
         $(document).ready(function(){
+            
+            function loadMoreCards(cardsToShow) {
+                // let cardsToShow = 2;
+                $(".card").slice(0,cardsToShow).fadeIn();
+                $("#shoeContainer").on("click", ".load-more",function(){
+                    // alert('here')
+                    cardsToShow += 4;
+                        $(".card").slice(0,cardsToShow).fadeIn();
+
+                        if ($('.card').length <= cardsToShow) {
+                            $('#load-more').fadeOut();
+                        }
+                });
+            }
+            loadMoreCards(4);        
+
+
             $('.addToCartBtn').on('click', function(){
                 const shoeId = $(this).data('shoe-id');
                 addToCart(shoeId);
@@ -691,28 +700,6 @@
                     success: function(response){
                         showNotification('Item added to cart!');
                         // console.log(response.message); 
-                        // console.log(response.cartItems); 
-                        // localStorage.setItem('cartItems', JSON.stringify(response.cartItems));
-                        // console.log(localStorage.getItem('cartItems'));
-
-                        // const storedCartItems = localStorage.getItem('cartItems');
-                        // console.log(storedCartItems)
-
-                        // Check if there are stored cart items
-                        // if (storedCartItems) {
-                            // Parse the stored string back into an array/object
-                            // const cartItems = JSON.parse(storedCartItems);
-
-                            // Now you can use cartItems in your application
-                            // console.log(cartItems); // For example, log the cart items
-                            // Use cartItems in your application logic...
-                        // } else {
-                            // console.log("nothing saved")
-                            // Handle the case where no cart items are stored
-                        // }
-                    // },
-                    // error: function(error){
-                        // console.error('Error adding item to cart:', error);
                     }
                 });
             }
@@ -792,6 +779,139 @@
                     }
                 });
             }
+
+            const filter = document.getElementById("filter");
+            const filterMenu = document.getElementById("filter-menu");
+
+            const sortBy = document.getElementById("sort-by");
+            const sortByMenu = document.getElementById("sort-menu");
+
+            filter.addEventListener('click', () => {
+                // alert("working");
+                filterMenu.classList.toggle("hidden");
+            });
+            sortBy.addEventListener('click', () => {
+                // alert("working");
+                sortByMenu.classList.toggle("hidden");
+            });
+
+
+                    let category = '';
+            $('.categoryBtn').on('click', function() {
+                category = $(this).attr('id');
+                // const sortBy = $('#sort-menu').val();
+                // console.log(sortBy);
+                loadFilteredShoes(category);
+            });
+            $('#showAllBtn').on('click', function() {
+                category = '';
+                loadFilteredShoes(category);
+            });
+            $('.sortByFilter').on('click', function() {
+                // const category = '';
+                // const category = $('.selectedCategory').val();
+                const sortBy = $(this).attr('id');
+                if (category) {
+                    // console.log(category);
+                    loadFilteredShoes(category, sortBy); // Load filtered shoes with sort type if a category is selected
+                } else {
+                    loadFilteredShoes('', sortBy); // If no category selected, sort all shoes
+                }
+                // console.log(category);
+                // loadFilteredShoes(category, sortBy);
+            });
+
+
+            function loadFilteredShoes(category, sortBy) {
+                $.ajax({
+                    url: '/',
+                    method: 'GET',
+                    data: { category: category, sort: sortBy },
+                    success: function(response) {
+                        // console.log(response);
+                        // Update the shoe container with the filtered content
+                        $('#shoeContainer').html($(response).find('#shoeContainer').html());
+                        loadMoreCards(4);
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                    }
+                });
+            }
+
+            let selectedFilterOptions = [];
+            let selectedSortOptions = [];
+
+            // Click event listeners for filter buttons
+            document.querySelectorAll('.categoryBtn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.value; // Get the value or text of the button
+                    selectedFilterOptions = [value]; // Reset filter array with the clicked option
+                    updateSelectedOptions('selectedFilterOptions'); // Update the displayed filter options
+                });
+            });
+
+            // Click event listeners for sort buttons
+            document.querySelectorAll('.sortByFilter').forEach(button => {
+                button.addEventListener('click', () => {
+                    const value = button.value; // Get the value or text of the button
+                    selectedSortOptions = [value];
+                    updateSelectedOptions('selectedSortOptions'); // Update the displayed sort options
+                });
+            });
+            function createCancelButton(targetDivId, option) {
+                const cancelBtn = document.createElement('button');
+                cancelBtn.textContent = 'X';
+                cancelBtn.classList.add('cancel-btn', 'bg-red-500', 'text-white', 'px-2', 'rounded-lg', 'focus:outline-none', 'ml-2');
+                cancelBtn.addEventListener('click', () => {
+                    if (targetDivId === 'selectedFilterOptions') {
+                        selectedFilterOptions = selectedFilterOptions.filter(item => item !== option);
+                        // console.log(selectedFilterOptions);
+                    } else {
+                        selectedSortOptions = selectedSortOptions.filter(item => item !== option);
+                    }
+                    updateSelectedOptions(targetDivId);
+                    // console.log(selectedFilterOptions);
+                    resetFilters();
+                });
+                return cancelBtn;
+            }
+
+                function resetFilters() {
+                if (selectedFilterOptions.length === 0 && selectedSortOptions.length === 0) {
+                    loadFilteredShoes('', ''); // Pass empty values to retrieve all items
+                } else {
+                    if (selectedFilterOptions.length > 0) {
+                        // Reload shoes based on the remaining filter options
+                        loadFilteredShoes(selectedFilterOptions.join(','), '');
+                    } else if (selectedSortOptions.length > 0) {
+                        // Reload shoes based on the remaining sort options
+                        loadFilteredShoes('', selectedSortOptions[0]); // Pass the first sort option
+                    }
+                }
+            }
+
+
+            // Function to update the displayed options
+            function updateSelectedOptions(targetDivId) {
+                const selectedOptionsDiv = document.getElementById(targetDivId);
+                selectedOptionsDiv.innerHTML = ''; // Clear previous content
+
+                // Determine which array to display based on targetDivId
+                const selectedOptions = (targetDivId === 'selectedFilterOptions') ? selectedFilterOptions : selectedSortOptions;
+
+                // Create and append elements for each selected option
+                selectedOptions.forEach(option => {
+                    const optionDiv = document.createElement('div');
+                    // console.log(optionDiv);
+                    optionDiv.textContent = option;
+                    optionDiv.classList.add('selected-option', 'bg-gray-200', 'rounded-full', 'py-1', 'px-3', 'text-gray-700', 'text-sm', 'mr-3');
+                    // console.log(optionDiv);
+                    const cancelBtn = createCancelButton(targetDivId, option);
+                    optionDiv.appendChild(cancelBtn);
+                    selectedOptionsDiv.appendChild(optionDiv);
+                });
+            }
         });
         // });
             
@@ -866,137 +986,7 @@
         })
         });
 
-        const filter = document.getElementById("filter");
-        const filterMenu = document.getElementById("filter-menu");
-
-        const sortBy = document.getElementById("sort-by");
-        const sortByMenu = document.getElementById("sort-menu");
-
-        filter.addEventListener('click', () => {
-            // alert("working");
-            filterMenu.classList.toggle("hidden");
-        });
-        sortBy.addEventListener('click', () => {
-            // alert("working");
-            sortByMenu.classList.toggle("hidden");
-        });
-
-
-        let category = '';
-$('.categoryBtn').on('click', function() {
-    category = $(this).attr('id');
-    // const sortBy = $('#sort-menu').val();
-    // console.log(sortBy);
-    loadFilteredShoes(category);
-});
-$('#showAllBtn').on('click', function() {
-    category = '';
-    loadFilteredShoes(category);
-});
-$('.sortByFilter').on('click', function() {
-    // const category = '';
-    // const category = $('.selectedCategory').val();
-    const sortBy = $(this).attr('id');
-    if (category) {
-        // console.log(category);
-        loadFilteredShoes(category, sortBy); // Load filtered shoes with sort type if a category is selected
-    } else {
-        loadFilteredShoes('', sortBy); // If no category selected, sort all shoes
-    }
-    // console.log(category);
-    // loadFilteredShoes(category, sortBy);
-});
-
-
-function loadFilteredShoes(category, sortBy) {
-    $.ajax({
-        url: '/',
-        method: 'GET',
-        data: { category: category, sort: sortBy },
-        success: function(response) {
-            // console.log(response);
-            // Update the shoe container with the filtered content
-            $('#shoeContainer').html($(response).find('#shoeContainer').html());
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
-}
-
-let selectedFilterOptions = [];
-let selectedSortOptions = [];
-
-// Click event listeners for filter buttons
-document.querySelectorAll('.categoryBtn').forEach(button => {
-    button.addEventListener('click', () => {
-        const value = button.value; // Get the value or text of the button
-        selectedFilterOptions = [value]; // Reset filter array with the clicked option
-        updateSelectedOptions('selectedFilterOptions'); // Update the displayed filter options
-    });
-});
-
-// Click event listeners for sort buttons
-document.querySelectorAll('.sortByFilter').forEach(button => {
-    button.addEventListener('click', () => {
-        const value = button.value; // Get the value or text of the button
-        selectedSortOptions = [value];
-        updateSelectedOptions('selectedSortOptions'); // Update the displayed sort options
-    });
-});
-function createCancelButton(targetDivId, option) {
-    const cancelBtn = document.createElement('button');
-    cancelBtn.textContent = 'X';
-    cancelBtn.classList.add('cancel-btn', 'bg-red-500', 'text-white', 'px-2', 'rounded-lg', 'focus:outline-none', 'ml-2');
-    cancelBtn.addEventListener('click', () => {
-        if (targetDivId === 'selectedFilterOptions') {
-            selectedFilterOptions = selectedFilterOptions.filter(item => item !== option);
-            // console.log(selectedFilterOptions);
-        } else {
-            selectedSortOptions = selectedSortOptions.filter(item => item !== option);
-        }
-        updateSelectedOptions(targetDivId);
-        // console.log(selectedFilterOptions);
-        resetFilters();
-    });
-    return cancelBtn;
-}
-
-    function resetFilters() {
-    if (selectedFilterOptions.length === 0 && selectedSortOptions.length === 0) {
-        loadFilteredShoes('', ''); // Pass empty values to retrieve all items
-    } else {
-        if (selectedFilterOptions.length > 0) {
-            // Reload shoes based on the remaining filter options
-            loadFilteredShoes(selectedFilterOptions.join(','), '');
-        } else if (selectedSortOptions.length > 0) {
-            // Reload shoes based on the remaining sort options
-            loadFilteredShoes('', selectedSortOptions[0]); // Pass the first sort option
-        }
-    }
-}
-
-
-// Function to update the displayed options
-function updateSelectedOptions(targetDivId) {
-    const selectedOptionsDiv = document.getElementById(targetDivId);
-    selectedOptionsDiv.innerHTML = ''; // Clear previous content
-
-    // Determine which array to display based on targetDivId
-    const selectedOptions = (targetDivId === 'selectedFilterOptions') ? selectedFilterOptions : selectedSortOptions;
-
-    // Create and append elements for each selected option
-    selectedOptions.forEach(option => {
-        const optionDiv = document.createElement('div');
-        // console.log(optionDiv);
-        optionDiv.textContent = option;
-        optionDiv.classList.add('selected-option', 'bg-gray-200', 'rounded-full', 'py-1', 'px-3', 'text-gray-700', 'text-sm', 'mr-3');
-        // console.log(optionDiv);
-        const cancelBtn = createCancelButton(targetDivId, option);
-        optionDiv.appendChild(cancelBtn);
-        selectedOptionsDiv.appendChild(optionDiv);
-    });
-}
+        
 
 
 
