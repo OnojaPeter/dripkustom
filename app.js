@@ -92,6 +92,33 @@ const shoeSchema = new mongoose.Schema({
 });
 const Shoe = mongoose.model('Shoe', shoeSchema);
 
+const addressSchema = new mongoose.Schema({
+    street: String,
+    city: String,
+    state: String,
+    country: String,
+    postalCode: String,
+    // other fields as needed
+});
+  
+const Address = mongoose.model('Address', addressSchema);
+// const dummyAddress = [
+//         { street: "ten",city: 'lagos', state: "lag", country: "naija"},
+//         { street: "pet", city: 'lagos', state: "lag", country: "naija"},
+        
+//         // Add more items as needed
+//     ];
+//     const populateDummyAddress = async () => {
+//         try {
+//             const docs = await Address.insertMany(dummyAddress);
+//             console.log('Dummy items inserted:', docs);
+//         } catch (err) {
+//             console.error('Error populating items:', err);
+//         }
+//     };
+    
+//     populateDummyAddress();
+
 // const dummyItems = [
 //     { image: "/public/images/7d77740b692425fa411ddf2b45825f51.jpg",name: 'Nike 1', price: 80, category: "nike"},
 //     { image: "/public/images/20201110_112950.jpg", name: 'Nike 2', price: 50, category: "nike"},
@@ -218,7 +245,50 @@ app.get('/checkout', async (req, res) => {
         console.error('Error:', error);
     }
 });
+app.get("/profile/person", async (req,res) => {
+    try {
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render("profile", {cartItems: retrievedCartItems});
+    } catch (error) {
+        console.error(error)
+    }
+});
+app.get("/profile/edit-person", async (req,res) => {
+    try {
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render("edit-profile", {cartItems: retrievedCartItems});
+    } catch (error) {
+        console.error(error)
+    }
+});
+app.get("/profile/edit-password", async (req,res) => {
+    try {
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render("edit-password", {cartItems: retrievedCartItems});
+    } catch (error) {
+        console.error(error)
+    }
+});
 
+app.get('/profile/address', async (req, res) => {
+    try {
+        const addressDetails = await Address.find();
+    //  console.log(addressDetails);
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render("address", {cartItems: retrievedCartItems, address: addressDetails});
+    } catch (error) {
+      console.error('Error fetching address details:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
+app.get("/profile/order", async (req,res) => {
+    try {
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render("order", {cartItems: retrievedCartItems});
+    } catch (error) {
+        console.error(error)
+    }
+});
 
 app.post('/add-to-cart', async (req, res) => {
     const shoeId = req.body.shoeId;

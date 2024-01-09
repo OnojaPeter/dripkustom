@@ -1,0 +1,52 @@
+<%- include ('partials/header') -%>
+
+<main class="py-3 md:py-10">
+    <section class="md:flex px-5 sm:px-10 lg:px-20 gap-x-10">
+        <div class="md:w-[30%]">
+            <div class="">
+                <h2 class="font-bold text-2xl border-b border-gray-500 mb-5 py-5">Transaction Management</h2>
+                <a href="/profile/order"><span>My Order</span></a>
+            </div>
+            
+            <div>
+                <h2 class="font-bold text-2xl border-b border-gray-500 mb-5 py-5">Account</h2>
+                <div class="flex flex-col gap-y-3">
+                    <a href="/profile/person"><span class="font-semibold">Personal Information</span></a>
+                    <a href="/profile/address" id="addressManagement"><span>Address Management</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="md:w-[70%]">
+            <div class="font-bold border-b border-gray-500 mb-5 py-5">
+                <h1 class="text-4xl">Welcome, User</h1>
+            </div>
+            <div class="shadow rounded-md">
+                <div class="bg-blue-200">
+                    <div class="flex justify-between font-semibold text-lg mx-10 py-4">
+                        <h3>Personal Information</h3>
+                        <span class="flex gap-x-6">
+                            <a href="/profile/edit-password"><h3>Change Password</h3></a>
+                            <a href="/profile/edit-person"><h3>Edit</h3></a>
+                      </span>                      
+                    </div>                 
+                </div>
+                <div class="flex flex-col mx-10 py-5 gap-y-4">
+                    <span>
+                        <span class="mr-2">Name:</span><span>Peter</span>
+                    </span>
+                    <span>
+                        <span class="mr-2">Email:</span><span>Peter@gmail.com</span>
+                    </span>
+                    <span>
+                        <span class="mr-2">Phone Number:</span><span>08236563</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<%- include ('partials/footer') -%>
+
+</body>
+</html>
