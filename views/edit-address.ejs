@@ -1,0 +1,98 @@
+<%- include ('partials/header') -%>
+
+<main class="py-3 md:py-10">
+    <section class="max-w sm:mx-16 lg:mx-32">
+        <div class="text-center border-b border-gray-500 mb-5 pb-5">
+            <h1 class="font-semibold text-2xl">Address Management</h1>
+        </div>
+
+        <div class="">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                    Email Address <span class="text-red-700">*</span>
+                    </label>
+                    <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="email" type="email" value="Email">
+                </div>
+
+                <div class="mb-4 flex">
+                    <div class="mr-2 w-[50%]">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="firstName">
+                            First Name <span class="text-red-700">*</span>
+                        </label>
+                        <input
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="firstName" type="text" value="First Name">
+                    </div>
+                    
+                    <div class="w-[50%]">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="lastName">
+                            Last Name <span class="text-red-700">*</span>
+                        </label>
+                        <input
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="lastName" type="text" value="Last Name">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="state">
+                        State/Province <span class="text-red-700">*</span>
+                    </label>
+                    <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="state" type="text" value="FCT">
+                </div>
+        
+                <div class="mb-4 flex">
+                    <div class="mr-2 w-[50%]">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="city">
+                            City <span class="text-red-700">*</span>
+                        </label>
+                        <input
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="city" type="text" value="<%= address.city %>">
+                    </div>
+                    
+                    <div class="w-[50%]">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="district">
+                            District <span class="text-red-700">*</span>
+                        </label>
+                        <input
+                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                            id="district" type="text" value="Kubwa">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="street-address">
+                        Street Address <span class="text-red-700">*</span>
+                    </label>
+                    <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="street-address" type="text" value="">
+                </div>
+                <!-- <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
+                    Phone Number <span class="text-red-700">*</span>
+                    </label>
+                    <input
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    id="phone" type="text" value="Phone Number">
+                </div> -->
+
+                <div class="flex justify-center">
+                    <button class="bg-black text-white font-bold py-2 px-4 rounded" type="submit">Confirm to Edit</button>
+                </div>
+            </form>
+        </div>
+  
+    </section>
+</main>
+
+<%- include ('partials/footer') -%>
+
+</body>
+</html>

@@ -103,8 +103,8 @@ const addressSchema = new mongoose.Schema({
   
 const Address = mongoose.model('Address', addressSchema);
 // const dummyAddress = [
-//         { street: "ten",city: 'lagos', state: "lag", country: "naija"},
-//         { street: "pet", city: 'lagos', state: "lag", country: "naija"},
+//         { street: "te",city: 'lagos', state: "lag", country: "naija"},
+//         { street: "p", city: 'lagos', state: "lag", country: "naija"},
         
 //         // Add more items as needed
 //     ];
@@ -281,6 +281,24 @@ app.get('/profile/address', async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
 });
+app.get('/profile/edit-address/:addressId?', async (req, res) => {
+    try {
+        const addressId = req.params.addressId;
+        let addressDetails;
+
+        if (addressId) {
+            addressDetails = await Address.findById(addressId);
+        } else {
+            addressDetails = {};
+        }
+
+        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        res.render('edit-address', { cartItems: retrievedCartItems, address: addressDetails });     
+    } catch (error) {
+      console.error('Error fetching address details:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+});
 app.get("/profile/order", async (req,res) => {
     try {
         const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
@@ -380,6 +398,22 @@ app.post('/remove-from-cart',async (req, res) => {
     }
 });
 
+app.delete('/profile/delete-address/:addressId', async (req, res) => {
+    try {
+        const addressId = req.params.addressId;
+        // Delete the address by ID
+        const deletedAddress = await Address.findByIdAndDelete(addressId);
+
+        if (!deletedAddress) {
+            return res.status(404).json({ message: 'Address not found' });
+        }
+
+        res.status(200).json({ message: 'Address deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting address:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 
 const PORT = 3000;
