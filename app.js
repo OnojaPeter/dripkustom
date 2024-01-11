@@ -93,18 +93,20 @@ const shoeSchema = new mongoose.Schema({
 const Shoe = mongoose.model('Shoe', shoeSchema);
 
 const addressSchema = new mongoose.Schema({
-    street: String,
-    city: String,
+    email: String,
+    fname: String,
+    lname: String,
     state: String,
+    city: String,
     country: String,
-    postalCode: String,
+    streetAddress: String,
     // other fields as needed
 });
   
 const Address = mongoose.model('Address', addressSchema);
 // const dummyAddress = [
-//         { street: "te",city: 'lagos', state: "lag", country: "naija"},
-//         { street: "p", city: 'lagos', state: "lag", country: "naija"},
+//         { email: "Peter@gmail.com",fname: 'onoja', lname: "peter", state: "lag", city: "ikd", country: "naija", streetAddress: "long ass address"},
+//         { email: "ter@gmail.com",fname: 'oja', lname: "pet", state: "abj", city: "kubs", country: "naija", streetAddress: "stretch ass address"},
         
 //         // Add more items as needed
 //     ];
@@ -397,10 +399,39 @@ app.post('/remove-from-cart',async (req, res) => {
         res.status(404).send('Item not found in cart');
     }
 });
+app.post('/profile/edit-address/:addressId?' , async (req, res) => {
+    try {
+        const addressId = req.params.addressId;
+        // const email = req.body.email;
+        // console.log(email);
+        console.log(addressId);
+        let addressDetails;
+
+        if (addressId) {
+            // Logic to update existing address
+            // console.log(req.body);
+
+            addressDetails = await Address.findByIdAndUpdate(addressId, req.body, { new: true });
+            // console.log(addressDetails);
+        } else {
+            // Logic to create a new address
+            addressDetails = await Address.create(req.body);
+            // console.log(addressDetails);
+        }
+        res.redirect("/profile/address");
+
+    } catch (error) {
+        console.error('Error handling address details:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 
 app.delete('/profile/delete-address/:addressId', async (req, res) => {
     try {
         const addressId = req.params.addressId;
+        console.log(addressId);
         // Delete the address by ID
         const deletedAddress = await Address.findByIdAndDelete(addressId);
 

@@ -38,16 +38,22 @@
                         </div>
                         <div class="flex flex-col mx-10 py-5 gap-y-4">
                             <span>
-                                <span class="mr-2">Email:</span><span>Peter@gmail.com</span>
+                                <span class="mr-2">Email:</span><span><%= address.email %></span>
                             </span>
                             <span>
-                                <span class="mr-2">Name:</span><span>Peter</span>
+                                <span class="mr-2">Name:</span><span><%= address.fname %> <%= address.lname %></span>
                             </span>
                             <span>
-                                <span class="mr-2">Phone Number:</span><span>08236563</span>
+                                <span class="mr-2">State:</span><span><%= address.state %></span>
                             </span>
                             <span>
-                                <span class="mr-2">Address:</span><span><%= address.street %></span>
+                                <span class="mr-2">City:</span><span><%= address.city %></span>
+                            </span>
+                            <span>
+                                <span class="mr-2">Country:</span><span><%= address.country %></span>
+                            </span>
+                            <span>
+                                <span class="mr-2">Address:</span><span><%= address.streetAddress %></span>
                             </span>
                         </div>
                     </div>
@@ -61,7 +67,7 @@
 <%- include ('partials/footer') -%>
 
 <script>
-    $('#addressContainerhere').on('click', '.delete-address', function() {
+    $('#addressContainer').on('click', '.delete-address', function() {
     const addressId = $(this).data('address-id');
     // console.log(addressId);
     const confirmDelete = confirm('Are you sure you want to delete this address?');

@@ -7,14 +7,14 @@
         </div>
 
         <div class="">
-            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="/profile/edit-address/<%= address._id %>" method="POST">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                     Email Address <span class="text-red-700">*</span>
                     </label>
                     <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="email" type="email" value="Email">
+                    id="email" name="email" type="email" value="<%= address.email %>">
                 </div>
 
                 <div class="mb-4 flex">
@@ -24,7 +24,7 @@
                         </label>
                         <input
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="firstName" type="text" value="First Name">
+                            id="firstName" name="fname" type="text" value="<%= address.fname %>">
                     </div>
                     
                     <div class="w-[50%]">
@@ -33,7 +33,7 @@
                         </label>
                         <input
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="lastName" type="text" value="Last Name">
+                            id="lastName" name="lname" type="text" value="<%= address.lname %>">
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                     </label>
                     <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="state" type="text" value="FCT">
+                    id="state" name="state" type="text" value="<%= address.state %>">
                 </div>
         
                 <div class="mb-4 flex">
@@ -53,16 +53,16 @@
                         </label>
                         <input
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="city" type="text" value="<%= address.city %>">
+                            id="city" name="city" type="text" value="<%= address.city %>">
                     </div>
                     
                     <div class="w-[50%]">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="district">
-                            District <span class="text-red-700">*</span>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="country">
+                            Country <span class="text-red-700">*</span>
                         </label>
                         <input
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="district" type="text" value="Kubwa">
+                            id="country" name="country" type="text" value="<%= address.country %>">
                     </div>
                 </div>
 
@@ -72,16 +72,8 @@
                     </label>
                     <input
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="street-address" type="text" value="">
+                    id="street-address" name="streetAddress" type="text" value="<%= address.streetAddress %>">
                 </div>
-                <!-- <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="phone">
-                    Phone Number <span class="text-red-700">*</span>
-                    </label>
-                    <input
-                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    id="phone" type="text" value="Phone Number">
-                </div> -->
 
                 <div class="flex justify-center">
                     <button class="bg-black text-white font-bold py-2 px-4 rounded" type="submit">Confirm to Edit</button>
