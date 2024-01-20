@@ -5,11 +5,14 @@ const { log } = require('util');
 const path = require("path");
 require('dotenv').config();
 
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const { LocalStorage } = require('node-localstorage');
 const localStorage = new LocalStorage('./scratch');
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -65,7 +68,14 @@ app.use('css', express.static('public/css', { 'extensions': ['css']}));
 //     res.sendFile(path.join(__dirname, "public/images", imageName));
 //     });
     
-
+app.use(
+    session({
+      secret: 'your-secret-key',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { secure: false },
+    })
+  );
 
 app.set('view engine', 'ejs');
 // mongoose.connect('mongodb://127.0.0.1:27017/drip');
@@ -100,10 +110,34 @@ const addressSchema = new mongoose.Schema({
     city: String,
     country: String,
     streetAddress: String,
-    // other fields as needed
 });
   
 const Address = mongoose.model('Address', addressSchema);
+
+const personSchema = new mongoose.Schema({
+    email: String,
+    fname: String,
+    lname: String,
+    phone: Number,
+});
+  
+const Person = mongoose.model('Person', personSchema);
+// const dummyPerson = 
+//         { email: "Peter@gmail.com",fname: 'onoja', lname: "peter", phone: "0576"};
+        
+//         // Add more items as needed
+    
+//     const populateDummyPerson = async () => {
+//         try {
+//             const docs = await Person.insertMany(dummyPerson);
+//             console.log('Dummy items inserted:', docs);
+//         } catch (err) {
+//             console.error('Error populating items:', err);
+//         }
+//     };
+    
+//     populateDummyPerson();
+
 // const dummyAddress = [
 //         { email: "Peter@gmail.com",fname: 'onoja', lname: "peter", state: "lag", city: "ikd", country: "naija", streetAddress: "long ass address"},
 //         { email: "ter@gmail.com",fname: 'oja', lname: "pet", state: "abj", city: "kubs", country: "naija", streetAddress: "stretch ass address"},
@@ -146,15 +180,17 @@ const Address = mongoose.model('Address', addressSchema);
 
 // const cartItems = []
 // console.log(cartItems);
-let cartItems = localStorage.getItem('cartItems');
+// let cartItems = localStorage.getItem('cartItems');
 
-// If cartItems exist in localStorage, parse it from JSON
-if (cartItems) {
-    cartItems = JSON.parse(cartItems);
-} else {
-    // If cartItems don't exist, initialize as an empty array
-    cartItems = [];
-}
+// // If cartItems exist in localStorage, parse it from JSON
+// if (cartItems) {
+//     cartItems = JSON.parse(cartItems);
+// } else {
+//     // If cartItems don't exist, initialize as an empty array
+//     cartItems = [];
+// }
+
+// const aboutRoute = require('./routes/aboutRoute');
 
 app.get('/', async (req, res) => {
     try {
@@ -180,27 +216,32 @@ app.get('/', async (req, res) => {
             shoes = await Shoe.find().sort(sortCriteria);
         }
         // const shoes = await Shoe.find();
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        const cart = req.session.cart || {};
+        // console.log(cart);
+        // const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
         // console.log(cartItems);
-        res.render('index', { shoes, cartItems:retrievedCartItems });
+        res.render('index', { shoes, cartItems:cart });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('An error occurred');
     }
 });
+// app.use('/about', aboutRoute);
 app.get('/about', async (req, res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        // const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
         // console.log(retrievedCartItems);
-        res.render('about', {cartItems: retrievedCartItems});
+        const cart = req.session.cart || {};
+        // console.log(cart);
+        res.render('about', {cartItems: cart});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/faqs', async (req, res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render('faqs', {cartItems: retrievedCartItems});
+        const cart = req.session.cart || {};
+        res.render('faqs', {cartItems: cart});
     } catch (error) {
         console.error('Error:', error);
     }
@@ -211,32 +252,34 @@ app.get('/shoe/:id', async (req, res) => {
     try {
         const shoe = await Shoe.findById(shoeId);
         // console.log(shoe);
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        const cart = req.session.cart || {};
         // console.log(retrievedCartItems);
-        res.render('shoe', {shoe ,cartItems: retrievedCartItems});
+        res.render('shoe', {shoe ,cartItems: cart});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/store-policy', async (req, res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render('store-policy', {cartItems: retrievedCartItems});
+        const cart = req.session.cart || {};
+        res.render('store-policy', {cartItems: cart});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/thank-you', async (req, res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render('thank-you', {cartItems: retrievedCartItems});
+        const cart = req.session.cart || {};
+        res.render('thank-you', {cartItems: cart});
     } catch (error) {
         console.error('Error:', error);
     }
 });
 app.get('/checkout', async (req, res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+        const cart = req.session.cart || {};
+        const retrievedCartItems = Object.values(cart);
+
         let totalPrice = 0;
         retrievedCartItems.forEach((item) => {
             totalPrice += item.price * item.quantity;
@@ -248,25 +291,25 @@ app.get('/checkout', async (req, res) => {
     }
 });
 app.get("/profile/person", async (req,res) => {
-    try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render("profile", {cartItems: retrievedCartItems});
+    try {        
+        const cart = req.session.cart || {};
+        res.render("profile", {cartItems: cart});
     } catch (error) {
         console.error(error)
     }
 });
 app.get("/profile/edit-person", async (req,res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render("edit-profile", {cartItems: retrievedCartItems});
+        const cart = req.session.cart || {};
+        res.render("edit-profile", {cartItems: cart});
     } catch (error) {
         console.error(error)
     }
 });
 app.get("/profile/edit-password", async (req,res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render("edit-password", {cartItems: retrievedCartItems});
+        const cart = req.session.cart || {};
+        res.render("edit-password", {cartItems: cart});
     } catch (error) {
         console.error(error)
     }
@@ -276,8 +319,8 @@ app.get('/profile/address', async (req, res) => {
     try {
         const addressDetails = await Address.find();
     //  console.log(addressDetails);
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render("address", {cartItems: retrievedCartItems, address: addressDetails});
+    const cart = req.session.cart || {};
+        res.render("address", {cartItems: cart, address: addressDetails});
     } catch (error) {
       console.error('Error fetching address details:', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -294,8 +337,8 @@ app.get('/profile/edit-address/:addressId?', async (req, res) => {
             addressDetails = {};
         }
 
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render('edit-address', { cartItems: retrievedCartItems, address: addressDetails });     
+        const cart = req.session.cart || {};
+        res.render('edit-address', { cartItems: cart, address: addressDetails });     
     } catch (error) {
       console.error('Error fetching address details:', error);
       res.status(500).json({ message: 'Internal server error' });
@@ -303,8 +346,8 @@ app.get('/profile/edit-address/:addressId?', async (req, res) => {
 });
 app.get("/profile/order", async (req,res) => {
     try {
-        const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        res.render("order", {cartItems: retrievedCartItems});
+        const cart = req.session.cart || {};
+        res.render("order", {cartItems: cart});
     } catch (error) {
         console.error(error)
     }
@@ -313,36 +356,27 @@ app.get("/profile/order", async (req,res) => {
 app.post('/add-to-cart', async (req, res) => {
     const shoeId = req.body.shoeId;
     // console.log(shoeId);
-    const shoeIdObject = shoeId;
-    // console.log(shoeIdObject)
-
     try {
         const shoe = await Shoe.findById(shoeId);
-        // console.log(shoe)
-
         if (shoe) {
-            // cartItems.push(shoe);
-            // console.log(cartItems)
-            const cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
+            const cart = req.session.cart || {};
+            // console.log(cart);
+            const shoeIdString = shoeId.toString();
+            console.log(shoeIdString);
 
-            // const existingItemIndex = cartItems.findIndex(shoe => shoe._id === shoeIdObject);
-            const existingItemIndex = cartItems.findIndex(item => item._id === shoeIdObject);
-
-            // console.log(existingItemIndex)
-
-            if (existingItemIndex !== -1) {
+            if (cart[shoeIdString]) {
                 // If item exists in cart, increment its quantity
-                cartItems[existingItemIndex].quantity++; 
-                // localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                cart[shoeIdString].quantity++;
             } else {
                 // If item doesn't exist in cart, add it with quantity 1
-                cartItems.push({ ...shoe.toObject(), quantity: 1 });
-                // localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                cart[shoeIdString] = { ...shoe.toObject(), quantity: 1 };
             }
-            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            req.session.cart = cart;
+
             res.status(200).json({
                 message: `"${shoe.name}" added to cart!`,
-                cartItems: cartItems // Sending the updated cart
+                cartItems: cart // Sending the updated cart
             });
         } else {
             res.status(404).send('Item not found');
@@ -354,47 +388,45 @@ app.post('/add-to-cart', async (req, res) => {
 });
 app.post('/update-quantity', async (req, res) => {
     const { shoeId, quantity } = req.body;
-    const shoeIdObject = shoeId;
-    // console.log(itemId)
-    // console.log(quantity )
+    const shoeIdObject = shoeId.toString(); // Convert ObjectId to string
+
     try {
-        const cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        // console.log("Cart items before update:", cartItems);
-        const existingItemIndex = cartItems.findIndex(item => item._id === shoeIdObject);
-        // console.log("Existing item index:", existingItemIndex);
+        const cart = req.session.cart || {};
+        const cartItem = cart[shoeIdObject];
 
-    if (existingItemIndex !== -1) {
-        // Update the quantity in the cartItems array
-        cartItems[existingItemIndex].quantity = quantity;
+        if (cartItem) {
+            // Update the quantity in the cart object
+            cartItem.quantity = quantity;
 
-        // Respond with a success message or updated cart data
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        console.log("Cart items after update:", cartItems);
-        res.status(200).json({ message: 'Quantity updated in cart', updatedCartItems: cartItems });
-    }
+            req.session.cart = cart;
+
+            res.status(200).json({ message: 'Quantity updated in cart', updatedCartItems: cart });
+        } else {
+            res.status(404).json({ error: 'Item not found in cart' });
+        }
     } catch (error) {
         console.error('Error updating quantity:', error);
         res.status(500).json({ error: 'Error updating quantity' });
     }
 });
-// Backend route to remove an item from the cart
+
 app.post('/remove-from-cart',async (req, res) => {
     // console.log("inside the actual removing shit");
     const shoeId = req.body.shoeId;
-    const shoeIdObject = shoeId;
+    const shoeIdObject = shoeId.toString();
     // console.log(shoeId);
     // console.log(shoeIdObject);
 
     try {
-        const cartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        const indexToRemove = cartItems.findIndex(shoe => shoe._id === shoeIdObject);
-        // console.log(indexToRemove);
-    if (indexToRemove !== -1) {
-        cartItems.splice(indexToRemove, 1);
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        console.log("deleted:", cartItems);
-        res.status(200).send('Item removed from cart');
-    }
+        const cart = req.session.cart || {};
+        const cartItem = cart[shoeIdObject];
+        
+        if (cartItem) {
+            delete cart[shoeIdObject];
+            req.session.cart = cart;
+            console.log("deleted:", cartItem);
+            res.status(200).send('Item removed from cart');
+        }
     } catch (error) {
         res.status(404).send('Item not found in cart');
     }
@@ -425,7 +457,14 @@ app.post('/profile/edit-address/:addressId?' , async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+app.post("/profile/edit-person", async (req,res) => {
+    try {
 
+        res.redirect("/profile/person");
+    } catch (error) {
+        console.error(error)
+    }
+});
 
 
 app.delete('/profile/delete-address/:addressId', async (req, res) => {

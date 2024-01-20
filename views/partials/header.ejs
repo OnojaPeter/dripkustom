@@ -167,8 +167,8 @@
 
             <div id="cartReload" style="height: 400px; overflow-y: auto;">
                 <h2 class="font-bold text-2xl">Your cart</h2>
-                <% if (cartItems.length > 0) { %>
-                    <% cartItems.forEach(function(cartItem) { %>
+                <% if (Object.keys(cartItems).length > 0) { %>
+                    <% Object.values(cartItems).forEach(function(cartItem) { %>
                         <div class="mb-4 flex lg:flex justify-between">
                             <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[40%] lg:w-[40%]">
                                 <div class="w-[100%]">
@@ -300,7 +300,7 @@
                 const shoeId = $(this).data('shoe-id');
                 // console.log(shoeId)
                 addToCart(shoeId);
-                $('#cartReload').load(location.href + ' #cartReload');
+                // $('#cartReload').load(location.href + ' #cartReload');
                 // console.log("just reloaded"); localStorage.setItem("cartItems", cartItems);
             });
             function addToCart(shoeId){
@@ -310,29 +310,7 @@
                     data: { shoeId: shoeId },
                     success: function(response){
                         showNotification('Item added to cart!');
-                        // console.log(response.message); 
-                        // console.log(response.cartItems); 
-                        // localStorage.setItem('cartItems', JSON.stringify(response.cartItems));
-                        // console.log(localStorage.getItem('cartItems'));
-
-                        // const storedCartItems = localStorage.getItem('cartItems');
-                        // console.log(storedCartItems)
-
-                        // Check if there are stored cart items
-                        // if (storedCartItems) {
-                            // Parse the stored string back into an array/object
-                            // const cartItems = JSON.parse(storedCartItems);
-
-                            // Now you can use cartItems in your application
-                            // console.log(cartItems); // For example, log the cart items
-                            // Use cartItems in your application logic...
-                        // } else {
-                            // console.log("nothing saved")
-                            // Handle the case where no cart items are stored
-                        // }
-                    // },
-                    // error: function(error){
-                        // console.error('Error adding item to cart:', error);
+                        $('#cartReload').load(location.href + ' #cartReload');
                     }
                 });
             }
