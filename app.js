@@ -4,12 +4,21 @@ const mongoose = require('mongoose');
 const { log } = require('util');
 const path = require("path");
 require('dotenv').config();
-
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const PORT = 3000;
 
-const { LocalStorage } = require('node-localstorage');
-const localStorage = new LocalStorage('./scratch');
+const homeRoute = require("./routes/homeRoute")
+const aboutRoute = require('./routes/aboutRoute');
+const faqsRoute = require('./routes/faqsRoute');
+const storepolicyRoute = require('./routes/storepolicyRoute');
+const thankyouRoute = require('./routes/thankyouRoute');
+const checkoutRoute = require('./routes/checkoutRoute');
+const shoeRoute = require('./routes/shoeRoute')
+const addtocartRoute = require('./routes/addtocartRoute')
+const removefromcartRoute = require('./routes/removefromcartRoute')
+const updatequantityRoute = require('./routes/updatequantityRoute')
+const profileRoute = require('./routes/profileRoute')
 
 const app = express();
 app.use(cookieParser());
@@ -18,55 +27,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/public', express.static('public'));
 app.use('css', express.static('public/css', { 'extensions': ['css']}));
-// app.use(express.static('public'));
-
-// app.use(
-//     express.static(path.join(__dirname, "public"), {
-//       setHeaders: (res, filePath) => {
-//         if (filePath.endsWith(".css")) {
-//           res.setHeader("Content-Type", "text/css");
-//         }
-//       },
-//     }
-//   ));
-//     //MIME tailwindcss/base
-//     app.get("/public/css/styles.css", (req, res) => {
-//     res.setHeader("Content-Type", "text/css");
-//     res.sendFile(path.join(__dirname, "public/css/styles.css"));
-//     });
-//     app.get("/public/css/output.css", (req, res) => {
-//     res.setHeader("Content-Type", "text/css");
-//     res.sendFile(path.join(__dirname, "public/css/output.css"));
-//     });
-//     // app.get("/public/css/tailwindcss/base", (req, res) => {
-//     // res.setHeader("Content-Type", "text/css");
-//     // res.sendFile(path.join(__dirname, "public/css/tailwindcss/base"));
-//     // });
-//     app.get("/public/js/script.js", (req, res) => {
-//     res.setHeader("Content-Type", "application/javascript");
-//     res.sendFile(path.join(__dirname, "public/js/script.js"));
-//     });
-//     app.get("/public/images/:imageName", (req, res) => {
-//     // Get the image file name from the request parameters
-//     const imageName = req.params.imageName;
-    
-//     // Determine the correct MIME type based on the file extension
-//     let contentType;
-//     if (imageName.endsWith(".png")) {
-//         contentType = "image/png";
-//     } else if (imageName.endsWith(".jpg") || imageName.endsWith(".jpeg")) {
-//         contentType = "image/jpeg";
-//     } else {
-//         // You may need to add more MIME types for other image formats
-//         // For example, for GIF, you can add: else if (imageName.endsWith(".gif")) contentType = "image/gif";
-//     }
-    
-//     //Content-Type header based on the determined MIME type
-//     res.setHeader("Content-Type", contentType);
-    
-//     // Serve the image file
-//     res.sendFile(path.join(__dirname, "public/images", imageName));
-//     });
     
 app.use(
     session({
@@ -79,414 +39,28 @@ app.use(
 
 app.set('view engine', 'ejs');
 // mongoose.connect('mongodb://127.0.0.1:27017/drip');
-//{ useNewUrlParser: true, useUnifiedTopology: true }
 const uri = process.env.MONGODB_URI;
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
 mongoose.connect(uri);
-
 const db = mongoose.connection;
-
 // Event listeners for connection status
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => {
   console.log('Connected to MongoDB successfully!');
 });
-// Define a schema and model for items
-const shoeSchema = new mongoose.Schema({
-    image: String,
-    name: String,
-    price: Number,
-    category: String,
-    createdAt: { type: Date, default: Date.now }
-    // Add more fields as needed
-});
-const Shoe = mongoose.model('Shoe', shoeSchema);
 
-const addressSchema = new mongoose.Schema({
-    email: String,
-    fname: String,
-    lname: String,
-    state: String,
-    city: String,
-    country: String,
-    streetAddress: String,
-});
-  
-const Address = mongoose.model('Address', addressSchema);
+app.use('/', homeRoute);
+app.use('/about', aboutRoute);
+app.use('/faqs', faqsRoute);
+app.get('/shoe', shoeRoute);
+app.use('/store-policy', storepolicyRoute);
+app.use('/thank-you', thankyouRoute);
+app.use('/checkout', checkoutRoute);
+app.use('/add-to-cart', addtocartRoute);
+app.use('/update-quantity', updatequantityRoute);
+app.use('/remove-from-cart', removefromcartRoute);
+app.use("/profile", profileRoute);
 
-const personSchema = new mongoose.Schema({
-    email: String,
-    fname: String,
-    lname: String,
-    phone: Number,
-});
-  
-const Person = mongoose.model('Person', personSchema);
-// const dummyPerson = 
-//         { email: "Peter@gmail.com",fname: 'onoja', lname: "peter", phone: "0576"};
-        
-//         // Add more items as needed
-    
-//     const populateDummyPerson = async () => {
-//         try {
-//             const docs = await Person.insertMany(dummyPerson);
-//             console.log('Dummy items inserted:', docs);
-//         } catch (err) {
-//             console.error('Error populating items:', err);
-//         }
-//     };
-    
-//     populateDummyPerson();
-
-// const dummyAddress = [
-//         { email: "Peter@gmail.com",fname: 'onoja', lname: "peter", state: "lag", city: "ikd", country: "naija", streetAddress: "long ass address"},
-//         { email: "ter@gmail.com",fname: 'oja', lname: "pet", state: "abj", city: "kubs", country: "naija", streetAddress: "stretch ass address"},
-        
-//         // Add more items as needed
-//     ];
-//     const populateDummyAddress = async () => {
-//         try {
-//             const docs = await Address.insertMany(dummyAddress);
-//             console.log('Dummy items inserted:', docs);
-//         } catch (err) {
-//             console.error('Error populating items:', err);
-//         }
-//     };
-    
-//     populateDummyAddress();
-
-// const dummyItems = [
-//     { image: "/public/images/7d77740b692425fa411ddf2b45825f51.jpg",name: 'Nike 1', price: 80, category: "nike"},
-//     { image: "/public/images/20201110_112950.jpg", name: 'Nike 2', price: 50, category: "nike"},
-//     { image: "/public/images/20201105_210955.jpg", name: 'Nike 3', price: 40, category: "nike"},
-//     { image: "/public/images/20201110_112901.jpg", name: 'Nike 4', price: 45, category: "nike"},
-// { image: "/public/images/4ff9167ec73af7436ba02f8135192578.jpg", name: 'Adidas 1', price: 20, category: "adidas"},
-// { image: "/public/images/9d1e24162babca5f650de973eaec89c7.jpg", name: 'Adidas 2', price: 25, category: "adidas"},
-// { image: "/public/images/3fe053f71dad15b98b32b0bb7005f825.jpg", name: 'Adidas 3', price: 51, category: "adidas"},
-// { image: "/public/images/20201110_112917.jpg", name: 'Adidas 4', price: 22, category: "adidas"},
-//     // Add more items as needed
-// ];
-// const populateDummyItems = async () => {
-//     try {
-//         const docs = await Shoe.insertMany(dummyItems);
-//         console.log('Dummy items inserted:', docs);
-//     } catch (err) {
-//         console.error('Error populating items:', err);
-//     }
-// };
-
-// populateDummyItems();
-
-
-// const cartItems = []
-// console.log(cartItems);
-// let cartItems = localStorage.getItem('cartItems');
-
-// // If cartItems exist in localStorage, parse it from JSON
-// if (cartItems) {
-//     cartItems = JSON.parse(cartItems);
-// } else {
-//     // If cartItems don't exist, initialize as an empty array
-//     cartItems = [];
-// }
-
-// const aboutRoute = require('./routes/aboutRoute');
-
-app.get('/', async (req, res) => {
-    try {
-        // localStorage.clear();
-        const { category, sort } = req.query;
-        // const { offset = 0, limit = 10 } = req.query;
-        // console.log(offset);
-        let shoes;
-        let sortCriteria = {};
-
-        if (sort === 'asc') {
-            sortCriteria = { price: 1 }; // Sort by price ascending
-        } else if (sort === 'desc') {
-            sortCriteria = { price: -1 }; // Sort by price descending
-        } else if (sort === 'recent') {
-            shoes = await Shoe.find().sort({ createdAt: -1 });
-        }
-
-        if (category) {
-            shoes = await Shoe.find({ category }).sort(sortCriteria);
-            console.log(shoes)
-        } else {
-            shoes = await Shoe.find().sort(sortCriteria);
-        }
-        // const shoes = await Shoe.find();
-        const cart = req.session.cart || {};
-        // console.log(cart);
-        // const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        // console.log(cartItems);
-        res.render('index', { shoes, cartItems:cart });
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).send('An error occurred');
-    }
-});
-// app.use('/about', aboutRoute);
-app.get('/about', async (req, res) => {
-    try {
-        // const retrievedCartItems = localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [];
-        // console.log(retrievedCartItems);
-        const cart = req.session.cart || {};
-        // console.log(cart);
-        res.render('about', {cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-app.get('/faqs', async (req, res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render('faqs', {cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-app.get('/shoe/:id', async (req, res) => {
-    const shoeId = req.params.id;
-    // console.log(shoeId);
-    try {
-        const shoe = await Shoe.findById(shoeId);
-        // console.log(shoe);
-        const cart = req.session.cart || {};
-        // console.log(retrievedCartItems);
-        res.render('shoe', {shoe ,cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-app.get('/store-policy', async (req, res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render('store-policy', {cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-app.get('/thank-you', async (req, res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render('thank-you', {cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-app.get('/checkout', async (req, res) => {
-    try {
-        const cart = req.session.cart || {};
-        const retrievedCartItems = Object.values(cart);
-
-        let totalPrice = 0;
-        retrievedCartItems.forEach((item) => {
-            totalPrice += item.price * item.quantity;
-        });
-        // console.log(totalPrice);
-        res.render('checkout', { cartItems: retrievedCartItems, totalPrice });
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
-app.get("/profile/person", async (req,res) => {
-    try {        
-        const cart = req.session.cart || {};
-        res.render("profile", {cartItems: cart});
-    } catch (error) {
-        console.error(error)
-    }
-});
-app.get("/profile/edit-person", async (req,res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render("edit-profile", {cartItems: cart});
-    } catch (error) {
-        console.error(error)
-    }
-});
-app.get("/profile/edit-password", async (req,res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render("edit-password", {cartItems: cart});
-    } catch (error) {
-        console.error(error)
-    }
-});
-
-app.get('/profile/address', async (req, res) => {
-    try {
-        const addressDetails = await Address.find();
-    //  console.log(addressDetails);
-    const cart = req.session.cart || {};
-        res.render("address", {cartItems: cart, address: addressDetails});
-    } catch (error) {
-      console.error('Error fetching address details:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-});
-app.get('/profile/edit-address/:addressId?', async (req, res) => {
-    try {
-        const addressId = req.params.addressId;
-        let addressDetails;
-
-        if (addressId) {
-            addressDetails = await Address.findById(addressId);
-        } else {
-            addressDetails = {};
-        }
-
-        const cart = req.session.cart || {};
-        res.render('edit-address', { cartItems: cart, address: addressDetails });     
-    } catch (error) {
-      console.error('Error fetching address details:', error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-});
-app.get("/profile/order", async (req,res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render("order", {cartItems: cart});
-    } catch (error) {
-        console.error(error)
-    }
-});
-
-app.post('/add-to-cart', async (req, res) => {
-    const shoeId = req.body.shoeId;
-    // console.log(shoeId);
-    try {
-        const shoe = await Shoe.findById(shoeId);
-        if (shoe) {
-            const cart = req.session.cart || {};
-            // console.log(cart);
-            const shoeIdString = shoeId.toString();
-            console.log(shoeIdString);
-
-            if (cart[shoeIdString]) {
-                // If item exists in cart, increment its quantity
-                cart[shoeIdString].quantity++;
-            } else {
-                // If item doesn't exist in cart, add it with quantity 1
-                cart[shoeIdString] = { ...shoe.toObject(), quantity: 1 };
-            }
-
-            req.session.cart = cart;
-
-            res.status(200).json({
-                message: `"${shoe.name}" added to cart!`,
-                cartItems: cart // Sending the updated cart
-            });
-        } else {
-            res.status(404).send('Item not found');
-        }
-    } catch (error) {
-        console.error('Error adding item to cart:', error);
-        res.status(500).send('Error adding item to cart');
-    }
-});
-app.post('/update-quantity', async (req, res) => {
-    const { shoeId, quantity } = req.body;
-    const shoeIdObject = shoeId.toString(); // Convert ObjectId to string
-
-    try {
-        const cart = req.session.cart || {};
-        const cartItem = cart[shoeIdObject];
-
-        if (cartItem) {
-            // Update the quantity in the cart object
-            cartItem.quantity = quantity;
-
-            req.session.cart = cart;
-
-            res.status(200).json({ message: 'Quantity updated in cart', updatedCartItems: cart });
-        } else {
-            res.status(404).json({ error: 'Item not found in cart' });
-        }
-    } catch (error) {
-        console.error('Error updating quantity:', error);
-        res.status(500).json({ error: 'Error updating quantity' });
-    }
-});
-
-app.post('/remove-from-cart',async (req, res) => {
-    // console.log("inside the actual removing shit");
-    const shoeId = req.body.shoeId;
-    const shoeIdObject = shoeId.toString();
-    // console.log(shoeId);
-    // console.log(shoeIdObject);
-
-    try {
-        const cart = req.session.cart || {};
-        const cartItem = cart[shoeIdObject];
-        
-        if (cartItem) {
-            delete cart[shoeIdObject];
-            req.session.cart = cart;
-            console.log("deleted:", cartItem);
-            res.status(200).send('Item removed from cart');
-        }
-    } catch (error) {
-        res.status(404).send('Item not found in cart');
-    }
-});
-app.post('/profile/edit-address/:addressId?' , async (req, res) => {
-    try {
-        const addressId = req.params.addressId;
-        // const email = req.body.email;
-        // console.log(email);
-        console.log(addressId);
-        let addressDetails;
-
-        if (addressId) {
-            // Logic to update existing address
-            // console.log(req.body);
-
-            addressDetails = await Address.findByIdAndUpdate(addressId, req.body, { new: true });
-            // console.log(addressDetails);
-        } else {
-            // Logic to create a new address
-            addressDetails = await Address.create(req.body);
-            // console.log(addressDetails);
-        }
-        res.redirect("/profile/address");
-
-    } catch (error) {
-        console.error('Error handling address details:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-app.post("/profile/edit-person", async (req,res) => {
-    try {
-
-        res.redirect("/profile/person");
-    } catch (error) {
-        console.error(error)
-    }
-});
-
-
-app.delete('/profile/delete-address/:addressId', async (req, res) => {
-    try {
-        const addressId = req.params.addressId;
-        console.log(addressId);
-        // Delete the address by ID
-        const deletedAddress = await Address.findByIdAndDelete(addressId);
-
-        if (!deletedAddress) {
-            return res.status(404).json({ message: 'Address not found' });
-        }
-
-        res.status(200).json({ message: 'Address deleted successfully' });
-    } catch (error) {
-        console.error('Error deleting address:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }
-});
-
-
-const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

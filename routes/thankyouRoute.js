@@ -4,8 +4,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
     try {
         const cart = req.session.cart || {};
-        // console.log(cart);
-        res.render('about', {cartItems: cart});
+        res.render('thank-you', {cartItems: cart});
     } catch (error) {
         console.error('Error:', error);
     }
