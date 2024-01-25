@@ -91,9 +91,14 @@
                 </div>
                 <div class="flex items-center gap-x-5 md:gap-x-8">
                     <div class="hidden md:block">
+                        <% if (isAuthenticated) { %>
+                        <!-- Content for authenticated users -->
+                        <a href="/profile/person" id="profileButton"><span class="font-semibold">Person</span></a>
+                        <% } else { %>
                         <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopLoginButton">
                             Login
                         </button>
+                        <% } %>
                         <!-- <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopSignupButton">
                             Sign up
                         </button> -->
@@ -121,9 +126,9 @@
                 </svg>
             </button>
 
-          <form>
-            <label for="loginUsername" class="block mb-2">Username:</label>
-            <input type="text" id="loginUsername" name="loginUsername" class="block w-full border rounded-md mb-4 p-2">
+          <form action="/auth/login" method="post">
+            <label for="loginEmail" class="block mb-2">Email:</label>
+            <input type="text" id="loginEmail" name="loginEmail" class="block w-full border rounded-md mb-4 p-2" required>
       
             <label for="loginPassword" class="block mb-2">Password:</label>
             <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2">
@@ -142,7 +147,7 @@
             </svg>
           </button>
 
-          <form class="w-[100%] md:w-80">
+          <form class="w-[100%] md:w-80" action="/auth/signup" method="post">
             <label for="signupUsername" class="block mb-2">Username:</label>
             <input type="text" id="signupUsername" name="signupUsername" class="block w-full border rounded-md mb-4 p-2">
       

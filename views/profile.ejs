@@ -10,15 +10,18 @@
             
             <div>
                 <h2 class="font-bold text-2xl border-b border-gray-500 mb-5 py-5">Account</h2>
-                <div class="flex flex-col gap-y-3">
+                <div class="flex flex-col gap-y-3 border-b border-gray-500 pb-5">
                     <a href="/profile/person"><span class="font-semibold">Personal Information</span></a>
                     <a href="/profile/address" id="addressManagement"><span>Address Management</span></a>
                 </div>
             </div>
+            <div class="mt-3">
+                <a href="/auth/logout"><span>Logout</span></a>
+            </div>           
         </div>
         <div class="md:w-[70%]">
             <div class="font-bold border-b border-gray-500 mb-5 py-5">
-                <h1 class="text-4xl">Welcome, User</h1>
+                <h1 class="text-4xl">Welcome, <%= user.username %></h1>
             </div>
             <div class="shadow rounded-md">
                 <div class="bg-blue-200">
@@ -35,7 +38,7 @@
                         <span class="mr-2">Name:</span><span>Peter</span>
                     </span>
                     <span>
-                        <span class="mr-2">Email:</span><span>Peter@gmail.com</span>
+                        <span class="mr-2">Email:</span><span><%= user.email %></span>
                     </span>
                     <span>
                         <span class="mr-2">Phone Number:</span><span>08236563</span>

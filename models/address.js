@@ -8,6 +8,10 @@ const addressSchema = new mongoose.Schema({
     city: String,
     country: String,
     streetAddress: String,
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
 });
   
 const Address = mongoose.model('Address', addressSchema);

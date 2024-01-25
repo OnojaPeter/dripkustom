@@ -1,13 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const policyController = require('../controllers/policyController')
 
-router.get('/', async (req, res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render('store-policy', {cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
+router.get('/', policyController);
 
 module.exports = router;

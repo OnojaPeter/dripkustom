@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <!-- owl carousel -->
@@ -91,9 +91,14 @@
                 </div>
                 <div class="flex items-center gap-x-5 md:gap-x-8">
                     <div class="hidden md:block">
+                        <% if (isAuthenticated) { %>
+                        <!-- Content for authenticated users -->
+                        <a href="/profile/person" id="profileButton"><span class="font-semibold">Person</span></a>
+                        <% } else { %>
                         <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopLoginButton">
                             Login
                         </button>
+                        <% } %>
                         <!-- <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopSignupButton">
                             Sign up
                         </button> -->
@@ -112,7 +117,7 @@
                 </div>
             </nav>
         </div>
-    </header>
+    </header>  
     <div id="loginModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white p-8 md:px-10 rounded-md relative">
             <button id="closeLoginModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
@@ -120,13 +125,19 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
+            <% if (messages && messages.length > 0) { %>
+                <div class="error-message">
+                  <%= messages[0] %>
+                </div>
+              <% } %>
+              
 
-          <form>
-            <label for="loginUsername" class="block mb-2">Username:</label>
-            <input type="text" id="loginUsername" name="loginUsername" class="block w-full border rounded-md mb-4 p-2">
+          <form action="/auth/login" method="post">
+            <label for="loginEmail" class="block mb-2">Email:</label>
+            <input type="text" id="loginEmail" name="loginEmail" class="block w-full border rounded-md mb-4 p-2" required>
       
             <label for="loginPassword" class="block mb-2">Password:</label>
-            <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2">
+            <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2" required>
       
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Login</button>
             <!-- <button  class="bg-blue-500 text-white py-2 px-4 rounded-md" id="signup-modal">Sign up</button> -->
@@ -142,15 +153,15 @@
             </svg>
           </button>
 
-          <form class="w-[100%] md:w-80">
+          <form class="w-[100%] md:w-80" action="/auth/signup" method="post">
             <label for="signupUsername" class="block mb-2">Username:</label>
-            <input type="text" id="signupUsername" name="signupUsername" class="block w-full border rounded-md mb-4 p-2">
+            <input type="text" id="signupUsername" name="signupUsername" class="block w-full border rounded-md mb-4 p-2" required>
       
             <label for="email" class="block mb-2">Email:</label>
-            <input type="email" id="email" name="email" class="block w-full border rounded-md mb-4 p-2">
+            <input type="email" id="email" name="email" class="block w-full border rounded-md mb-4 p-2" required>
       
             <label for="signupPassword" class="block mb-2">Password:</label>
-            <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2">
+            <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2" required>
       
             <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md">Sign Up</button>
           </form>
@@ -598,6 +609,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     
     <script>
+        
         const loginButton = document.getElementById('loginButton');
         const desktopLoginButton = document.getElementById('desktopLoginButton');
         const loginModal = document.getElementById('loginModal');

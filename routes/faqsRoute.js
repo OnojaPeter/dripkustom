@@ -1,13 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const faqsController = require('../controllers/faqsController')
 
-router.get('/', async (req, res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render('faqs', {cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
+router.get('/', faqsController);
 
 module.exports = router;

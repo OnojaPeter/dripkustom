@@ -1,13 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const thankyouController = require('../controllers/thankyouController')
 
-router.get('/', async (req, res) => {
-    try {
-        const cart = req.session.cart || {};
-        res.render('thank-you', {cartItems: cart});
-    } catch (error) {
-        console.error('Error:', error);
-    }
-});
+router.get('/', thankyouController);
 
 module.exports = router;
