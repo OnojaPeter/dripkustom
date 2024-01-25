@@ -133,16 +133,6 @@ height: 38vh;
     width: 100%;
     text-align: center;
   }
-  /* .dot-div {
-    cursor: pointer; position: absolute; top: 0; left: 40px;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-  } */
   .dot {
     cursor: pointer;
     height: 15px;
@@ -167,17 +157,6 @@ height: 38vh;
     from {opacity: .4}
     to {opacity: 1}
   }
-
-
-  /* hero2 */
-
-/* .hero3 a {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-.hero3 a:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-} */
 
 
 
@@ -229,14 +208,6 @@ footer .footer-links a, footer p {
 footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
     padding-bottom: 72px;
 }
-
-
-
-
-
-
-
-
 
  /*ABOUT WEBPAGE*/
 
