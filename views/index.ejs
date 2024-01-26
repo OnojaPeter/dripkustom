@@ -34,7 +34,8 @@
             <nav class="relative z-50 flex justify-between items-center">
                 <div class="flex items-center md:gap-x-24">
                     <a aria-label="Home" href="/" class="font-bold">
-                        DRIP-KUSTOM
+                        <img width="200px" height="60px" src="../public/images/DRIPog.png" alt="">
+                        <!-- DRIP-KUSTOM -->
                     </a>
                     <div class="hidden md:flex md:gap-x-6" >
                         <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
@@ -75,7 +76,7 @@
                         </a>
                         <% if (isAuthenticated) { %>
                             <a class=" px-6 " href="/profile/person" id="profileButton"><span class="font-semibold">My Profile</span></a>
-                            <% } else { %>
+                        <% } else { %>
                             <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 bg-blue-500 text-white" id="loginButton">
                                 <button class="" >
                                     Login
@@ -86,8 +87,7 @@
                                     Sign-up
                                 </button>
                             </a>
-                            <% } %>
-                        
+                        <% } %>
                     </div>
                 </div>
                 <div class="flex items-center gap-x-5 md:gap-x-8">
@@ -229,7 +229,7 @@
                     <div class="">
                         <div class="hero1-text absolute mt-10 text-left text-white font-semibold ml-4">
                             <h1 class="text-6xl">NEW <br> COLLECTION</h1>
-                            <a class="absolute text-left -bottom-64" href=""><button>GO ON</button></a>
+                            <a class="absolute text-left -bottom-64" href="#shoesCollection"><button>GO ON</button></a>
                         </div>
                         <img class=" full-height" src="/public/images/448f6034839c033dcc19f2fdc5c55198.jpg" alt="">
                     </div>
@@ -371,7 +371,7 @@
             
         </section>
 
-        <section>
+        <section id="shoesCollection">
             <div class="filter-section mb-3 px-3 sm:px-0">
                 <div>
                     <h1 class="font-semibold lg:text-5xl md:text-4xl text-3xl mb-4">SHOE COLLECTIONS</h1>
@@ -565,7 +565,7 @@
                 </div>
             </div> -->
             <div class="text-center w-[100%] mt-4">               
-                <button id="load-more" class="px-6 py-2 bg-blue-500 text-white rounded-lg load-more">VIEW MORE</button>               
+                <button id="load-more" class="px-6 py-2 bg-gray-900 text-white rounded-lg load-more">VIEW MORE</button>               
             </div>
         </section>
 
@@ -574,11 +574,13 @@
         </div>
         
     </main>
-    <footer class="mt-10 lg:mt-28 px-6 lg:px-0">
+    <footer class="mt-10 lg:mt-28 px-6 lg:px-0 text-white bg-gray-900">
         <div class="footer-content lg:px-20 lg:pt-16 flex flex-col text-center lg:flex-row lg:justify-between lg:text-left">
             <ul class="pt-10  lg:pt-0">
                 <div>
-                    <a href="/">DRIP-KUSTOM</a>
+                    <a href="/">
+                        <img width="200px" height="60px" src="../public/images/DRIPog.png" alt="drip kuston logo">
+                    </a>
                 </div>
                 <p>Building Your Amazing <br> Kustom Shoes</p>
             </ul>
@@ -600,7 +602,7 @@
                 <a href="about">Instagram</a>
             </ul>
         </div>
-        <div class="copyright pb-4 text-center">
+        <div class="copyright py-4 text-center">
             © DRIPKUSTOM. All Rights Reserved
         </div>
     </footer>

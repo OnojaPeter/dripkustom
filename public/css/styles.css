@@ -188,9 +188,9 @@ height: 38vh;
 
 
 /* footer */
-footer {
-    background: #F6F6F6;
-}
+/* footer {
+    background: #000;
+} */
 footer h5 {
     font-size: 18px;
     font-weight: 700;
