@@ -605,16 +605,16 @@ video {
   bottom: -16rem;
 }
 
-.bottom-0 {
-  bottom: 0px;
-}
-
 .right-0 {
   right: 0px;
 }
 
 .top-0 {
   top: 0px;
+}
+
+.top-24 {
+  top: 6rem;
 }
 
 .top-9 {
@@ -722,10 +722,6 @@ video {
   margin-right: 0.75rem;
 }
 
-.mr-4 {
-  margin-right: 1rem;
-}
-
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -804,6 +800,10 @@ video {
 
 .h-8 {
   height: 2rem;
+}
+
+.h-\[70px\] {
+  height: 70px;
 }
 
 .h-\[80vh\] {
@@ -1065,6 +1065,11 @@ video {
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+}
+
 .bg-green-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
@@ -1190,6 +1195,10 @@ video {
 
 .pt-10 {
   padding-top: 2.5rem;
+}
+
+.pt-24 {
+  padding-top: 6rem;
 }
 
 .pt-3 {
@@ -1491,17 +1500,6 @@ main {
   text-align: center;
 }
 
-/* .dot-div {
-    cursor: pointer; position: absolute; top: 0; left: 40px;
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-  } */
-
 .dot {
   cursor: pointer;
   height: 15px;
@@ -1534,16 +1532,6 @@ main {
   }
 }
 
-/* hero2 */
-
-/* .hero3 a {
-    color: white;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-.hero3 a:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-} */
-
 .slider-card {
   /* max-width: 400px; */
   display: flex;
@@ -1575,16 +1563,16 @@ main {
 
 /* footer */
 
-footer {
-  background: #F6F6F6;
-}
+/* footer {
+    background: #000;
+} */
 
 footer h5 {
   font-size: 18px;
   font-weight: 700;
   line-height: 28px;
   letter-spacing: 0em;
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 
 footer .footer-links a, footer p {
@@ -1595,8 +1583,8 @@ footer .footer-links a, footer p {
   margin-top: 15px;
 }
 
-footer li:nth-last-child(-n+1), footer p:nth-last-child(-n+1){
-  padding-bottom: 72px;
+footer .footer-links a:nth-last-child(-n+1){
+  margin-bottom: 50px;
 }
 
 /*ABOUT WEBPAGE*/

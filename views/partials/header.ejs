@@ -28,10 +28,10 @@
     <title>Drip Kustom</title>
 </head>
 
-<body>
-    <header class="py-5 sm:px-10 lg:px-20">
+<body class="pt-24">
+    <header class="py-5 top-0 sm:px-10 lg:px-20 z-50 fixed w-[100%] bg-white">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-0">
-            <nav class="relative z-50 flex justify-between items-center">
+            <nav class="relative flex justify-between items-center">
                 <div class="flex items-center md:gap-x-24">
                     <a aria-label="Home" href="/" class="font-bold">
                         <img width="200px" height="60px" src="../public/images/DRIPog.png" alt="">
@@ -94,7 +94,7 @@
                     <div class="hidden md:block">
                         <% if (isAuthenticated) { %>
                         <!-- Content for authenticated users -->
-                        <a href="/profile/person" id="profileButton"><span class="font-semibold">Person</span></a>
+                        <a href="/profile/person" id="profileButton" title="Profile"><i class="fa-solid fa-user fa-xl"></i></a>
                         <% } else { %>
                         <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopLoginButton">
                             Login
