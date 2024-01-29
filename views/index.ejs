@@ -766,7 +766,7 @@
                         updateQuantity(shoeId, currentQuantity - 1);
                     }
                 } 
-                $('#cartReload').load(location.href + ' #cartReload');
+                // $('#cartReload').load(location.href + ' #cartReload');
             });
 
 
@@ -777,6 +777,7 @@
                     method: 'POST',
                     data: { shoeId: shoeId, quantity: newQuantity },
                     success: function(response) {
+                        $('#cartReload').load(location.href + ' #cartReload');
                         // Handle success if needed
                         // console.log(response);
                     },

@@ -3,7 +3,8 @@ const User = require('../models/user');
 
 async function person (req,res) {
     try {        
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         res.render("profile", {cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
     } catch (error) {
         console.error(error)
@@ -12,7 +13,8 @@ async function person (req,res) {
 
 async function editPerson (req,res) {
     try {
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         res.render("edit-profile", {cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
     } catch (error) {
         console.error(error)
@@ -29,7 +31,8 @@ async function editPersonPost (req,res) {
 
 async function editPassword (req,res) {
     try {
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         res.render("edit-password", {cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
     } catch (error) {
         console.error(error)
@@ -51,7 +54,8 @@ async function address (req, res) {
         // Extract the addresses from the populated 'addresses' field
         const addressDetails = userWithAddresses.addresses;
     //  console.log(addressDetails);
-    const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         res.render("address", {cartItems: cart, address: addressDetails, user: req.user, isAuthenticated: req.isAuthenticated()});
     } catch (error) {
       console.error('Error fetching address details:', error);
@@ -70,7 +74,8 @@ async function editAddressPage (req, res) {
             addressDetails = {};
         }
 
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         res.render('edit-address', { cartItems: cart, address: addressDetails , user: req.user, isAuthenticated: req.isAuthenticated()});     
     } catch (error) {
       console.error('Error fetching address details:', error);
@@ -114,7 +119,8 @@ async function editAddressPost (req, res) {
 
 async function order (req,res) {
     try {
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         res.render("order", {cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
     } catch (error) {
         console.error(error)

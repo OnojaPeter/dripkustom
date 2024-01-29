@@ -4,12 +4,13 @@ async function removeFromCartController (req, res) {
     const shoeIdObject = shoeId.toString();
 
     try {
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         const cartItem = cart[shoeIdObject];
         
         if (cartItem) {
             delete cart[shoeIdObject];
-            req.session.cart = cart;
+            res.cookie('cart', JSON.stringify(cart));
             console.log("deleted:", cartItem);
             res.status(200).send('Item removed from cart');
         }

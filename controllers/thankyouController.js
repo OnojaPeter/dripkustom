@@ -1,6 +1,7 @@
 async function thankyouController (req, res) {
     try {
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         res.render('thank-you', {cartItems: cart});
     } catch (error) {
         console.error('Error:', error);

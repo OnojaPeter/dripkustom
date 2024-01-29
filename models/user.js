@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     addresses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
 });
   
-// userSchema.plugin(passportLocalMongoose);
+
 userSchema.pre('save', async function (next) {
     try {
         if (!this.isModified('password')) {
@@ -25,6 +25,8 @@ userSchema.pre('save', async function (next) {
       next(error);
     }
   });
+
+  // userSchema.plugin(passportLocalMongoose);
 
 const User = mongoose.model('User', userSchema);
 // const dummyPerson = 

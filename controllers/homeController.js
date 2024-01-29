@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Shoe = require ("../models/shoes")
+const Shoe = require ("../models/shoes");
+const cookieParser = require('cookie-parser');
 
 
 async function homeController (req, res) {
@@ -20,13 +21,22 @@ async function homeController (req, res) {
 
         if (category) {
             shoes = await Shoe.find({ category }).sort(sortCriteria);
-            console.log(shoes)
+            // console.log(shoes)
         } else {
             shoes = await Shoe.find().sort(sortCriteria);
         }
-        const cart = req.session.cart || {};
-        // console.log(cart);
-        res.render('index', { isAuthenticated: req.isAuthenticated(), user: req.user, messages: req.flash('error'), shoes, cartItems: cart });
+        // const cart = req.session.cart || {};
+        // console.log(req.session.cart);
+
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
+        res.render('index', { 
+            isAuthenticated: req.isAuthenticated(), 
+            user: req.user, 
+            messages: req.flash('error'), 
+            shoes, 
+            cartItems: cart,
+        });
         // console.log(req.user);
     } catch (error) {
         console.error('Error:', error);

@@ -2,7 +2,8 @@
 
 async function checkoutController (req, res) {
     try {
-        const cart = req.session.cart || {};
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
         const retrievedCartItems = Object.values(cart);
 
         let totalPrice = 0;
