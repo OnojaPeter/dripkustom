@@ -1048,7 +1048,7 @@
         button.addEventListener("click", () => {
             const cartItems = getCartItemsFromCookies();
             console.log(cartItems);
-  fetch("http://localhost:3000/create-checkout-session", {
+  fetch("/create-checkout-session", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
