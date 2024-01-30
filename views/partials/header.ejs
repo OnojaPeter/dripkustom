@@ -338,6 +338,7 @@
  
             document.getElementById('cartModal').addEventListener('click', function(event) {
                 const target = event.target;
+                console.log(target);
 
                 // Check if the clicked element is an increase or decrease button
                 if (target.classList.contains('increase-btn')) {
@@ -360,7 +361,35 @@
                         updateQuantity(shoeId, currentQuantity - 1);
                     }
                 } 
-                $('#cartReload').load(location.href + ' #cartReload');
+                // $('#cartReload').load(location.href + ' #cartReload');
+            });
+
+            document.getElementById('checkout').addEventListener('click', function(event) {
+                const target = event.target;
+                console.log(target);
+
+                // Check if the clicked element is an increase or decrease button
+                if (target.classList.contains('increase-btn')) {
+                    const shoeId = target.dataset.shoeId;
+                    const spanQuantity = document.getElementById(`quantity_${shoeId}`);
+                    const currentQuantity = parseInt(spanQuantity.textContent);
+
+                    // Increase quantity
+                    spanQuantity.textContent = currentQuantity + 1;
+                    updateQuantity(shoeId, currentQuantity + 1);
+                } else if (target.classList.contains('decrease-btn')) {
+                    const shoeId = target.dataset.shoeId;
+                    const spanQuantity = document.getElementById(`quantity_${shoeId}`);
+                    const currentQuantity = parseInt(spanQuantity.textContent);
+
+                    // Decrease quantity only if it's greater than 1
+                    if (currentQuantity > 1) {
+                        spanQuantity.textContent = currentQuantity - 1;
+
+                        updateQuantity(shoeId, currentQuantity - 1);
+                    }
+                } 
+                // $('#checkout').load(location.href + ' #checkout');
             });
 
 
@@ -371,6 +400,8 @@
                     method: 'POST',
                     data: { shoeId: shoeId, quantity: newQuantity },
                     success: function(response) {
+                        $('#cartReload').load(location.href + ' #cartReload');
+                        $('#checkout').load(location.href + ' #checkout');
                         // Handle success if needed
                         // console.log(response);
                     },
@@ -387,6 +418,11 @@
                 // console.log(shoeId)
                 removeFromCart(shoeId);
             });
+            $('#checkout').on('click', '.remove-btn', function() {
+                const shoeId = $(this).data('shoe-id');
+                // console.log(shoeId)
+                removeFromCart(shoeId);
+            });
             function removeFromCart(shoeId){
                 // console.log("inside remove from cart function ajax side");
                 $.ajax({
@@ -396,7 +432,8 @@
                     success: function(response) {
                         // console.log(response);
                         $('#cartReload').load(location.href + ' #cartReload');
-                        console.log("just reloaded");
+                        $('#checkout').load(location.href + ' #checkout');
+                        // console.log("just reloaded");
                     },
                     error: function(error) {
                         console.error('Error removing item:', error);
@@ -407,88 +444,30 @@
         // });
             
         // });
-
-
-
-
-
-
-
-
-        let slideIndex = 1;
-        showSlides(slideIndex);
-
-        // Next/previous controls
-        function plusSlides(n) {
-        showSlides(slideIndex += n);
-        }
-
-        // Thumbnail image controls
-        function currentSlide(n) {
-        showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-        }
-
-        // const hamburgerButton = document.getElementById('hamburgerButton');
-        // const mobileMenu = document.getElementById('mobileMenu');
-        // const closeBtn = document.getElementById('closeBtn');
-
-        // hamburgerButton.addEventListener('click', () => {
-        //     alert("working")
-        //     mobileMenu.classList.toggle("hidden");
-        // });
-        // closeBtn.addEventListener('click', () => {
-        //     mobileMenu.classList.toggle("hidden");
-        // });
-
-        $(document).ready(function(){
-        $('.owl-carousel').owlCarousel({
-            loop:true,
-            margin:10,
-            autoplay: true,
-            autoplayTimeout:2000,
-            autoplayHoverPause: true,
-            responsive:{
-                0:{
-                    items:1,stagePadding: 50,
-                },
-                500:{
-                    items:2
-                },
-                1000:{
-                    items:3
-                }
-            }
-        })
-        });
-
         const filter = document.getElementById("filter");
         const filterMenu = document.getElementById("filter-menu");
 
         const sortBy = document.getElementById("sort-by");
         const sortByMenu = document.getElementById("sort-menu");
 
-        filter.addEventListener('click', () => {
-            // alert("working");
+        const toggleFilter = () => {
             filterMenu.classList.toggle("hidden");
-        });
-        sortBy.addEventListener('click', () => {
-            // alert("working");
-            sortByMenu.classList.toggle("hidden");
-        });
+        }
+        const toggleSort = () => {
+            sortByMenu.classList.toggle("hidden")
+        }
+        if (filterMenu) {
+            filter.addEventListener('click', toggleFilter)
+        }
+        if (sortByMenu) {
+            sortByMenu.addEventListener('click', toggleSort)
+        }
+        // filter.addEventListener('click', () => {
+        //     // alert("working");
+        //     filterMenu.classList.toggle("hidden");
+        // });
+        // sortBy.addEventListener('click', () => {
+        //     // alert("working");
+        //     sortByMenu.classList.toggle("hidden");
+        // });
     </script>

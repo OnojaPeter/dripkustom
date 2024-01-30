@@ -212,7 +212,7 @@
                 
                 <p class="font-semibold text-center mb-10">Cart is empty</p>
                 
-                <a href="collections.html" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
+                <a href="#shoesCollection" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
                     <button>Continue shopping</button>
                 </a>
                 <% } %>
@@ -269,7 +269,6 @@
                 </div>
             </div>
         </section>    
-
         <section class="hero2 py-16 lg:py-24">
                 <div class="slider">
                     <div class="owl-carousel owl-theme owl-loaded">
@@ -572,6 +571,8 @@
         <div id="notification" class="fixed top-24 z-50 right-0 text-center bg-green-500 text-white w-[100%] px-4 py-2 rounded-md hidden">
             Item added to cart!
         </div>
+
+        <button id="button">checkout</button>
         
     </main>
     <footer class="mt-10 lg:mt-28 px-6 lg:px-0 text-white bg-gray-900">
@@ -611,6 +612,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
     
     <script>
         
@@ -625,7 +627,7 @@
             loginModal.classList.toggle('hidden');
         }
         if (desktopLoginButton) {
-            console.log('desktop login');
+            // console.log('desktop login');
             desktopLoginButton.addEventListener('click', toggleLoginModal)
         }
         if (loginButton) {
@@ -1019,6 +1021,53 @@
 
         
 
+        const button = document.getElementById("button")
+        var stripe = Stripe('pk_test_51OdizXKiIBXF9r7LB9S3bhE2RkBiDaGKKFwFi80YItKTV0I6qMlTHttzH9THfOWX2uBoq7G8qMLdMZT3o13sS6dV001fmJ3XRS');
+        // button.addEventListener('click', () => {
+        //     alert("working")
+        // });
+        function getCartItemsFromCookies() {
+  // Retrieve the cookie value
+  const cartCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('cart='));
+
+  // Parse the cookie value to get the cart items
+  if (cartCookie) {
+    const cartItemsString = decodeURIComponent(cartCookie.split('=')[1]);
+    try {
+      const cartItems = JSON.parse(cartItemsString);
+      return cartItems;
+    } catch (error) {
+      console.error('Error parsing cart items from cookie:', error);
+    }
+  }
+
+  // Return an empty array if the cart cookie is not found or cannot be parsed
+  return [];
+}
+
+        button.addEventListener("click", () => {
+            const cartItems = getCartItemsFromCookies();
+            console.log(cartItems);
+  fetch("http://localhost:3000/create-checkout-session", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      items: cartItems,
+    }),
+  })
+    .then(res => {
+      if (res.ok) return res.json()
+      return res.json().then(json => Promise.reject(json))
+    })
+    .then(({ url }) => {
+      window.location = url
+    })
+    .catch(e => {
+      console.error(e.error)
+    })
+})
 
 
 

@@ -35,6 +35,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/public', express.static('public'));
 app.use('css', express.static('public/css', { 'extensions': ['css']}));
+
+const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
     
 app.use(
     session({
@@ -121,6 +123,103 @@ app.use('/update-quantity', updatequantityRoute);
 app.use('/remove-from-cart', removefromcartRoute);
 app.use("/profile", profileRoute);
 app.use('/auth', authRoutes);
+
+// app.post("/create-checkout-session", async (req, res) => {
+//   try {
+//     const cart = req.cookies.cart || {};
+//     // console.log('Cart:', cart);
+
+//     const lineItems = Object.values(cart).map(item => {
+//       return {
+//         price_data: {
+//           currency: 'usd',
+//           product_data: {
+//             name: item.name,
+//             images: [item.image],
+//           },
+//           unit_amount: item.price * 100, // Convert price to cents
+//         },
+//         quantity: item.quantity,
+//       };
+//     });
+//     console.log(lineItems);
+
+
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: lineItems,
+//       success_url: `${process.env.CLIENT_URL}/success.html`,
+//       cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
+//     })
+//     res.json({ id: session.id });
+//   } catch (e) {
+//     res.status(500).json({ error: e.message })
+//   }
+// })
+
+
+const storeItems = new Map([
+  [1, { priceInCents: 10000, name: "Learn React Today" }],
+  [2, { priceInCents: 20000, name: "Learn CSS Today" }],
+])
+
+app.post("/create-checkout-session", async (req, res) => {
+  try {
+    // console.log(req.body.items);
+    const itemsArray = Object.values(req.body.items);
+    console.log(itemsArray);
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: itemsArray.map(item => ({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item.name,
+            images: [item.image],
+          },
+          unit_amount: item.price * 100,
+        },
+        quantity: item.quantity,
+      })),
+      success_url: `${process.env.CLIENT_URL}/thank-you`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
+    });
+
+    res.json({ url: session.url });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// app.post("/create-checkout-session", async (req, res) => {
+//   try {
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ["card"],
+//       mode: "payment",
+//       line_items: req.body.items.map(item => {
+//         const storeItem = storeItems.get(item.id)
+//         return {
+//           price_data: {
+//             currency: "usd",
+//             product_data: {
+//               name: storeItem.name,
+//             },
+//             unit_amount: storeItem.priceInCents,
+//           },
+//           quantity: item.quantity,
+//         }
+//       }),
+//       success_url: `${process.env.CLIENT_URL}/success.html`,
+//       cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
+//     })
+//     res.json({ url: session.url })
+//   } catch (e) {
+//     res.status(500).json({ error: e.message })
+//   }
+// })
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -11,7 +11,7 @@ const Shoe = mongoose.model('Shoe', shoeSchema);
 
 
 // const dummyItems = [
-//     { image: "/public/images/7d77740b692425fa411ddf2b45825f51.jpg",name: 'Nike 1', price: 80, category: "nike"},
+//     { image: "https://res.cloudinary.com/djfrsyayo/image/upload/v1706575393/4ff9167ec73af7436ba02f8135192578_pqz7sv.jpg",name: 'new 1', price: 70, category: "nike"},
 //     { image: "/public/images/20201110_112950.jpg", name: 'Nike 2', price: 50, category: "nike"},
 //     { image: "/public/images/20201105_210955.jpg", name: 'Nike 3', price: 40, category: "nike"},
 //     { image: "/public/images/20201110_112901.jpg", name: 'Nike 4', price: 45, category: "nike"},
