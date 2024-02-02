@@ -3,33 +3,49 @@ const cookieParser = require('cookie-parser');
 
 async function addToCartController (req, res) {
     const shoeId = req.body.shoeId;
-    // console.log(shoeId);
+    const selectedSize = req.body.size; // Retrieve the selected size from the request body
+    console.log(shoeId);
+    console.log(selectedSize);
     try {
         const shoe = await Shoe.findById(shoeId);
         if (shoe) {
-            // const cart = req.session.cart || {};
-            // // console.log(cart);
-            // const shoeIdString = shoeId.toString();
-            // console.log(shoeIdString);
-
-            // if (cart[shoeIdString]) {
-            //     // If item exists in cart, increment its quantity
-            //     cart[shoeIdString].quantity++;
-            // } else {
-            //     // If item doesn't exist in cart, add it with quantity 1
-            //     cart[shoeIdString] = { ...shoe.toObject(), quantity: 1 };
-            // }
-
-            // req.session.cart = cart;
-
             const cartCookie = req.cookies.cart || '{}';
-      const cart = JSON.parse(cartCookie);
+            const cart = JSON.parse(cartCookie);
 
-      if (cart[shoeId]) {
-        cart[shoeId].quantity++;
-      } else {
-        cart[shoeId] = { ...shoe.toObject(), quantity: 1 };
-      }
+            const cartItemKey =`${shoeId}-${selectedSize}`;
+            console.log(cartItemKey);
+    //   if (cart[shoeId]) {
+    //     cart[shoeId].quantity++;
+    //   } else {
+    //     cart[shoeId] = { ...shoe.toObject(), quantity: 1 };
+    //   }
+
+
+    if (cart[cartItemKey]) {
+        // If the item exists in the cart, increment its quantity
+        cart[cartItemKey].quantity++;
+    } else {
+        // If the item doesn't exist in the cart, add it with quantity 1
+        cart[cartItemKey] = { ...shoe.toObject(), size: selectedSize, quantity: 1 };
+    }
+    
+        // if (cart[shoeId]) {
+        //     // If the item exists in the cart, check if the size matches
+        //     if (cart[shoeId].size === selectedSize) {
+        //         console.log("size:",cart[shoeId].size);
+        //         console.log("selected size:",selectedSize)
+        //         cart[shoeId].quantity++;
+        //     } else {
+        //         console.log("size in else:",cart[shoeId].size);
+        //         console.log("selected size in else:",selectedSize)
+        //         // If the size doesn't match, consider it as a new item
+        //         const newItem = { ...shoe.toObject(), size: selectedSize, quantity: 1 };
+        //         cart[`${shoeId}-${selectedSize}`] = newItem; 
+        //     }
+        // } else {
+        //     // If the item doesn't exist in the cart, add it with the selected size
+        //     cart[shoeId] = { ...shoe.toObject(), size: selectedSize, quantity: 1 };
+        // }
 
       // Set the updated cart in the cookie
       res.cookie('cart', JSON.stringify(cart));

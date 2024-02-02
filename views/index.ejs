@@ -185,7 +185,7 @@
                                 <div class="w-[100%]">
                                     
                                     <img class="h-20 w-[70%] sm:h-28 sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[50%] rounded-md" src="<%= cartItem.image %>" alt="">
-                                    <button class="remove-btn  text-red-700 font-semibold py-1 px-2 underline" data-shoe-id="<%= cartItem._id %>">Remove</button>
+                                    <button class="remove-btn  text-red-700 font-semibold py-1 px-2 underline" data-shoe-id="<%= cartItem._id %>" data-size="<%= cartItem.size %>">Remove</button>
                                 </div>
                                
                                 <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-sm lg:text-lg"><%= cartItem.name %></h2>
@@ -193,7 +193,7 @@
                             <div class="lg:w-[40%] w-[40%] flex flex-col justify-between my-3 sm:my-4 md:my-5 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
                                 <span class="flex flex-row lg:flex-col">
                                     <p>size:</p>
-                                    <p> 46</p>
+                                    <p> <%= cartItem.size %></p>
                                 </span>
                                 <span class="flex flex-row">
                                     <button class="decrease-btn" data-shoe-id="<%= cartItem._id %>">-</button>
@@ -437,6 +437,19 @@
                     </div>
                 <% }); %>
                 </div>
+                <!-- Size Selection Modal -->
+            <div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="sizeSelectionModal">
+                <div class="absolute inset-0 bg-black opacity-50"></div>
+                <div class="bg-white z-50 p-8 rounded shadow-md">
+                <h4 class="text-lg font-semibold mb-4">Select Size</h4>
+                <select id="sizeDropdown" class="w-full border p-2 mb-4">
+                    <option value="40">40</option>
+                    <option value="45">45</option>
+                    <option value="50">50</option>
+                </select>
+                <button class="bg-gray-900 text-white py-2 px-4 rounded" id="addToCartBtnInModal">Add to Cart</button>
+                </div>
+            </div>
 
                 <!-- <div class="card  w-[48%] md:w-[30%] lg:w-[24%]">
                     <a href="shoe.html">
@@ -571,8 +584,6 @@
         <div id="notification" class="fixed top-24 z-50 right-0 text-center bg-green-500 text-white w-[100%] px-4 py-2 rounded-md hidden">
             Item added to cart!
         </div>
-
-        <button id="button">checkout</button>
         
     </main>
     <footer class="mt-10 lg:mt-28 px-6 lg:px-0 text-white bg-gray-900">
@@ -717,23 +728,57 @@
             loadMoreCards(4);        
 
 
-            $('.addToCartBtn').on('click', function(){
+            // $('.addToCartBtn').on('click', function(){
+            //     const shoeId = $(this).data('shoe-id');
+            //     addToCart(shoeId);
+            //     // $('#cartReload').load(location.href + ' #cartReload');
+            //     // console.log("just reloaded"); localStorage.setItem("cartItems", cartItems);
+            // });
+            // function addToCart(shoeId){
+            //     $.ajax({
+            //         url: '/add-to-cart',
+            //         method: 'POST',
+            //         data: { shoeId: shoeId },
+            //         success: function(response){
+            //             showNotification('Item added to cart!');
+            //             $('#cartReload').load(location.href + ' #cartReload');
+            //             // console.log(response.message); 
+            //         }
+            //     });
+            // }
+            $('.addToCartBtn').on('click', function () {
                 const shoeId = $(this).data('shoe-id');
-                addToCart(shoeId);
-                // $('#cartReload').load(location.href + ' #cartReload');
-                // console.log("just reloaded"); localStorage.setItem("cartItems", cartItems);
+                console.log(shoeId);
+                $('#sizeSelectionModal').removeClass('hidden');
+
+                $('#sizeSelectionModal').data('shoe-id', shoeId);
             });
-            function addToCart(shoeId){
-                $.ajax({
-                    url: '/add-to-cart',
-                    method: 'POST',
-                    data: { shoeId: shoeId },
-                    success: function(response){
-                        showNotification('Item added to cart!');
-                        $('#cartReload').load(location.href + ' #cartReload');
-                        // console.log(response.message); 
-                    }
-                });
+
+            // Event listener for "Add to Cart" button in the size selection modal
+            $('#addToCartBtnInModal').on('click', function () {
+                const shoeId = $('#sizeSelectionModal').data('shoe-id');
+                console.log(shoeId);
+                const selectedSize = $('#sizeDropdown').val(); // Retrieve selected size from the dropdown
+                addToCart(shoeId, selectedSize);
+            });
+
+            // Function to add the item to the cart with the selected size
+            function addToCart(shoeId, selectedSize) {
+            $.ajax({
+                url: '/add-to-cart',
+                method: 'POST',
+                data: { shoeId: shoeId, size: selectedSize },
+                success: function (response) {
+                    // console.log('added', selectedSize)
+                showNotification('Item added to cart!');
+                $('#cartReload').load(location.href + ' #cartReload');
+                // const cartItems = getCartItemsFromCookies();
+                        // console.log(cartItems);
+                // You can update the cart display or perform other actions after successful addition
+                // Close the modal
+                $('#sizeSelectionModal').addClass('hidden');
+                }
+            });
             }
             function showNotification(message) {
                 const notification = document.getElementById('notification');
@@ -794,17 +839,21 @@
             $('#cartReload').on('click', '.remove-btn', function() {
                 const shoeId = $(this).data('shoe-id');
                 // console.log(shoeId)
-                removeFromCart(shoeId);
+                const selectedSize = $(this).data('size'); 
+                // console.log(selectedSize);
+                removeFromCart(shoeId, selectedSize);
             });
-            function removeFromCart(shoeId){
+            function removeFromCart(shoeId, selectedSize){
                 console.log("inside remove from cart function ajax side");
+                console.log(shoeId)
                 $.ajax({
                     url: '/remove-from-cart',
                     method: 'POST',
-                    data: { shoeId: shoeId },
+                    data: { shoeId: shoeId, size: selectedSize },
                     success: function(response) {
                         // console.log(response);
                         $('#cartReload').load(location.href + ' #cartReload');
+                        $('#checkout').load(location.href + ' #checkout');
                         // console.log("just reloaded");
                     },
                     error: function(error) {
@@ -1018,58 +1067,6 @@
             }
         })
         });
-
-        
-
-        const button = document.getElementById("button")
-        var stripe = Stripe('pk_test_51OdizXKiIBXF9r7LB9S3bhE2RkBiDaGKKFwFi80YItKTV0I6qMlTHttzH9THfOWX2uBoq7G8qMLdMZT3o13sS6dV001fmJ3XRS');
-        // button.addEventListener('click', () => {
-        //     alert("working")
-        // });
-        function getCartItemsFromCookies() {
-  // Retrieve the cookie value
-  const cartCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('cart='));
-
-  // Parse the cookie value to get the cart items
-  if (cartCookie) {
-    const cartItemsString = decodeURIComponent(cartCookie.split('=')[1]);
-    try {
-      const cartItems = JSON.parse(cartItemsString);
-      return cartItems;
-    } catch (error) {
-      console.error('Error parsing cart items from cookie:', error);
-    }
-  }
-
-  // Return an empty array if the cart cookie is not found or cannot be parsed
-  return [];
-}
-
-        button.addEventListener("click", () => {
-            const cartItems = getCartItemsFromCookies();
-            console.log(cartItems);
-  fetch("/create-checkout-session", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      items: cartItems,
-    }),
-  })
-    .then(res => {
-      if (res.ok) return res.json()
-      return res.json().then(json => Promise.reject(json))
-    })
-    .then(({ url }) => {
-      window.location = url
-    })
-    .catch(e => {
-      console.error(e.error)
-    })
-})
-
-
 
     </script>
 </body>
