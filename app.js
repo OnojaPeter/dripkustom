@@ -53,7 +53,7 @@ app.use(
 
 
 app.set('view engine', 'ejs');
-// mongoose.connect('mongodb://127.0.0.1:27017/drip');
+// const uri = 'mongodb://127.0.0.1:27017/drip';
 const uri = process.env.MONGODB_URI;
 
 mongoose.connect(uri);
