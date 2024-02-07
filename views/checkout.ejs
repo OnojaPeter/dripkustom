@@ -115,7 +115,7 @@
                 <div class=" bg-gray-700 rounded-md shadow-md p-6">
                     <h2 class="text-lg font-semibold mb-6">Cart Total</h2>
                   
-                    <div class="mb-4">
+                    <div class="mb-4" id="grandPrice">
                         <span class="flex justify-between">
                             <p>Sub Total</p>
                             <p>$ <%= totalPrice %></p>
@@ -148,6 +148,7 @@
                                 <label for="sortCheckbox3">Stripe</label>
                             </li>
                             <li><button id="button">Stripe Checkout</button></li>
+                            <li><button id="paystackForm">Paystack Checkout</button></li>
                         </ul>
                     </div>
 
@@ -162,6 +163,7 @@
     </main>
     <%- include ('partials/footer') -%>
     <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <script>
         const button = document.getElementById("button")
         var stripe = Stripe('pk_test_51OdizXKiIBXF9r7LB9S3bhE2RkBiDaGKKFwFi80YItKTV0I6qMlTHttzH9THfOWX2uBoq7G8qMLdMZT3o13sS6dV001fmJ3XRS');
@@ -185,6 +187,25 @@
         }
         const cartItems = getCartItemsFromCookies();
         console.log(cartItems);
+        function calculateTotalAmount(cartItems) {
+            let totalAmount = 0;
+
+            // Iterate over the values of the cartItems object
+            for (const itemId in cartItems) {
+                if (cartItems.hasOwnProperty(itemId)) {
+                    const item = cartItems[itemId];
+                    // Add the price of the item multiplied by its quantity to the total amount
+                    totalAmount += item.price * item.quantity;
+                }
+            }
+
+            return totalAmount;
+        }
+
+        const totalAmount = calculateTotalAmount(cartItems);
+        console.log(totalAmount); // Output the total amount
+
+        
         button.addEventListener("click", () => {
             const cartItems = getCartItemsFromCookies();
             console.log(cartItems);
@@ -200,15 +221,54 @@
             })
                 .then(res => {
                 if (res.ok) return res.json()
-                return res.json().then(json => Promise.reject(json))
+                return res.json().then(json => Promise.reject(json)), clearCartCookies();
                 })
                 .then(({ url }) => {
                 window.location = url
+                clearCartCookies(); //clear the cart cookies after successful payment
                 })
                 .catch(e => {
                 console.error(e.error)
                 })
         })
+        
+        const paymentForm = document.getElementById('paystackForm');
+        paystackForm.addEventListener("click", payWithPaystack, false);
+
+        function payWithPaystack(e) {
+        e.preventDefault();
+
+        let handler = PaystackPop.setup({
+            key: 'pk_test_2dd31b309b9af1abb060c66bb52c2c4b8525ee6b', // Replace with your public key
+            email: 'oonojapeter@gmail.com', //document.getElementById("email-address").value,
+            amount: totalAmount * 100, //document.getElementById("amount").value * 100,
+            ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+            // label: "Optional string that replaces customer email"
+            onClose: function(){
+            alert('Window closed.');
+            },
+            // callback: function(response){
+            //   let message = 'Payment complete! Reference: ' + response.reference;
+            //   alert(message);
+            // }
+            callback: function(response){
+                        if (response.status === 'success') {
+                            // alert('success');
+                            // Redirect to the Thank You page
+                            window.location.href = '/thank-you';
+                            clearCartCookies();
+                        } else {
+                            alert('Payment failed. Please try again.');
+                        }
+            }
+        });
+
+        handler.openIframe();
+        }
+
+        function clearCartCookies() {
+            document.cookie = 'cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        }
     </script>
 </body>
 </html>
