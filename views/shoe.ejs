@@ -31,46 +31,27 @@
                                 <p class="mt-3">
                                     Quisquam sit harum perferendis beatae voluptatem. Lorem ipsum dolor sit amet consectetur adipisicing elit.
                                 </p>
-                                <div class="flex">
-                                    <label for="shoeSize">Select Size:</label>
-                                    <select name="shoeSize" id="shoeSize">
-                                        <option value="" disabled selected>Size</option>
-                                        <option value="37">37</option>
-                                        <option value="38">38</option>
-                                        <option value="39">39</option>
-                                    </select>
+
+                                <!-- Size Selection Modal -->
+                                <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden" id="sizeSelectionModal">
+                                    <!-- <div class="absolute inset-0 bg-black opacity-50"></div> -->
+                                    <div class="bg-white z-50 p-8 rounded shadow-md w-[80%] md:w-[50%] lg:w-[30%]">
+                                        <div class="flex justify-end mb-4">
+                                            <button class="text-gray-600 hover:text-gray-800 focus:outline-none" id="closeSizeModalBtn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <h4 class="text-lg font-semibold mb-4">Select Size</h4>
+                                        <select id="sizeDropdown" class="w-full border p-2 mb-4">
+                                            <option value="40">40 [available]</option>
+                                            <option value="45">45</option>
+                                            <option value="50">50</option>
+                                        </select>
+                                        <button class="bg-gray-900 text-white py-2 px-4 rounded" id="addToCartBtnInModal">Add to Cart</button>
+                                    </div>
                                 </div>
-                                
-                                <!-- <div class="shoe-size mt-2">
-                                    <p class="text-lg">size:</p>
-                                    <ul class="flex flex-wrap">
-                                        <li>
-                                            <input type="checkbox" id="checkbox1" name="groupOfCheckboxes" class="number-checkbox">
-                                            <label for="checkbox1">1</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="checkbox2" name="groupOfCheckboxes" class="number-checkbox">
-                                            <label for="checkbox2">2</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="checkbox3" name="groupOfCheckboxes" class="number-checkbox">
-                                            <label for="checkbox3">3</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="checkbox4" name="groupOfCheckboxes" class="number-checkbox">
-                                            <label for="checkbox4">4</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="checkbox5" name="groupOfCheckboxes" class="number-checkbox">
-                                            <label for="checkbox5">5</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" id="checkbox6" name="groupOfCheckboxes" class="number-checkbox">
-                                            <label for="checkbox6">6</label>
-                                        </li>
-                                    </ul>
-                                    
-                                </div> -->
                                 
                                 <div class="flex items-center mt-5">
                                     <button id="decreaseBtn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
@@ -92,12 +73,12 @@
                                 </span> -->
                                 
                                 <div class="mt-6 font-semibold gap-2 lg:gap-4 flex">
-                                    <button class="shoe-add-to-cart addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
+                                    <button class="bg-gray-900 text-white py-2 px-4 rounded addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
                                         Add to Cart
                                     </button>
-                                    <a href="#" class="shoe-buy-1-click">
+                                    <!-- <a href="#" class="shoe-buy-1-click">
                                         <button class="btn">Buy by 1 Click</button>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </div>
@@ -109,6 +90,21 @@
 
     <%- include ('partials/footer') -%>
     <script>
+        const closeSizeSelectionModal = document.getElementById('closeSizeModalBtn');
+        const sizeSelectionModal = document.getElementById('sizeSelectionModal');
+        const toggleSizeSelectionModal = () => {
+            sizeSelectionModal.classList.toggle('hidden');
+        }
+        if (closeSizeSelectionModal) {
+            closeSizeSelectionModal.addEventListener('click', toggleSizeSelectionModal)
+        }
+        sizeSelectionModal.addEventListener('click', (event) => {
+            if(event.target === sizeSelectionModal) {
+                console.log(event.target);
+                sizeSelectionModal.classList.add('hidden')
+            }
+        })
+        
         const checkboxes = document.querySelectorAll('.number-checkbox');
 
         checkboxes.forEach(checkbox => {
@@ -128,7 +124,7 @@
         const numberInput = document.getElementById('numberInput');
 
         const shoeInfo = document.querySelector('.shoe-info');
-const shoeId = shoeInfo.dataset.shoeId;
+        const shoeId = shoeInfo.dataset.shoeId;
         console.log(shoeId);
         // console.log(target.dataset.shoeId);
 
@@ -166,24 +162,6 @@ function updateQuantity(shoeId, newQuantity) {
         }
     });
 }
-
-        // decreaseBtn.addEventListener('click', () => {
-        //     if (numberInput.value > 1) {
-        //     numberInput.stepDown();
-        // }
-        // });
-
-        // increaseBtn.addEventListener('click', () => {
-        //     numberInput.stepUp();
-        // });
-
-        // numberInput.addEventListener('input', () => {
-        // if (numberInput.value < 1 || isNaN(numberInput.value)) {
-        //     numberInput.value = 1;
-        // }
-        // });
-
-
     </script>
 </body>
 </html>

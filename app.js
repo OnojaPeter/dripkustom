@@ -125,46 +125,6 @@ app.use('/remove-from-cart', removefromcartRoute);
 app.use("/profile", profileRoute);
 app.use('/auth', authRoutes);
 
-// app.post("/create-checkout-session", async (req, res) => {
-//   try {
-//     const cart = req.cookies.cart || {};
-//     // console.log('Cart:', cart);
-
-//     const lineItems = Object.values(cart).map(item => {
-//       return {
-//         price_data: {
-//           currency: 'usd',
-//           product_data: {
-//             name: item.name,
-//             images: [item.image],
-//           },
-//           unit_amount: item.price * 100, // Convert price to cents
-//         },
-//         quantity: item.quantity,
-//       };
-//     });
-//     console.log(lineItems);
-
-
-//     const session = await stripe.checkout.sessions.create({
-//       payment_method_types: ["card"],
-//       mode: "payment",
-//       line_items: lineItems,
-//       success_url: `${process.env.CLIENT_URL}/success.html`,
-//       cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
-//     })
-//     res.json({ id: session.id });
-//   } catch (e) {
-//     res.status(500).json({ error: e.message })
-//   }
-// })
-
-
-const storeItems = new Map([
-  [1, { priceInCents: 10000, name: "Learn React Today" }],
-  [2, { priceInCents: 20000, name: "Learn CSS Today" }],
-])
-
 app.post("/create-checkout-session", async (req, res) => {
   try {
     // console.log(req.body.items);
@@ -195,38 +155,7 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
-app.post('/pay', async (req, res) => {
-  try {
-      const { email, amount } = req.body;
 
-      const response = await paystack.transaction.initialize({
-          email,
-          amount,
-          // Add other necessary parameters
-      });
-
-      res.json(response.data);
-  } catch (error) {
-      console.error('Error initiating payment:', error);
-      res.status(500).json({ error: 'Error initiating payment' });
-  }
-});
-
-app.post('/pay/callback', async (req, res) => {
-  try {
-      const { reference } = req.body;
-
-      const response = await paystack.transaction.verify(reference);
-
-      // Update your database or perform other actions based on the transaction status
-      console.log(response.data);
-
-      res.status(200).end();
-  } catch (error) {
-      console.error('Error processing payment callback:', error);
-      res.status(500).end();
-  }
-});
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

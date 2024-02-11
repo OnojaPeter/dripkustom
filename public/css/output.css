@@ -862,6 +862,10 @@ video {
   width: 70%;
 }
 
+.w-\[80\%\] {
+  width: 80%;
+}
+
 .w-\[90\%\] {
   width: 90%;
 }
@@ -1290,6 +1294,11 @@ video {
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
+.text-gray-600 {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+
 .text-gray-700 {
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity));
@@ -1325,6 +1334,10 @@ video {
 
 .opacity-0 {
   opacity: 0;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .shadow {
@@ -1654,25 +1667,6 @@ footer .footer-links a:nth-last-child(-n+1){
   padding: 5px 0px;
 }
 
-/* #selectedFilterOptions, #selectedSortOptions */
-
-/* shoe page */
-
-.shoe-add-to-cart {
-  background: #717171;
-  color: white;
-  padding: 5px 15px;
-  border-radius: 5px;
-}
-
-.shoe-buy-1-click {
-  background-color: rgba(0, 0, 0, 0.2);
-  color: black;
-  padding: 5px 15px;
-  border-radius: 5px;
-  border: 2px solid #717171;
-}
-
 /* Hide the default checkbox */
 
 .shoe-size input[type="checkbox"] {
@@ -1740,6 +1734,11 @@ footer .footer-links a:nth-last-child(-n+1){
   color: rgb(55 65 81 / var(--tw-text-opacity));
 }
 
+.hover\:text-gray-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(31 41 55 / var(--tw-text-opacity));
+}
+
 .hover\:text-slate-900:hover {
   --tw-text-opacity: 1;
   color: rgb(15 23 42 / var(--tw-text-opacity));
@@ -1769,10 +1768,6 @@ footer .footer-links a:nth-last-child(-n+1){
 
   .sm\:my-4 {
     margin-top: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .sm\:mb-4 {
     margin-bottom: 1rem;
   }
 
@@ -1815,10 +1810,6 @@ footer .footer-links a:nth-last-child(-n+1){
     margin-bottom: 1.25rem;
   }
 
-  .md\:mb-5 {
-    margin-bottom: 1.25rem;
-  }
-
   .md\:mt-8 {
     margin-top: 2rem;
   }
@@ -1845,6 +1836,10 @@ footer .footer-links a:nth-last-child(-n+1){
 
   .md\:w-\[30\%\] {
     width: 30%;
+  }
+
+  .md\:w-\[50\%\] {
+    width: 50%;
   }
 
   .md\:w-\[60\%\] {
@@ -2133,11 +2128,6 @@ footer .footer-links a:nth-last-child(-n+1){
 
   .lg\:text-center {
     text-align: center;
-  }
-
-  .lg\:text-2xl {
-    font-size: 1.5rem;
-    line-height: 2rem;
   }
 
   .lg\:text-3xl {

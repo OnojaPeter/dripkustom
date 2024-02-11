@@ -36,8 +36,9 @@ async function homeController (req, res) {
             messages: req.flash('error'), 
             shoes, 
             cartItems: cart,
+            // requireLogin: false
         });
-        // console.log(req.user);
+        // console.log(shoes);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('An error occurred');

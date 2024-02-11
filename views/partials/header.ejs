@@ -309,23 +309,39 @@
                 mobileMenu.classList.toggle("hidden");
             });
 
-            $('.addToCartBtn').on('click', function(){
+            $('.addToCartBtn').on('click', function () {
                 const shoeId = $(this).data('shoe-id');
-                // console.log(shoeId)
-                addToCart(shoeId);
-                // $('#cartReload').load(location.href + ' #cartReload');
-                // console.log("just reloaded"); localStorage.setItem("cartItems", cartItems);
+                console.log(shoeId);
+                $('#sizeSelectionModal').removeClass('hidden');
+
+                $('#sizeSelectionModal').data('shoe-id', shoeId);
             });
-            function addToCart(shoeId){
-                $.ajax({
-                    url: '/add-to-cart',
-                    method: 'POST',
-                    data: { shoeId: shoeId },
-                    success: function(response){
-                        showNotification('Item added to cart!');
-                        $('#cartReload').load(location.href + ' #cartReload');
-                    }
-                });
+
+            // Event listener for "Add to Cart" button in the size selection modal
+            $('#addToCartBtnInModal').on('click', function () {
+                const shoeId = $('#sizeSelectionModal').data('shoe-id');
+                console.log(shoeId);
+                const selectedSize = $('#sizeDropdown').val(); // Retrieve selected size from the dropdown
+                addToCart(shoeId, selectedSize);
+            });
+
+            // Function to add the item to the cart with the selected size
+            function addToCart(shoeId, selectedSize) {
+            $.ajax({
+                url: '/add-to-cart',
+                method: 'POST',
+                data: { shoeId: shoeId, size: selectedSize },
+                success: function (response) {
+                    // console.log('added', selectedSize)
+                showNotification('Item added to cart!');
+                $('#cartReload').load(location.href + ' #cartReload');
+                // const cartItems = getCartItemsFromCookies();
+                        // console.log(cartItems);
+                // You can update the cart display or perform other actions after successful addition
+                // Close the modal
+                $('#sizeSelectionModal').addClass('hidden');
+                }
+            });
             }
             function showNotification(message) {
                 const notification = document.getElementById('notification');
@@ -364,33 +380,33 @@
                 // $('#cartReload').load(location.href + ' #cartReload');
             });
 
-            document.getElementById('checkout').addEventListener('click', function(event) {
-                const target = event.target;
-                console.log(target);
+            // document.getElementById('checkout').addEventListener('click', function(event) {
+            //     const target = event.target;
+            //     console.log(target);
 
-                // Check if the clicked element is an increase or decrease button
-                if (target.classList.contains('increase-btn')) {
-                    const shoeId = target.dataset.shoeId;
-                    const spanQuantity = document.getElementById(`quantity_${shoeId}`);
-                    const currentQuantity = parseInt(spanQuantity.textContent);
+            //     // Check if the clicked element is an increase or decrease button
+            //     if (target.classList.contains('increase-btn')) {
+            //         const shoeId = target.dataset.shoeId;
+            //         const spanQuantity = document.getElementById(`quantity_${shoeId}`);
+            //         const currentQuantity = parseInt(spanQuantity.textContent);
 
-                    // Increase quantity
-                    spanQuantity.textContent = currentQuantity + 1;
-                    updateQuantity(shoeId, currentQuantity + 1);
-                } else if (target.classList.contains('decrease-btn')) {
-                    const shoeId = target.dataset.shoeId;
-                    const spanQuantity = document.getElementById(`quantity_${shoeId}`);
-                    const currentQuantity = parseInt(spanQuantity.textContent);
+            //         // Increase quantity
+            //         spanQuantity.textContent = currentQuantity + 1;
+            //         updateQuantity(shoeId, currentQuantity + 1);
+            //     } else if (target.classList.contains('decrease-btn')) {
+            //         const shoeId = target.dataset.shoeId;
+            //         const spanQuantity = document.getElementById(`quantity_${shoeId}`);
+            //         const currentQuantity = parseInt(spanQuantity.textContent);
 
-                    // Decrease quantity only if it's greater than 1
-                    if (currentQuantity > 1) {
-                        spanQuantity.textContent = currentQuantity - 1;
+            //         // Decrease quantity only if it's greater than 1
+            //         if (currentQuantity > 1) {
+            //             spanQuantity.textContent = currentQuantity - 1;
 
-                        updateQuantity(shoeId, currentQuantity - 1);
-                    }
-                } 
-                // $('#checkout').load(location.href + ' #checkout');
-            });
+            //             updateQuantity(shoeId, currentQuantity - 1);
+            //         }
+            //     } 
+            //     // $('#checkout').load(location.href + ' #checkout');
+            // });
 
 
             function updateQuantity(shoeId, newQuantity) {
@@ -428,7 +444,7 @@
                 removeFromCart(shoeId, selectedSize);
             });
             function removeFromCart(shoeId, selectedSize){
-                // console.log("inside remove from cart function ajax side");
+                console.log("inside remove from cart function ajax side");
                 $.ajax({
                     url: '/remove-from-cart',
                     method: 'POST',
