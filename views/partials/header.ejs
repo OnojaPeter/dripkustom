@@ -127,7 +127,7 @@
                 </svg>
             </button>
 
-          <form action="/auth/login" method="post">
+          <form action="/auth/login" method="post" id="loginForm">
             <label for="loginEmail" class="block mb-2">Email:</label>
             <input type="text" id="loginEmail" name="loginEmail" class="block w-full border rounded-md mb-4 p-2" required>
       
@@ -199,7 +199,8 @@
                             </div>
                         </div>
                     <% }); %>
-                    <a href="checkout" class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg"><button class="w-[100%] ">CHECKOUT</button></a>
+                    <button class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg w-[100%]" id="checkoutButton">CHECKOUT</button>
+                    <!-- <a href="checkout" class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg"><button class="w-[100%] ">CHECKOUT</button></a> -->
                 <% } else { %>
                 <div class="flex justify-center">
                     <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
@@ -218,6 +219,53 @@
     </div>
 
 
+    <script>
+        $(document).ready(function () {
+            // Add click event listener to checkout button
+            $(document).on('click', '#checkoutButton', function() {
+                // alert('click')
+                // Check if user is authenticated
+                var isAuthenticated = '<%= isAuthenticated %>' === 'true'; // Assuming isAuthenticated is passed to the template
+
+                // Show the login modal if user is not authenticated
+                if (!isAuthenticated) {
+                    console.log('not logged in');
+                    $('#cartModal').addClass('hidden');
+                    $('#loginModal').removeClass('hidden');
+                    // You may need to add code here to properly initialize the modal if it's not already initialized
+                } else {
+                    console.log('logged in');
+                    // Proceed with checkout if user is authenticated
+                    window.location.href = '/checkout';
+                }
+            });
+
+            $('#loginForm').submit(function (event) {
+                event.preventDefault();
+
+                // Perform login process here
+                // console.log('login success to check');
+
+                // Redirect to checkout page after successful login
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: $(this).attr('method'),
+                    data: $(this).serialize(),
+                    success: function () {
+                        // alert('click')
+                        console.log('login success to check');
+                        // Redirect to checkout page after successful login
+                        window.location.href = '/checkout';
+                    },
+                    error: function () {
+                        // Handle login error here
+                        alert('Login failed. Please try again.');
+                    }
+                });
+            });
+        });
+
+    </script>
     <script>
         const loginButton = document.getElementById('loginButton');
         const desktopLoginButton = document.getElementById('desktopLoginButton');

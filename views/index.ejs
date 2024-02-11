@@ -635,7 +635,8 @@
     <script>
         $(document).ready(function () {
             // Add click event listener to checkout button
-            $('#checkoutButton').click(function () {
+            $(document).on('click', '#checkoutButton', function() {
+                // alert('click')
                 // Check if user is authenticated
                 var isAuthenticated = '<%= isAuthenticated %>' === 'true'; // Assuming isAuthenticated is passed to the template
 
