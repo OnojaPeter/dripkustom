@@ -278,42 +278,31 @@
                             <h1 class="text-start font-semibold lg:text-6xl text-3xl mb-6 mx-4 lg:mx-0">
                                 BESTSELLERS
                             </h1>
-                        </div>
-                        <div class="owl-stage">                
-                          <article class="owl-item" style="border-radius: 10px;">
-                            <figure>
-                                <div class="slider-card">
-                                    <div class="slider-shoe">
-                                        <img src="/public/images/3fe053f71dad15b98b32b0bb7005f825.jpg" alt="">
-                                    </div>
-                                    <div class="shoe-details flex items-center justify-between px-3 text-white">
-                                        <div class="font-semibold">
-                                            <h3>Air Max</h3>
-                                            <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
-                                        </div>
-                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                                    </div>
-                                </div>  
-                            </figure>
-                          </article>
-                
-                          <article class="owl-item" style="border-radius: 10px;">
-                            <figure>
-                                <div class="slider-card">
-                                    <div class="slider-shoe">
-                                        <img src="/public/images/7d77740b692425fa411ddf2b45825f51.jpg" alt="">
-                                    </div>
-                                    <div class="shoe-details flex items-center justify-between px-3 text-white">
-                                        <div class="font-semibold">
-                                            <h3>Travix</h3>
-                                            <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
-                                        </div>
-                                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                                    </div>
-                                </div>  
-                            </figure>
-                          </article>
-                
+                        </div>                       
+                        <div class="owl-stage">    
+                            <% ShoeBestsellers.forEach(function(shoe) { %>
+                                <article class="owl-item" style="border-radius: 10px;">
+                                    <figure>
+                                        <div class="slider-card">
+                                            <div class="slider-shoe">
+                                                <a href="/shoe/<%= shoe._id %>">
+                                                    <img src="<%= shoe.image %>" alt="">
+                                                </a>                                               
+                                            </div>
+                                            <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                                <div class="font-semibold">
+                                                    <h3><%= shoe.name %></h3>
+                                                    <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
+                                                </div>
+                                                <button style="padding: 10px;" class="addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
+                                                    <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                                                </button>
+                                            </div>
+                                        </div>  
+                                    </figure>
+                                </article>   
+                            <% }); %>         
+                          
                           <article class="owl-item" style="border-radius: 10px;">
                             <figure>
                                 <div class="slider-card">
@@ -785,7 +774,7 @@
 
             $('.addToCartBtn').on('click', function () {
                 const shoeId = $(this).data('shoe-id');
-                console.log(shoeId);
+                // console.log(shoeId);
                 $('#sizeSelectionModal').removeClass('hidden');
 
                 $('#sizeSelectionModal').data('shoe-id', shoeId);
@@ -794,8 +783,9 @@
             // Event listener for "Add to Cart" button in the size selection modal
             $('#addToCartBtnInModal').on('click', function () {
                 const shoeId = $('#sizeSelectionModal').data('shoe-id');
-                console.log(shoeId);
+                // console.log(shoeId);
                 const selectedSize = $('#sizeDropdown').val(); // Retrieve selected size from the dropdown
+                // console.log(selectedSize);
                 addToCart(shoeId, selectedSize);
             });
 

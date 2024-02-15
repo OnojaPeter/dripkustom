@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Shoe = require ("../models/shoes");
+const ShoeBestseller = require ("../models/bestsellers");
 const cookieParser = require('cookie-parser');
 
 
@@ -27,6 +28,8 @@ async function homeController (req, res) {
         }
         // const cart = req.session.cart || {};
         // console.log(req.session.cart);
+        const ShoeBestsellers = await ShoeBestseller.find();
+        // console.log(ShoeBestsellers);
 
         const cartCookie = req.cookies.cart || '{}';
         const cart = JSON.parse(cartCookie);
@@ -35,6 +38,7 @@ async function homeController (req, res) {
             user: req.user, 
             messages: req.flash('error'), 
             shoes, 
+            ShoeBestsellers,
             cartItems: cart,
             // requireLogin: false
         });
