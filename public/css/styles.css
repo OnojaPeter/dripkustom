@@ -41,7 +41,7 @@ main {
     max-width: 1440px;
     margin: 0 auto;
 }
-.footer-content, header {
+.footer-content, .header-content {
     max-width: 1440px;
     margin: 0 auto;
 }
