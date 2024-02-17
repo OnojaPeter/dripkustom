@@ -11,9 +11,9 @@
 </head>
 <body> -->
     <%- include ('partials/header') -%>
-    <main>
-        <section class="thank-you-section h-[80vh] lg:h-[80vh] flex flex-col items-center">
-            <div class="thank-you-blur absolute lg:h-[80vh] h-[80vh]"></div>
+    <main class="overflow-hidden">
+        <section class="thank-you-section h-[80vh] lg:h-[80vh] flex flex-col items-center relative">
+            <div class="thank-you-blur  lg:h-[80vh] h-[80vh]"></div> <!--removed the absolute from this -->
             <div class="absolute text-white w-[90%] mt-10">
                 <h1 class="font-bold text-lg md:text-3xl lg:text-5xl mt-5 md:mt-8 mb-2">THANK YOU FOR YOUR ORDER!</h1>
                 <p class="font-semibold text-sm md:text-2xl lg:text-3xl mb-6">Our manager will contact you shortly with your order details</p>

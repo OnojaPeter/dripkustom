@@ -77,12 +77,12 @@
                         <% if (isAuthenticated) { %>
                             <a class=" px-6 " href="/profile/person" id="profileButton"><span class="font-semibold">My Profile</span></a>
                         <% } else { %>
-                            <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 bg-blue-500 text-white" id="loginButton">
+                            <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="loginButton">
                                 <button class="" >
                                     Login
                                 </button>
                             </a>
-                            <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 bg-blue-500 text-white" id="signupButton">
+                            <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="signupButton">
                                 <button class="" >
                                     Sign-up
                                 </button>
@@ -589,7 +589,7 @@
             <ul class="pt-10  lg:pt-0">
                 <div class="flex justify-center">
                     <a href="/">
-                        <img width="200px" height="60px" src="../public/images/DRIPog.png" alt="drip kuston logo">mx-auto max-w-7xl
+                        <img width="200px" height="60px" src="../public/images/DRIPog.png" alt="drip kuston logo">
                     </a>
                 </div>
                 <div class="h-[70px]">
@@ -640,13 +640,8 @@
                     // Proceed with checkout if user is authenticated
                     window.location.href = '/checkout';
                 }
-            });
-
-            $('#loginForm').submit(function (event) {
+                $('#loginForm').submit(function (event) {
                 event.preventDefault();
-
-                // Perform login process here
-                // console.log('login success to check');
 
                 // Redirect to checkout page after successful login
                 $.ajax({
@@ -654,7 +649,7 @@
                     method: $(this).attr('method'),
                     data: $(this).serialize(),
                     success: function () {
-                        // console.log('login success to check');
+                        // alert('login success to check');
                         // Redirect to checkout page after successful login
                         window.location.href = '/checkout';
                     },
@@ -663,6 +658,7 @@
                         alert('Login failed. Please try again.');
                     }
                 });
+            });
             });
         });
 

@@ -45,8 +45,9 @@
                         <% }); %>
                     <% } %>
                 </div>
+               
                 
-                <div class="mt-5">
+                <!-- <div class="mt-5">
                     <fieldset class="border border-gray-300 p-4 rounded-md">
                         <legend class="text-lg font-semibold">PERSONAL DATA</legend>
                         
@@ -106,6 +107,43 @@
                             </div>
                         </div>
                     </fieldset>
+                </div> -->
+                <div id="addressContainer" class="rounded-md shadow-md">
+                        <div class="shadow rounded-md mt-5">
+                            <div class="bg-gray-700 text-white rounded-t-md">
+                                <div class="flex justify-between font-semibold text-lg mx-10 py-4">
+                                    <h3>Choose Your Address Information</h3>
+                                    <a href="/profile/edit-address?returnTo=/checkout" class="flex items-center"><span>Add New Address</span></a>
+                                </div>                 
+                            </div>
+                            <% address.forEach(function(address, index) { %>
+                                <div class="flex flex-col mx-10 py-5 gap-y-4">
+                                    <label class="address-item">
+                                        <input type="radio" name="selected-address" value="<%= address.id %>" id="address<%= index %>">
+                                        <span class="address-info">
+                                            <span class="mr-2">Address:</span>
+                                            <span id="addressContent<%= index %>"><%= address.streetAddress %>, <%= address.city %>, <%= address.state %>, <%= address.country %></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <script>
+                                    var textElement = document.getElementById('addressContent<%= index %>');
+                                    // Get the text content
+                                    var textContent = textElement.textContent;
+
+                                    // Check if the text exceeds 100 words
+                                    if (textContent.length > 100) {
+                                        // Trim the text to 100 words
+                                        var trimmedText = textContent.substring(0, 100);
+                                        // Add "..." at the end
+                                        trimmedText += '...';
+                                        // Update the text content
+                                        textElement.textContent = trimmedText;
+                                    }
+                                </script>
+                            <% }); %>
+                        </div>
+                        
                 </div>
             </div>
 
@@ -135,24 +173,21 @@
                     <div class="mb-4">
                         <ul class="" id="">
                             <li>
-                                <input type="radio" id="sortCheckbox1" name="sortCheckboxes">
-                                <label for="sortCheckbox1">Paypal</label>                    </li>
-                            <li>
-                                <input type="radio" id="sortCheckbox2" name="sortCheckboxes">
-                                <label for="sortCheckbox2">Payoneer</label>
+                                <input type="radio" id="sortCheckbox1" name="sortCheckboxes" value="paystack">
+                                <label for="sortCheckbox1">Paystack</label>                    
                             </li>
                             <li>
-                                <input type="radio" id="sortCheckbox3" name="sortCheckboxes">
+                                <input type="radio" id="sortCheckbox3" name="sortCheckboxes" value="stripe">
                                 <label for="sortCheckbox3">Stripe</label>
                             </li>
-                            <li><button id="button">Stripe Checkout</button></li>
-                            <li><button id="paystackForm">Paystack Checkout</button></li>
+                            <!-- <li><button id="button">Stripe Checkout</button></li>
+                            <li><button id="paystackForm">Paystack Checkout</button></li> -->
                         </ul>
                     </div>
 
-                    <a href="" class=" font-semibold text-lg flex justify-center bg-green-500 hover:bg-green-600 rounded-md md:rounded-lg">
-                        <button class=" py-2">Confirm Order</button>                       
-                    </a>
+                    <!-- <a href="" class=" font-semibold text-lg flex justify-center bg-green-500 hover:bg-green-600 rounded-md md:rounded-lg"> -->
+                        <button id="confirmOrderBtn" class="w-full py-2 font-semibold text-lg flex justify-center bg-green-500 hover:bg-green-600 rounded-md md:rounded-lg">Confirm Order</button>                       
+                    <!-- </a> -->
                     
                 </div>
 
@@ -184,7 +219,7 @@
         return [];
         }
         const cartItems = getCartItemsFromCookies();
-        console.log(cartItems);
+        // console.log(cartItems);
         function calculateTotalAmount(cartItems) {
             let totalAmount = 0;
 
@@ -201,68 +236,147 @@
         }
 
         const totalAmount = calculateTotalAmount(cartItems);
-        console.log(totalAmount); // Output the total amount
+        // console.log(totalAmount);
 
-        
-        button.addEventListener("click", () => {
-            const cartItems = getCartItemsFromCookies();
-            console.log(cartItems);
+        document.getElementById('confirmOrderBtn').addEventListener('click', function(event) {
+            event.preventDefault();
+            const userEmail = '<%= userEmail %>' //!!!use this for the email in paystack and stripe as email!!!!
+            // console.log(userEmail);
 
-            fetch("/create-checkout-session", {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
+            // Check if any address is selected
+            var selectedAddress = document.querySelector('input[name="selected-address"]:checked');
+            if (!selectedAddress) {
+                alert('Please select a delivery address.');
+                return; // Prevent further execution
+            }
+            // Check if any payment method is selected
+            var selectedPaymentMethod = document.querySelector('input[name="sortCheckboxes"]:checked');
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method.');
+                return; // Prevent further execution
+            }
+
+            selectedAddress = selectedAddress.value;
+            selectedPaymentMethod = selectedPaymentMethod.value;
+
+            if(selectedPaymentMethod === 'stripe') {
+                // alert('striped')
+                const cartItems = getCartItemsFromCookies();
+                // console.log(cartItems);
+
+                fetch("/create-checkout-session", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                    items: cartItems,
+                    }),
+                })
+                    .then(res => {
+                    if (res.ok) return res.json()
+                    return res.json().then(json => Promise.reject(json)), clearCartCookies();
+                    })
+                    .then(({ url }) => {
+                    window.location = url
+                    clearCartCookies(); //clear the cart cookies after successful payment
+                    })
+                    .catch(e => {
+                    console.error(e.error)
+                    })
+            } 
+
+            if(selectedPaymentMethod === 'paystack') {
+                let handler = PaystackPop.setup({
+                key: 'pk_test_2dd31b309b9af1abb060c66bb52c2c4b8525ee6b', // Paystack public key
+                email: 'oonojapeter@gmail.com', //!!!use the userEmail passed through ejs for this mail!!!!
+                amount: totalAmount * 100, //use the conversion here
+                // ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                // label: "Optional string that replaces customer email"
+                onClose: function(){
+                // alert('Window closed.');
                 },
-                body: JSON.stringify({
-                items: cartItems,
-                }),
-            })
-                .then(res => {
-                if (res.ok) return res.json()
-                return res.json().then(json => Promise.reject(json)), clearCartCookies();
-                })
-                .then(({ url }) => {
-                window.location = url
-                clearCartCookies(); //clear the cart cookies after successful payment
-                })
-                .catch(e => {
-                console.error(e.error)
-                })
-        })
+                // callback: function(response){
+                //   let message = 'Payment complete! Reference: ' + response.reference;
+                //   alert(message);
+                // }
+                callback: function(response){
+                            if (response.status === 'success') {
+                                // alert('success');
+                                // Redirect to the Thank You page
+                                window.location.href = '/thank-you';
+                                clearCartCookies();
+                            } else {
+                                alert('Payment failed. Please try again.');
+                            }
+                }
+            });
+
+            handler.openIframe();
         
-        const paymentForm = document.getElementById('paystackForm');
-        paystackForm.addEventListener("click", payWithPaystack, false);
-
-        function payWithPaystack(e) {
-        e.preventDefault();
-
-        let handler = PaystackPop.setup({
-            key: 'pk_test_2dd31b309b9af1abb060c66bb52c2c4b8525ee6b', // Replace with your public key
-            email: 'oonojapeter@gmail.com', //document.getElementById("email-address").value,
-            amount: totalAmount * 100, //document.getElementById("amount").value * 100,
-            ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-            // label: "Optional string that replaces customer email"
-            onClose: function(){
-            alert('Window closed.');
-            },
-            // callback: function(response){
-            //   let message = 'Payment complete! Reference: ' + response.reference;
-            //   alert(message);
-            // }
-            callback: function(response){
-                        if (response.status === 'success') {
-                            // alert('success');
-                            // Redirect to the Thank You page
-                            window.location.href = '/thank-you';
-                            clearCartCookies();
-                        } else {
-                            alert('Payment failed. Please try again.');
-                        }
             }
         });
 
-        handler.openIframe();
-        }
+        
+        // button.addEventListener("click", () => {
+        //     const cartItems = getCartItemsFromCookies();
+        //     console.log(cartItems);
+
+        //     fetch("/create-checkout-session", {
+        //         method: "POST",
+        //         headers: {
+        //         "Content-Type": "application/json",
+        //         },
+        //         body: JSON.stringify({
+        //         items: cartItems,
+        //         }),
+        //     })
+        //         .then(res => {
+        //         if (res.ok) return res.json()
+        //         return res.json().then(json => Promise.reject(json)), clearCartCookies();
+        //         })
+        //         .then(({ url }) => {
+        //         window.location = url
+        //         clearCartCookies(); //clear the cart cookies after successful payment
+        //         })
+        //         .catch(e => {
+        //         console.error(e.error)
+        //         })
+        // })
+        
+        // const paymentForm = document.getElementById('paystackForm');
+        // paystackForm.addEventListener("click", payWithPaystack, false);
+
+        // function payWithPaystack(e) {
+        // e.preventDefault();
+
+        // let handler = PaystackPop.setup({
+        //     key: 'pk_test_2dd31b309b9af1abb060c66bb52c2c4b8525ee6b', // Replace with your public key
+        //     email: 'oonojapeter@gmail.com', //document.getElementById("email-address").value,
+        //     amount: totalAmount * 100, //document.getElementById("amount").value * 100,
+        //     ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+        //     // label: "Optional string that replaces customer email"
+        //     onClose: function(){
+        //     alert('Window closed.');
+        //     },
+        //     // callback: function(response){
+        //     //   let message = 'Payment complete! Reference: ' + response.reference;
+        //     //   alert(message);
+        //     // }
+        //     callback: function(response){
+        //                 if (response.status === 'success') {
+        //                     // alert('success');
+        //                     // Redirect to the Thank You page
+        //                     window.location.href = '/thank-you';
+        //                     clearCartCookies();
+        //                 } else {
+        //                     alert('Payment failed. Please try again.');
+        //                 }
+        //     }
+        // });
+
+        // handler.openIframe();
+        // }
 
         function clearCartCookies() {
             document.cookie = 'cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -270,7 +384,7 @@
 
         document.getElementById('checkout').addEventListener('click', function(event) {
                 const target = event.target;
-                console.log(target);
+                // console.log(target);
 
                 // Check if the clicked element is an increase or decrease button
                 if (target.classList.contains('increase-btn')) {
@@ -293,7 +407,6 @@
                         updateQuantity(shoeId, currentQuantity - 1);
                     }
                 } 
-                // $('#checkout').load(location.href + ' #checkout');
         });
     </script>
 </body>

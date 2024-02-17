@@ -238,29 +238,24 @@
                     // Proceed with checkout if user is authenticated
                     window.location.href = '/checkout';
                 }
-            });
 
-            $('#loginForm').submit(function (event) {
-                event.preventDefault();
+                $('#loginForm').submit(function (event) {
+                    event.preventDefault();
 
-                // Perform login process here
-                // console.log('login success to check');
-
-                // Redirect to checkout page after successful login
-                $.ajax({
-                    url: $(this).attr('action'),
-                    method: $(this).attr('method'),
-                    data: $(this).serialize(),
-                    success: function () {
-                        // alert('click')
-                        console.log('login success to check');
-                        // Redirect to checkout page after successful login
-                        window.location.href = '/checkout';
-                    },
-                    error: function () {
-                        // Handle login error here
-                        alert('Login failed. Please try again.');
-                    }
+                    // Redirect to checkout page after successful login
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: $(this).attr('method'),
+                        data: $(this).serialize(),
+                        success: function () {
+                            // console.log('login success to check');
+                            // Redirect to checkout page after successful login
+                            window.location.href = '/checkout';
+                        },
+                        error: function () {
+                            alert('Login failed. Please try again.');
+                        }
+                    });
                 });
             });
         });

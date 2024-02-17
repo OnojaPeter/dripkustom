@@ -2,7 +2,7 @@ const Address = require ("../models/address")
 const User = require('../models/user');
 
 async function person (req,res) {
-    try {        
+    try {     
         const cartCookie = req.cookies.cart || '{}';
         const cart = JSON.parse(cartCookie);
         res.render("profile", {cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
@@ -42,9 +42,9 @@ async function editPassword (req,res) {
 async function address (req, res) {
     try {
         const userId = req.user._id;
-        // const addressDetails = await Address.find();
+        // console.log(userId);
         const userWithAddresses = await User.findById(userId).populate('addresses');
-        console.log(userWithAddresses);
+        // console.log(userWithAddresses);
 
         if (!userWithAddresses) {
             // Handle the case where the user is not found
@@ -88,6 +88,8 @@ async function editAddressPost (req, res) {
         const addressId = req.params.addressId;
         // console.log(addressId);
         let addressDetails;
+        const returnTo = req.query.returnTo;
+        console.log(returnTo);
 
         if (addressId) {
             // Logic to update existing address
@@ -109,7 +111,12 @@ async function editAddressPost (req, res) {
             }
             // console.log(user)
         }
+        if (returnTo) {
+            // console.log('here')
+            res.redirect(returnTo); // Redirect to the specified URL (e.g., /checkout)
+        } else {
         res.redirect("/profile/address");
+        }
 
     } catch (error) {
         console.error('Error handling address details:', error);

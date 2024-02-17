@@ -290,24 +290,10 @@ footer .footer-links a:nth-last-child(-n+1){
   margin-right: 10px;
 }
 
-/* Style for checked label */
-.shoe-size input[type="checkbox"]:checked + label {
-  border: 2px solid #717171;
-}
-
-
-/* Checkout */
-/* .confirm-order-btn button {
-  background-color: #717171;
-  width: 90%;
-  border-radius: 5px;
-} */
-
-
 /* THANK YOU PAGE */
 .thank-you-section {
   width: 100%;
-  background-image: url(images/header2.jpg);
+  background-image: url(/public/images/header2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
