@@ -54,8 +54,8 @@ app.use(
 
 
 app.set('view engine', 'ejs');
-// const uri = 'mongodb://127.0.0.1:27017/drip';
-const uri = process.env.MONGODB_URI;
+const uri = 'mongodb://127.0.0.1:27017/drip';
+// const uri = process.env.MONGODB_URI;
 
 mongoose.connect(uri);
 const db = mongoose.connection;
@@ -66,6 +66,7 @@ db.once('open', () => {
 });
 
 const User = require('./models/user');
+const { Console } = require('console');
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -124,6 +125,14 @@ app.use('/update-quantity', updatequantityRoute);
 app.use('/remove-from-cart', removefromcartRoute);
 app.use("/profile", profileRoute);
 app.use('/auth', authRoutes);
+
+app.get('/admin', async (req,res) =>{
+  try {
+    res.render('adminHomepage');
+  } catch (error) {
+    console.error(error);
+  }
+})
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
