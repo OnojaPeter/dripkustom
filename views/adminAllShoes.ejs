@@ -15,14 +15,14 @@
 </style>
 
 <main>
-    <button id="myBtn" class="rounded-md shadow-md p-3 my-5 border-indigo-300 border-2 hover:bg-indigo-200">Add Shoe to Shoe Collections</button>
+    <button id="myBtn" class="rounded-md shadow-md p-3 my-10 ml-4 border-indigo-300 border-2 hover:bg-indigo-200">Add Shoe to Shoe Collections</button>
 
     <section>
         <div class="" id="shoeContainer">
 
             <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3 px-4 md:px-0" id="shoeCard">
                 <% shoes.forEach(function(shoe) { %>
-                    <div class="card w-[48%] md:w-[30%] lg:w-[24%] ">
+                    <div class="card ">
                             <img class="h-32 lg:h-40" src="<%= shoe.image %>" alt="Product Image">
 
                         <div class="flex items-center justify-between">
@@ -43,7 +43,7 @@
     </section>
 
     <div id="myModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
-        <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
+        <div class="bg-white p-8 rounded-lg shadow-md w-3/5 md:w-1/2">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-semibold">Add Shoe to Shoe Container</h2>
             <button id="closeModal" class="text-gray-500 hover:text-gray-700 focus:outline-none">

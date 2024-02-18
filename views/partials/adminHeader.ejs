@@ -12,11 +12,6 @@
         .sidebar-toggle {
             display: none; /* Hide by default on larger screens */
         }
-        /* Show sidebar when checkbox is checked */
-        #sidebar-toggle:checked + .sidebar {
-            transform: translateX(0);
-        }
-        /* Hide sidebar on smaller screens */
         @media (max-width: 768px) {
             .sidebar-toggle {
                 display: block;
@@ -64,13 +59,50 @@
         </div>
     </aside>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             $('#sidebar-toggle').click(function() {
                 $('.sidebar').toggleClass('hidden');
                 $('#sidebar-toggle').toggleClass('text-white');
             });
         });
+    </script> -->
+    <script>
+        $(document).ready(function() {
+            function isSidebarHidden() {
+                // Check if the sidebar element is hidden
+                return $('.sidebar').hasClass('hidden');
+            }
+    
+            // Example usage
+            $('#sidebar-toggle').click(function() {
+                // Toggle the hidden class on the sidebar
+                $('.sidebar').toggleClass('hidden');
+                $('#sidebar-toggle').toggleClass('text-white');
+                // Update the card width based on sidebar visibility
+                updateCardWidth();
+            });
+    
+            // Update the card width based on sidebar visibility
+            function updateCardWidth() {
+                // Get the card elements
+                var cards = $('.card');
+                // Check if the sidebar is hidden
+                if (isSidebarHidden()) {
+                    // Adjust card width when sidebar is hidden
+                    cards.addClass('w-[48%] sm:w-[65%] md:w-[60%] lg:w-[50%]');
+                    cards.removeClass('w-[60%] sm:w-[45%] md:w-[30%] lg:w-[24%]');
+                } else {
+                    // Reset card width when sidebar is visible
+                    cards.addClass('w-[60%] sm:w-[45%] md:w-[30%] lg:w-[24%]');
+                    cards.removeClass('w-[48%] sm:w-[65%] md:w-[60%] lg:w-[50%]');
+                }
+            }
+            
+            // Call updateCardWidth function on page load
+            updateCardWidth();
+        });
     </script>
+    
 </body>
 </html>
