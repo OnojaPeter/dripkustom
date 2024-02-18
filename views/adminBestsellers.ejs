@@ -1,0 +1,99 @@
+<%- include ('partials/adminHeader') -%>
+<style>
+    .collections .card {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .collections .card img {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-bottom: 12px;
+    }
+</style>
+
+<main>
+    <button id="myBtn" class="rounded-md shadow-md p-3 my-5 border-indigo-300 border-2 hover:bg-indigo-200">Add Shoe to Best-sellers slider</button>
+
+    <section>
+        <div class="" id="shoeContainer">
+
+            <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3 px-4 md:px-0" id="shoeCard">
+                <% bestSellers.forEach(function(shoe) { %>
+                    <div class="card w-[48%] md:w-[30%] lg:w-[24%] ">
+                            <img class="h-32 lg:h-40" src="<%= shoe.image %>" alt="Product Image">
+
+                        <div class="flex items-center justify-between">
+                            <div class="font-semibold">
+                                <h3><%= shoe.name %></h3>
+                                <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
+                            </div>
+                            <!-- Edit and delete buttons -->
+                            <div class="flex gap-2">
+                                <a href="/admin/edit/<%= shoe._id %>" class="text-blue-500 hover:text-blue-700">Edit</a>
+                                <button class="text-red-500 hover:text-red-700" onclick="deleteShoe('<%= shoe._id %>')">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>            
+        </div>
+    </section>
+    
+    <div id="myModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
+        <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Add Shoe to Best-sellers slider</h2>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          
+          <form id="addShoeForm" action="uploadBestseller" method="post">
+            <div class="mb-4">
+              <label for="imageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>
+              <input type="text" id="imageUrl" name="imageUrl" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md border-2">
+            </div>
+            <div class="mb-4">
+              <label for="shoeName" class="block text-sm font-medium text-gray-700">Shoe Name</label>
+              <input type="text" id="shoeName" name="shoeName" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md border-2">
+            </div>
+            <div class="mb-4">
+              <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+              <input type="number" id="price" name="price" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md border-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Add Shoe</button>
+          </form>
+        </div>
+    </div>
+      
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementById("closeModal");
+    
+        btn.addEventListener('click', function () {
+        modal.classList.add('flex');
+        modal.classList.remove('hidden');
+        });
+    
+        span.addEventListener('click', function () {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+        });
+    
+        window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+        });
+    });
+</script>

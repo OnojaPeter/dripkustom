@@ -27,6 +27,7 @@ const addtocartRoute = require('./routes/addtocartRoute')
 const removefromcartRoute = require('./routes/removefromcartRoute')
 const updatequantityRoute = require('./routes/updatequantityRoute')
 const profileRoute = require('./routes/profileRoute')
+const adminRoute = require('./routes/adminRoute')
 
 const app = express();
 app.use(cookieParser());
@@ -125,14 +126,7 @@ app.use('/update-quantity', updatequantityRoute);
 app.use('/remove-from-cart', removefromcartRoute);
 app.use("/profile", profileRoute);
 app.use('/auth', authRoutes);
-
-app.get('/admin', async (req,res) =>{
-  try {
-    res.render('adminHomepage');
-  } catch (error) {
-    console.error(error);
-  }
-})
+app.use('/admin', adminRoute);
 
 app.post("/create-checkout-session", async (req, res) => {
   try {

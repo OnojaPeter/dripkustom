@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" 
+    integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
+    <title>Drip Kustom Admin</title>
+    <style>
+        .sidebar-toggle {
+            display: none; /* Hide by default on larger screens */
+        }
+        /* Show sidebar when checkbox is checked */
+        #sidebar-toggle:checked + .sidebar {
+            transform: translateX(0);
+        }
+        /* Hide sidebar on smaller screens */
+        @media (max-width: 768px) {
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                left: 1rem;
+                z-index: 9999;
+            }
+            .sidebar {
+                width: 90%; /* Expand sidebar to 90% on smaller screens */
+                transition: transform 0.3s ease;
+            }
+        }
+    </style>
+</head>
+<body class="flex h-screen">
+    <!-- Hamburger Menu Toggle -->
+    <label for="sidebar-toggle" class="block cursor-pointer md:hidden">
+        <svg id="sidebar-toggle" class="w-10 h-10 text-white fill-current absolute pl-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3 5a1 1 0 0 1 1-1h16a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h10a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm0 6a1 1 0 0 1 1-1h16a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1z"/>
+        </svg>
+    </label>
+    <!-- Sidebar -->
+    <aside class="w-2/5 md:w-1/5 lg:w-auto lg:block bg-gray-800 text-white sidebar">
+        
+        <div class="p-4 pt-8">
+            <h1 class="text-xl font-bold mb-2">Dashboard</h1>
+            <!-- Navigation links -->
+            <nav>
+                <ul>
+                    <li class="mb-2">
+                        <a href="/admin/bestsellers" class="block px-2 py-2 hover:bg-gray-700">Bestsellers</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/admin/all-shoes" class="block px-2 py-2 hover:bg-gray-700">Shoe Collections</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/admin/orders" class="block px-2 py-2 hover:bg-gray-700">Orders</a>
+                    </li>
+                    <li>
+                        <a href="/auth/logout" class="block px-2 py-2 hover:bg-gray-700">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <script>
+        $(document).ready(function() {
+            $('#sidebar-toggle').click(function() {
+                $('.sidebar').toggleClass('hidden');
+                $('#sidebar-toggle').toggleClass('text-white');
+            });
+        });
+    </script>
+</body>
+</html>
