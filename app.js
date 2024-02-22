@@ -158,6 +158,16 @@ app.post("/create-checkout-session", async (req, res) => {
   }
 });
 
+app.post('/payment-success', (req, res) => {
+  const { reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod } = req.body;
+  // console.log('Payment successful. Reference:', reference);
+  console.log('ref:', reference);
+  // console.log('Total Amount:',totalAmount);
+
+  // Here, you can process the payment details, update the order status, and send items to the user
+
+  res.status(200).send('Payment details received successfully.');
+});
 
 
 app.listen(PORT, () => {

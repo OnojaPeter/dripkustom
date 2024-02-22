@@ -238,7 +238,7 @@
         const totalAmount = calculateTotalAmount(cartItems);
         // console.log(totalAmount);
 
-        document.getElementById('confirmOrderBtn').addEventListener('click', function(event) {
+        document.getElementById('confirmOrderBtn').addEventListener('click', async function(event) {
             event.preventDefault();
             const userEmail = '<%= userEmail %>' //!!!use this for the email in paystack and stripe as email!!!!
             // console.log(userEmail);
@@ -287,35 +287,70 @@
             } 
 
             if(selectedPaymentMethod === 'paystack') {
-                let handler = PaystackPop.setup({
-                key: 'pk_test_2dd31b309b9af1abb060c66bb52c2c4b8525ee6b', // Paystack public key
-                email: 'oonojapeter@gmail.com', //!!!use the userEmail passed through ejs for this mail!!!!
-                amount: totalAmount * 100, //use the conversion here
-                // ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                // label: "Optional string that replaces customer email"
-                onClose: function(){
-                // alert('Window closed.');
-                },
-                // callback: function(response){
-                //   let message = 'Payment complete! Reference: ' + response.reference;
-                //   alert(message);
-                // }
-                callback: function(response){
-                            if (response.status === 'success') {
-                                // alert('success');
-                                // Redirect to the Thank You page
-                                window.location.href = '/thank-you';
-                                clearCartCookies();
-                            } else {
-                                alert('Payment failed. Please try again.');
-                            }
-                }
-            });
+                try {
+                    const userEmail = 'oonojapeter@gmail.com';
+                    // console.log(cartItems);
+                    let handler = PaystackPop.setup({
+                        key: 'pk_test_2dd31b309b9af1abb060c66bb52c2c4b8525ee6b', // Paystack public key
+                        email: userEmail, //!!!use the userEmail passed through ejs for this mail!!!!
+                        amount: totalAmount * 100, //use the conversion here
+                        // ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                        // label: "Optional string that replaces customer email"
+                        onClose: function(){
+                        // alert('Window closed.');
+                        },
+                        // callback: function(response){
+                        //   let message = 'Payment complete! Reference: ' + response.reference;
+                        //   alert(message);
+                        // }
+                        callback: function(response){
+                                    if (response.status === 'success') {
+                                        
+                                        // console.log('response from callback')
+                                        // console.log('ref:', response.reference );
+                                        // console.log('payment method:', selectedPaymentMethod);
+                                        sendPaymentDetails(response.reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod);
+                                        // Redirect to the Thank You page
+                                        window.location.href = '/thank-you';
+                                        clearCartCookies();
+                                    } else {
+                                        alert('Payment failed. Please try again.');
+                                    }
+                        }
+                    });
 
-            handler.openIframe();
+                    handler.openIframe();
         
+                } catch (error) {
+                    console.error('Error processing payment:', error);
+                }
+
+
             }
+            
         });
+
+        async function sendPaymentDetails(reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod) {
+            try {
+                const paymentDetails = { reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod };
+                // console.log('inside sendPaymentDetails:', paymentDetails);
+                const response = await fetch('/payment-success', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(paymentDetails)
+                });
+                
+                if (response.ok) {
+                    console.log('Payment details sent to server successfully.');
+                } else {
+                    console.error('Failed to send payment details to server.');
+                }
+            } catch (error) {
+                console.error('Error sending payment details to server:', error);
+            }
+        }
 
         
         // button.addEventListener("click", () => {
