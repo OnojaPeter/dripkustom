@@ -28,6 +28,7 @@ const removefromcartRoute = require('./routes/removefromcartRoute')
 const updatequantityRoute = require('./routes/updatequantityRoute')
 const profileRoute = require('./routes/profileRoute')
 const adminRoute = require('./routes/adminRoute')
+const paymentRoute = require('./routes/paymentRoute')
 
 const app = express();
 app.use(cookieParser());
@@ -127,47 +128,8 @@ app.use('/remove-from-cart', removefromcartRoute);
 app.use("/profile", profileRoute);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoute);
+app.use('/', paymentRoute);
 
-app.post("/create-checkout-session", async (req, res) => {
-  try {
-    // console.log(req.body.items);
-    const itemsArray = Object.values(req.body.items);
-    console.log(itemsArray);
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: itemsArray.map(item => ({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: item.name,
-            images: [item.image],
-          },
-          unit_amount: item.price * 100,
-        },
-        quantity: item.quantity,
-      })),
-      success_url: `${process.env.CLIENT_URL}/thank-you`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
-    });
-
-    res.json({ url: session.url });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.post('/payment-success', (req, res) => {
-  const { reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod } = req.body;
-  // console.log('Payment successful. Reference:', reference);
-  console.log('ref:', reference);
-  // console.log('Total Amount:',totalAmount);
-
-  // Here, you can process the payment details, update the order status, and send items to the user
-
-  res.status(200).send('Payment details received successfully.');
-});
 
 
 app.listen(PORT, () => {

@@ -208,9 +208,19 @@
         // Parse the cookie value to get the cart items
         if (cartCookie) {
             const cartItemsString = decodeURIComponent(cartCookie.split('=')[1]);
+            // console.log('Cart items string:', cartItemsString);
             try {
             const cartItems = JSON.parse(cartItemsString);
-            return cartItems;
+            const cartItemsArray = Object.values(cartItems);
+            // console.log(cartItemsArray);
+            const formattedCartItems = cartItemsArray.map(item => {
+                const { name, price, size, quantity } = item;
+                // console.log('quantity 1:', item.quantity);
+                return { name, price, size, quantity };
+            });
+            return formattedCartItems;
+
+            // return cartItems;
             } catch (error) {
             console.error('Error parsing cart items from cookie:', error);
             }
@@ -222,15 +232,12 @@
         // console.log(cartItems);
         function calculateTotalAmount(cartItems) {
             let totalAmount = 0;
-
-            // Iterate over the values of the cartItems object
-            for (const itemId in cartItems) {
-                if (cartItems.hasOwnProperty(itemId)) {
-                    const item = cartItems[itemId];
-                    // Add the price of the item multiplied by its quantity to the total amount
-                    totalAmount += item.price * item.quantity;
-                }
-            }
+            cartItems.forEach(item => {
+                totalAmount += item.price * item.quantity;
+                // console.log('price:', item.price);
+                // console.log('quantity2:', item.quantity);
+                // console.log(totalAmount);
+            });
 
             return totalAmount;
         }
@@ -288,28 +295,22 @@
 
             if(selectedPaymentMethod === 'paystack') {
                 try {
-                    const userEmail = 'oonojapeter@gmail.com';
+                    const userEmail = 'oonojapeter@gmail.com'; //this should be removed on production and user email through ejs should be used
                     // console.log(cartItems);
                     let handler = PaystackPop.setup({
                         key: 'pk_test_2dd31b309b9af1abb060c66bb52c2c4b8525ee6b', // Paystack public key
                         email: userEmail, //!!!use the userEmail passed through ejs for this mail!!!!
                         amount: totalAmount * 100, //use the conversion here
                         // ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                        // label: "Optional string that replaces customer email"
                         onClose: function(){
                         // alert('Window closed.');
                         },
-                        // callback: function(response){
-                        //   let message = 'Payment complete! Reference: ' + response.reference;
-                        //   alert(message);
-                        // }
                         callback: function(response){
-                                    if (response.status === 'success') {
-                                        
+                                    if (response.status === 'success') {                               
                                         // console.log('response from callback')
                                         // console.log('ref:', response.reference );
                                         // console.log('payment method:', selectedPaymentMethod);
-                                        sendPaymentDetails(response.reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod);
+                                        sendPaymentDetails(response.reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod, cartItems);
                                         // Redirect to the Thank You page
                                         window.location.href = '/thank-you';
                                         clearCartCookies();
@@ -330,9 +331,9 @@
             
         });
 
-        async function sendPaymentDetails(reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod) {
+        async function sendPaymentDetails(reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod, cartItems) {
             try {
-                const paymentDetails = { reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod };
+                const paymentDetails = { reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod, cartItems };
                 // console.log('inside sendPaymentDetails:', paymentDetails);
                 const response = await fetch('/payment-success', {
                     method: 'POST',
