@@ -38,10 +38,14 @@ async function paymentSuccess (req, res) {
   // console.log('Total Amount:',totalAmount);
   try {
     // Create a new order instance
+    function generateOrderNumber() {
+        return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
+    }
     const address = await Address.findById(selectedAddress);
     console.log(address);
 
     const order = new Order({
+      orderNumber : generateOrderNumber(),
       reference: reference,
       userEmail: userEmail,
       totalAmount: totalAmount,

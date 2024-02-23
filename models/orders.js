@@ -1,7 +1,11 @@
 const mongoose = require ('mongoose');
 
 const orderSchema = new mongoose.Schema({
-    reference: {
+      orderNumber: {
+        type: String,
+        unique: true,
+      },
+      reference: {
         type: String,
         required: true
       },
