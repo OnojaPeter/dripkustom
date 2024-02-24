@@ -1,5 +1,6 @@
 const ShoeBestseller = require('../models/bestsellers');
 const Shoes = require('../models/shoes');
+const Order = require('../models/orders');
 
 //GET METHOD
 async function admin (req,res) {
@@ -30,9 +31,10 @@ async function shoes (req,res) {
 
 async function orders (req,res) {
     try {
-      res.render('adminOrders');
+        const order = await Order.find().populate('selectedAddress');
+        res.render('adminOrders', {order});
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
 }
 //GET EDIT_PAGE

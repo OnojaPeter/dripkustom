@@ -42,7 +42,7 @@ async function paymentSuccess (req, res) {
         return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
     }
     const address = await Address.findById(selectedAddress);
-    console.log(address);
+    // console.log(address);
 
     const order = new Order({
       orderNumber : generateOrderNumber(),
