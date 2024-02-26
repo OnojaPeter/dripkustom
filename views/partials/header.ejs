@@ -171,7 +171,7 @@
                 </svg>
             </button>
 
-            <div id="cartReload" style="height: 400px; overflow-y: auto;">
+            <div id="cartReload" class="overflow-y-scroll" style="height: 400px;">
                 <h2 class="font-bold text-2xl">Your cart</h2>
                 <% if (Object.keys(cartItems).length > 0) { %>
                     <% Object.values(cartItems).forEach(function(cartItem) { %>
@@ -199,8 +199,7 @@
                             </div>
                         </div>
                     <% }); %>
-                    <button class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg w-[100%]" id="checkoutButton">CHECKOUT</button>
-                    <!-- <a href="checkout" class="text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md md:rounded-lg"><button class="w-[100%] ">CHECKOUT</button></a> -->
+                    <button class="bottom-0 right-0 absolute text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md w-[100%]" id="checkoutButton">CHECKOUT</button>
                 <% } else { %>
                 <div class="flex justify-center">
                     <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
