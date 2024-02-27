@@ -37,6 +37,26 @@ async function orders (req,res) {
         console.error(error);
     }
 }
+
+async function ordersByOrderNumber(req, res) {
+    const orderNumber = req.params.orderNumber;
+
+    try {
+        // Find the order by orderNumber
+        const order = await Order.findOne({ orderNumber }).populate('selectedAddress');
+        console.log(order);
+
+        if (!order) {
+            return res.status(404).send('Order not found');
+        }
+        res.render('adminOrderNumber', {order});
+        // Return the order if found
+        // res.status(200).json(order);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+}
 //GET EDIT_PAGE
 
 async function editShoePage( req, res) {
@@ -147,6 +167,7 @@ module.exports = {
     bestSellers,
     shoes,
     orders,
+    ordersByOrderNumber,
 
     //post
     editShoePage,

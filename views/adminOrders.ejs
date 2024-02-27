@@ -1,55 +1,83 @@
 <%- include ('partials/adminHeader') -%>
+<style>
+    /* Style for the modal */
+    .modal {
+      display: none;
+    }
+  
+    .modal-content {
+      max-width: 400px;
+    }
+  
+    .close {
+      cursor: pointer;
+    }
+</style>
+  
 
-<main>
-    <button class="rounded-md shadow-md p-3 my-5">Search an order using Order Id</button>
+<main class="w-[100%]">
+    <button id="openModalButton" class="rounded-md shadow-md p-3 my-5">Search an order using Order Id</button>
+    
+    <div id="myModal" class="modal hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex justify-center items-center">
+        <div class="modal-content bg-white mx-auto w-96 p-6 rounded-lg relative">
+          <span id="closeModal" class="close absolute top-0 right-0 p-4">&times;</span>
+          
+          <form id="searchOrderForm">
+            <label for="orderId" class="block mb-2">Order ID:</label>
+            <input type="text" id="orderId" name="orderId" class="w-full p-2 border border-gray-300 rounded-md mb-4">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Search</button>
+          </form>
+        </div>
+    </div>
 
     <section>
-        <div class="md:w-[70%]">
-            <div id="addressContainer">
+        <table class="min-w-full divide-y divide-gray-400">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Order Number</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-900 uppercase tracking-wider">Date Created</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-300">
                 <% order.forEach(function(order) { %>
-                    <div class="shadow rounded-md mt-5">
-                        <div class="bg-blue-200">
-                            <div class="flex justify-between font-semibold text-lg mx-10 py-4">
-                                <h3>Order Information</h3>                  
-                            </div>                 
-                        </div>
-                        <div class="flex flex-col mx-10 py-5 gap-y-4">
-                            <span>
-                                <strong class="mr-2">Order Number:</strong><span><%= order.orderNumber %></span>
-                            </span>
-                            <span>
-                                <strong class="mr-2">Payment reference:</strong><span><%= order.reference %></span>
-                            </span>
-                            <span>
-                                <strong class="mr-2">Email:</strong><span><%= order.userEmail %></span>
-                            </span>
-                            <span>
-                                <strong class="mr-2">Total Amount:</strong><span><%= order.totalAmount %></span>
-                            </span>
-                            <span>
-                                <strong class="mr-2">Selected Address:</strong>
-                                <span><%= order.selectedAddress.streetAddress %>, <%= order.selectedAddress.city %>, <%= order.selectedAddress.state %>, <%= order.selectedAddress.country %>
-                                </span>
-                            </span>
-                            <span>
-                                <strong class="mr-2">Selected PaymentMethod:</strong><span><%= order.selectedPaymentMethod %></span>
-                            </span>
-                            <ul>
-                                <strong class="mr-2">Items:</strong>
-                                <% order.items.forEach(function(item) { %>
-                                  <li>
-                                    <span><%= item.name %> (size: <%= item.size %>) x<%= item.quantity %></span>
-                                  </li>
-                                <% }); %>
-                              </ul>
-                            <span>
-                                <strong class="mr-2">Order Date:</strong><span><%= order.orderDate %></span>
-                            </span>
-                        </div>
-                    </div>
-                    <% }); %>
-            </div>
-            
-        </div>
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="/admin/orders/<%= order.orderNumber %>" class="text-indigo-600 hover:text-indigo-900"><%= order.orderNumber %></a>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap"><%= order.orderDate.toDateString() %></td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
     </section>
 </main>
+
+<script>
+    var modal = document.getElementById('myModal');
+    var btn = document.getElementById('openModalButton');
+    var span = document.getElementById('closeModal');
+  
+    btn.onclick = function() {
+      modal.style.display = 'block';
+    }
+    span.onclick = function() {
+      modal.style.display = 'none';
+    }
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    function submitForm(event) {
+        event.preventDefault();
+
+        const orderId = document.getElementById('orderId').value;
+        const redirectUrl = `/admin/orders/${orderId}`;
+        // Redirect the user to the specified URL
+        window.location.href = redirectUrl;
+    }
+
+  document.getElementById('searchOrderForm').addEventListener('submit', submitForm);
+</script>
+  

@@ -8,6 +8,7 @@ router.get("/bestsellers", adminController.bestSellers);
 router.get("/all-shoes", adminController.shoes);
 router.get("/orders", adminController.orders);
 router.get("/edit/:id", adminController.editShoePage);
+router.get("/orders/:orderNumber", adminController.ordersByOrderNumber);
 
 router.post("/add-bestsellers", adminController.addBestsellers);
 router.post("/add-shoe", adminController.addShoeCollection);

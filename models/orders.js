@@ -4,6 +4,7 @@ const orderSchema = new mongoose.Schema({
       orderNumber: {
         type: String,
         unique: true,
+        index: true,
       },
       reference: {
         type: String,
@@ -34,7 +35,7 @@ const orderSchema = new mongoose.Schema({
       }],
       orderDate: {
         type: Date,
-        default: Date.now
+        default: () => new Date().toLocaleString("en-US", {timeZone: "Africa/Lagos"})
       }
     });
 

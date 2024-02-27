@@ -1,0 +1,56 @@
+<%- include ('partials/adminHeader') -%>
+
+<main class="w-[100%]">
+
+    <section>
+        <div class="md:w-[70%]">
+            <div id="addressContainer">
+               
+                    <div class="shadow rounded-md mt-5">
+                        <div class="bg-blue-200">
+                            <div class="flex justify-between font-semibold text-lg mx-10 py-4">
+                                <h3>Order Information</h3>                  
+                            </div>                 
+                        </div>
+                        <div class="flex flex-col mx-10 py-5 gap-y-4">
+                            <span>
+                                <strong class="mr-2">Order Number:</strong><span><%= order.orderNumber %></span>
+                            </span>
+                            <span>
+                                <strong class="mr-2">Payment reference:</strong><span><%= order.reference %></span>
+                            </span>
+                            <span>
+                                <strong class="mr-2">Email:</strong><span><%= order.userEmail %></span>
+                            </span>
+                            <span>
+                                <strong class="mr-2">Total Amount:</strong><span><%= order.totalAmount %></span>
+                            </span>
+                            <span>
+                                <strong class="mr-2">Selected Address:</strong>
+                                <span><%= order.selectedAddress.streetAddress %>, <%= order.selectedAddress.city %>, <%= order.selectedAddress.state %>, <%= order.selectedAddress.country %>
+                                </span>
+                            </span>
+                            <span>
+                                <strong class="mr-2">Selected PaymentMethod:</strong><span><%= order.selectedPaymentMethod %></span>
+                            </span>
+                            <ul>
+                                <strong class="mr-2">Items:</strong>
+                                <% order.items.forEach(function(item) { %>
+                                  <li>
+                                    <span><%= item.name %> (size: <%= item.size %>) x<%= item.quantity %></span>
+                                  </li>
+                                <% }); %>
+                              </ul>
+                            <span>
+                                <strong class="mr-2">Order Date:</strong><span><%= order.orderDate %></span>
+                            </span>
+                        </div>
+                    </div>
+                  
+            </div>
+            
+        </div>
+    </section>
+
+
+</main>
