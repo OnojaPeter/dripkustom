@@ -139,7 +139,7 @@
             <label for="loginPassword" class="block mb-2">Password:</label>
             <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2" required>
       
-            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md">Login</button>
+            <button type="submit" class="bg-blue-500 focus:bg-blue-900 text-white py-2 px-4 rounded-md">Login</button>
             <!-- <button  class="bg-blue-500 text-white py-2 px-4 rounded-md" id="signup-modal">Sign up</button> -->
           </form>
           <button  class="underline py-2 px-4 rounded-md" id="signup-modal">Dont have an account? Sign up</button>
@@ -163,20 +163,20 @@
             <label for="signupPassword" class="block mb-2">Password:</label>
             <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2" required>
       
-            <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md">Sign Up</button>
+            <button type="submit" class="bg-green-500 focus:bg-green-800 text-white py-2 px-4 rounded-md">Sign Up</button>
           </form>
           <button  class="underline py-2 px-4 rounded-md" id="login-modal">Already have an account? Sign in</button>
         </div>
     </div>
     <div id="cartModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-8 md:px-10 rounded-md relative w-[70%] lg:w-[50%]">
+        <div class="bg-white p-4 md:px-10 rounded-md relative w-[70%] lg:w-[50%]">
             <button id="closeCartModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
-            <div id="cartReload" class="overflow-y-scroll" style="height: 400px;">
+            <div id="cartReload" class="overflow-y-scroll" style="height: 430px;">
                 <h2 class="font-bold text-2xl">Your cart</h2>
                 <% if (Object.keys(cartItems).length > 0) { %>
                     <% Object.values(cartItems).forEach(function(cartItem) { %>
@@ -206,19 +206,17 @@
                     <% }); %>
                     <button class="bottom-0 right-0 absolute text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md w-[100%]" id="checkoutButton">CHECKOUT</button>
                 <% } else { %>
-                <div class="flex justify-center">
+                <div class="flex justify-center h-[70%]">
                     <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
                 </div>
                 
-                <p class="font-semibold text-center mb-10">Cart is empty</p>
+                <p class="font-semibold text-center mb-4">Cart is empty</p>
                 
                 <a href="#shoesCollection" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
                     <button>Continue shopping</button>
                 </a>
                 <% } %>
             </div>
-
-            <!-- <img class="bg-white" src="images/cart.jpg" alt=""> -->
         </div>
     </div>
 
