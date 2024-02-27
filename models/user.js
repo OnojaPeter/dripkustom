@@ -7,6 +7,11 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     addresses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+    role: {
+      type: String,
+      enum: ['admin', 'user'], // Define available roles
+      default: 'user' // Default role for new users
+    }
 });
   
 

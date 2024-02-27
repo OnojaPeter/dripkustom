@@ -22,13 +22,45 @@ async function signup(req, res, next) {
   }
 }
 
+// async function login(req, res, next) {
+//   passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/',
+//     failureFlash: true,
+// })(req, res );
+// }
+
 async function login(req, res, next) {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/',
-    failureFlash: true,
-})(req, res );
+  passport.authenticate('local', async (err, user, info) => {
+      if (err) {
+        // console.log('error part1');
+          return next(err);
+      }
+      if (!user) {
+          // console.log('not user');
+          req.flash('error', info.message);
+          return res.redirect('/');
+      }
+
+      // Log the user in
+      req.logIn(user, async (err) => {
+          if (err) {
+              return next(err);
+          }
+          // Redirect based on user role
+          if (user.role === 'admin') {
+            // console.log('yes-admin');
+              return res.redirect('/admin');
+          } else {
+            // console.log('no-admin');
+              return res.redirect('/');
+          }
+      });
+  })(req, res, next);
 }
+
+
+
 
 function logout(req, res) {
   req.logout(req.user, err => {
