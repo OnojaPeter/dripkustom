@@ -1,4 +1,4 @@
-const Shoe = require ("../models/shoes")
+const Shoe = require ("../models/shoes");
 const ShoeBestseller = require ("../models/bestsellers");
 
 async function shoeController (req, res) {

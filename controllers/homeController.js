@@ -28,8 +28,20 @@ async function homeController (req, res) {
         }
         // const cart = req.session.cart || {};
         // console.log(req.session.cart);
-        const ShoeBestsellers = await ShoeBestseller.find();
-        // console.log(ShoeBestsellers);
+        // const ShoeBestsellers = await ShoeBestseller.find();
+        // const bestsellerIds = await ShoeBestseller.find().select('shoeId');
+        // console.log('bestseller id:', bestsellerIds);
+        // const ShoeBestsellers = await Shoe.find({ _id: { $in: bestsellerIds.map(item => item.shoeId) } });
+        // console.log('shoebestseller in homepage', ShoeBestsellers);
+        const bestsellerItems = await ShoeBestseller.find();
+const bestsellerIds = bestsellerItems.map(item => item.shoe); // Extract shoe IDs from bestseller items
+
+console.log('bestseller IDs:', bestsellerIds);
+
+// Query the Shoe collection using the extracted IDs
+const ShoeBestsellers = await Shoe.find({ _id: { $in: bestsellerIds } });
+
+console.log('Bestselling shoes:', ShoeBestsellers);
 
         const cartCookie = req.cookies.cart || '{}';
         const cart = JSON.parse(cartCookie);
