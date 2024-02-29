@@ -13,7 +13,11 @@ async function admin (req,res) {
 
 async function bestSellers (req,res) {
     try {
-        const bestSellers = await ShoeBestseller.find()
+        const bestsellerItems = await ShoeBestseller.find();
+        const bestsellerIds = bestsellerItems.map(item => item.shoe); 
+
+        // console.log('bestseller IDs:', bestsellerIds);
+        const bestSellers = await Shoes.find({ _id: { $in: bestsellerIds } });
         res.render('adminBestsellers', {bestSellers});
     } catch (error) {
         console.error(error);
@@ -72,31 +76,6 @@ async function editShoePage( req, res) {
 
 //POST METHOD
 
-async function addBestsellers (req, res){
-    try{
-        const { 
-            imageUrl,
-            shoeName,
-            price,
-            category} = req.body
-            // console.log(req.body);
-
-        const newBestseller = new ShoeBestseller({
-            image: imageUrl,
-            name: shoeName,
-            price: price,
-            category: category,
-        });
-       
-        const savedBestseller = await newBestseller.save();
-
-        // console.log('bestseller saved:', savedBestseller);
-        res.redirect("/admin/bestsellers");
-    } catch(err) {
-        console.error(err);
-    }
-}
-
 async function addShoeCollection (req, res){
     try{
         const { 
@@ -125,7 +104,12 @@ async function addShoeCollection (req, res){
 async function editShoePost (req, res) {
     try {
         const updatedShoe = await Shoes.findByIdAndUpdate(req.params.id, { $set: req.body });
-        // console.log(updatedPricelist);
+        const bestsellerShoe = await ShoeBestseller.findOne({ shoe: req.params.id });
+
+        if (bestsellerShoe) {
+            await ShoeBestseller.updateOne({ shoe: req.params.id }, { $set: req.body });
+        }
+        console.log('bestseller updated:', bestsellerShoe);
         res.redirect("/admin/all-shoes");
     } catch (error) {
         // console.error(error);
@@ -134,24 +118,16 @@ async function editShoePost (req, res) {
 }
 //DELETE METHOD
 
-async function deleteBestseller (req,res) {
-    try {
-        // const id = req.params.id;
-        // console.log(id);
-        const DeletedBestseller= await ShoeBestseller.findByIdAndDelete(req.params.id);
-        // console.log('deleted bestseller:',DeletedBestseller);
-        res.status(200).send({ message: 'Shoe deleted successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
-    }
-}
-
 async function deleteShoe (req,res) {
     try {
         // console.log(req.params.id);
       const DeletedShoe= await Shoes.findByIdAndDelete(req.params.id);
-    //   console.log('deleted shoe:',DeletedShoe);
+      const bestsellerShoe = await ShoeBestseller.findOne({ shoe: req.params.id });
+    //   console.log('shoe to be deleted from bestseller:', bestsellerShoe);
+
+      if(bestsellerShoe) {
+        await ShoeBestseller.deleteOne({ shoe: req.params.id })
+      }
       res.status(200).send({ message: 'Shoe deleted successfully' });
     } catch (error) {
       console.error(error);
@@ -171,12 +147,9 @@ module.exports = {
 
     //post
     editShoePage,
-    addBestsellers,
     addShoeCollection,
     editShoePost,
 
-    //delete
-    deleteBestseller,
     deleteShoe,
 
 };

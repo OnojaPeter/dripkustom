@@ -26,22 +26,14 @@ async function homeController (req, res) {
         } else {
             shoes = await Shoe.find().sort(sortCriteria);
         }
-        // const cart = req.session.cart || {};
-        // console.log(req.session.cart);
-        // const ShoeBestsellers = await ShoeBestseller.find();
-        // const bestsellerIds = await ShoeBestseller.find().select('shoeId');
-        // console.log('bestseller id:', bestsellerIds);
-        // const ShoeBestsellers = await Shoe.find({ _id: { $in: bestsellerIds.map(item => item.shoeId) } });
-        // console.log('shoebestseller in homepage', ShoeBestsellers);
+
         const bestsellerItems = await ShoeBestseller.find();
-const bestsellerIds = bestsellerItems.map(item => item.shoe); // Extract shoe IDs from bestseller items
+        const bestsellerIds = bestsellerItems.map(item => item.shoe); // Extract shoe IDs from bestseller items
 
-console.log('bestseller IDs:', bestsellerIds);
-
-// Query the Shoe collection using the extracted IDs
-const ShoeBestsellers = await Shoe.find({ _id: { $in: bestsellerIds } });
-
-console.log('Bestselling shoes:', ShoeBestsellers);
+        // console.log('bestseller IDs:', bestsellerIds);
+        // Query the Shoe collection using the extracted IDs
+        const ShoeBestsellers = await Shoe.find({ _id: { $in: bestsellerIds } });
+        // console.log('Bestselling shoes:', ShoeBestsellers);
 
         const cartCookie = req.cookies.cart || '{}';
         const cart = JSON.parse(cartCookie);
@@ -52,9 +44,7 @@ console.log('Bestselling shoes:', ShoeBestsellers);
             shoes, 
             ShoeBestsellers,
             cartItems: cart,
-            // requireLogin: false
         });
-        // console.log(shoes);
     } catch (error) {
         console.error('Error:', error);
         res.status(500).send('An error occurred');

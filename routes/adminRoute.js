@@ -10,11 +10,9 @@ router.get("/orders", isAuthenticated, isAdmin, adminController.orders);
 router.get("/edit/:id", isAuthenticated, isAdmin, adminController.editShoePage);
 router.get("/orders/:orderNumber", isAuthenticated, isAdmin, adminController.ordersByOrderNumber);
 
-router.post("/add-bestsellers", isAuthenticated, isAdmin, adminController.addBestsellers);
 router.post("/add-shoe", isAuthenticated, isAdmin, adminController.addShoeCollection);
 router.post("/edit/:id", isAuthenticated, isAdmin, adminController.editShoePost);
 
-router.delete("/delete-bestseller-shoe/:id", isAuthenticated, isAdmin, adminController.deleteBestseller);
 router.delete("/delete-shoe/:id", isAuthenticated, isAdmin, adminController.deleteShoe);
 
 
