@@ -22,13 +22,14 @@ const faqsRoute = require('./routes/faqsRoute');
 const storepolicyRoute = require('./routes/storepolicyRoute');
 const thankyouRoute = require('./routes/thankyouRoute');
 const checkoutRoute = require('./routes/checkoutRoute');
-const shoeRoute = require('./routes/shoeRoute')
-const addtocartRoute = require('./routes/addtocartRoute')
-const removefromcartRoute = require('./routes/removefromcartRoute')
-const updatequantityRoute = require('./routes/updatequantityRoute')
-const profileRoute = require('./routes/profileRoute')
-const adminRoute = require('./routes/adminRoute')
-const paymentRoute = require('./routes/paymentRoute')
+const shoeRoute = require('./routes/shoeRoute');
+const addtocartRoute = require('./routes/addtocartRoute');
+const removefromcartRoute = require('./routes/removefromcartRoute');
+const updatequantityRoute = require('./routes/updatequantityRoute');
+const profileRoute = require('./routes/profileRoute');
+const adminRoute = require('./routes/adminRoute');
+const paymentRoute = require('./routes/paymentRoute');
+const resetPasswordRoute = require('./routes/resetPasswordRoute');
 
 const app = express();
 app.use(cookieParser());
@@ -129,6 +130,7 @@ app.use("/profile", profileRoute);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoute);
 app.use('/', paymentRoute);
+app.use('/', resetPasswordRoute);
 
 
 

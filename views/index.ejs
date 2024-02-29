@@ -139,10 +139,13 @@
             <label for="loginPassword" class="block mb-2">Password:</label>
             <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2" required>
       
-            <button type="submit" class="bg-blue-500 focus:bg-blue-900 text-white py-2 px-4 rounded-md">Login</button>
-            <!-- <button  class="bg-blue-500 text-white py-2 px-4 rounded-md" id="signup-modal">Sign up</button> -->
+            <div class="flex justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 focus:bg-blue-900 text-white py-2 px-4 rounded-md">Login</button>
+                <a href="/forgot-password" class="underline py-2 hover:text-red-400">Reset Password</a>
+            </div>
+            
           </form>
-          <button  class="underline py-2 px-4 rounded-md" id="signup-modal">Dont have an account? Sign up</button>
+          <button  class="underline mt-2 py-1 px-2 hover:text-blue-400" id="signup-modal">Dont have an account? Sign up</button>
         </div>
     </div>
     <div id="signupModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
