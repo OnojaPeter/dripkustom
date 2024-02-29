@@ -25,11 +25,11 @@ async function resetPassPage (req, res) {
     try {
         // Check if the token is valid and not expired
         const user = await User.findOne({ resetToken: token, resetTokenExpires: { $gt: Date.now() } });
-
+        console.log(user);
         if (!user) {
             // Invalid or expired token
             console.log('Invalid or expired token');
-            console.error('Invalid or expired token:', error);
+            // console.error('Invalid or expired token:', error);
             // return res.render('reset-password-error', { errorMessage: 'Invalid or expired token' });
         }
 
