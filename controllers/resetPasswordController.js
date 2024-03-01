@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 // Nodemailer transporter configuration
 const transporter = nodemailer.createTransport({
@@ -23,9 +24,9 @@ async function resetPassPage (req, res) {
     const { token } = req.params;
 
     try {
-        console.log('Received token:', token);
+        // console.log('Received token:', token);
         const user = await User.findOne({ resetToken: token, resetTokenExpires: { $gt: Date.now() } });
-        console.log('User found:', user);
+        // console.log('User found:', user);
         if (!user) {
             // Invalid or expired token
             console.log('Invalid or expired token');
@@ -45,17 +46,14 @@ async function forgotPassword (req, res) {
     const { email } = req.body;
 
     try {
-        // Step 2: Generate Token
+        // Generate Token
         const token = crypto.randomBytes(20).toString('hex');
-        console.log(token);
-        // Step 3: Send Reset Link
+        // console.log(token);
         const user = await User.findOneAndUpdate({ email }, {
             resetToken: token,
-            resetTokenExpires: Date.now() + 6000000 // Token expires in 10 minutes --increaed by adding 0 for testing
+            resetTokenExpires: Date.now() + 600000 // Token expires in 10 minutes 
         }, { new: true });
-        console.log('time for the token to expire:', Date.now() + 6000000);
-        console.log('user after User.findOneAndUpdate:', user);
-        // Send reset password email
+        // console.log('user after User.findOneAndUpdate:', user);
         await transporter.sendMail({
             to: email,
             subject: 'Password Reset Request',
@@ -88,9 +86,13 @@ async function resetPassword  (req, res) {
         if (!user || user.resetTokenExpires < Date.now()) {
             return res.status(400).json({ message: 'Invalid or expired token' });
         }
-        // Step 6: Update Password
-        user.password = password;
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
         console.log('former pw:', user.password);
+        // Step 6: Update Password
+        user.password = hashedPassword;
         user.resetToken = undefined;
         user.resetTokenExpires = undefined;
         await user.save();
