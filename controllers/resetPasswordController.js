@@ -23,9 +23,9 @@ async function resetPassPage (req, res) {
     const { token } = req.params;
 
     try {
-        // Check if the token is valid and not expired
+        console.log('Received token:', token);
         const user = await User.findOne({ resetToken: token, resetTokenExpires: { $gt: Date.now() } });
-        console.log(user);
+        console.log('User found:', user);
         if (!user) {
             // Invalid or expired token
             console.log('Invalid or expired token');
@@ -51,9 +51,10 @@ async function forgotPassword (req, res) {
         // Step 3: Send Reset Link
         const user = await User.findOneAndUpdate({ email }, {
             resetToken: token,
-            resetTokenExpires: Date.now() + 600000 // Token expires in 10 minutes
+            resetTokenExpires: Date.now() + 6000000 // Token expires in 10 minutes --increaed by adding 0 for testing
         }, { new: true });
-
+        console.log('time for the token to expire:', Date.now() + 6000000);
+        console.log('user after User.findOneAndUpdate:', user);
         // Send reset password email
         await transporter.sendMail({
             to: email,
@@ -81,6 +82,7 @@ async function resetPassword  (req, res) {
     try {
         // Step 5: Validate Token
         const user = await User.findOne({ resetToken: token });
+        console.log(user);
 
         if (!user || user.resetTokenExpires < Date.now()) {
             return res.status(400).json({ message: 'Invalid or expired token' });

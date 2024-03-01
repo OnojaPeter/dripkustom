@@ -7,6 +7,12 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     addresses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+    resetToken: {
+      type: String,
+    },
+    resetTokenExpires: {
+        type: Date,
+    },
     role: {
       type: String,
       enum: ['admin', 'user'], // Define available roles
