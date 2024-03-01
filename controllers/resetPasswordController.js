@@ -78,18 +78,19 @@ async function forgotPassword (req, res) {
 async function resetPassword  (req, res) {
     const { token } = req.params;
     const { newPassword } = req.body;
+    console.log('new password:', newPassword);
 
     try {
         // Step 5: Validate Token
         const user = await User.findOne({ resetToken: token });
-        console.log(user);
+        console.log('found user with the token id:', user);
 
         if (!user || user.resetTokenExpires < Date.now()) {
             return res.status(400).json({ message: 'Invalid or expired token' });
         }
-
         // Step 6: Update Password
         user.password = newPassword;
+        console.log('former pw:', user.password);
         user.resetToken = undefined;
         user.resetTokenExpires = undefined;
         await user.save();
