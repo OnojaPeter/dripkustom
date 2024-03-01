@@ -77,8 +77,8 @@ async function forgotPassword (req, res) {
 // Step 4-6: Reset Password Page & Logic
 async function resetPassword  (req, res) {
     const { token } = req.params;
-    const { newPassword } = req.body;
-    console.log('new password:', newPassword);
+    const { password } = req.body;
+    console.log('new password:', password);
 
     try {
         // Step 5: Validate Token
@@ -89,7 +89,7 @@ async function resetPassword  (req, res) {
             return res.status(400).json({ message: 'Invalid or expired token' });
         }
         // Step 6: Update Password
-        user.password = newPassword;
+        user.password = password;
         console.log('former pw:', user.password);
         user.resetToken = undefined;
         user.resetTokenExpires = undefined;
