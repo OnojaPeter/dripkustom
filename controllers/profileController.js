@@ -1,5 +1,6 @@
 const Address = require ("../models/address")
 const User = require('../models/user');
+const Order = require('../models/orders');
 
 async function person (req,res) {
     try {     
@@ -126,9 +127,16 @@ async function editAddressPost (req, res) {
 
 async function order (req,res) {
     try {
+        const userId = req.user._id;
+        // console.log(userId);
+        const userIdToString = userId.toString();
+        // console.log('user string:', userIdToString);
+
+        const orderAssociatedWithUser = await Order.find({user: userIdToString}).populate('selectedAddress');
+        // console.log('order Associated With User:', orderAssociatedWithUser);
         const cartCookie = req.cookies.cart || '{}';
         const cart = JSON.parse(cartCookie);
-        res.render("order", {cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
+        res.render("order", {cartItems: cart, order: orderAssociatedWithUser, user: req.user, isAuthenticated: req.isAuthenticated()});
     } catch (error) {
         console.error(error)
     }

@@ -37,7 +37,8 @@ async function paymentSuccess (req, res) {
   // console.log('cartItems:', cartItems);
   // console.log('Total Amount:',totalAmount);
   try {
-    // Create a new order instance
+    const userId = req.user._id;
+    // console.log(userId);
     function generateOrderNumber() {
         return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
     }
@@ -45,6 +46,7 @@ async function paymentSuccess (req, res) {
     // console.log(address);
 
     const order = new Order({
+      user: userId,
       orderNumber : generateOrderNumber(),
       reference: reference,
       userEmail: userEmail,
@@ -57,7 +59,7 @@ async function paymentSuccess (req, res) {
     // Save the order to the database
     const savedOrder = await order.save();
 
-    console.log('Order saved successfully:', savedOrder);
+    // console.log('Order saved successfully:', savedOrder);
 
     res.status(200).send('Payment details received successfully.');
   } catch (error) {
