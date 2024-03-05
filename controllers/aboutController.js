@@ -5,7 +5,7 @@ async function aboutController (req, res) {
         const cartCookie = req.cookies.cart || '{}';
         const cart = JSON.parse(cartCookie);
         // console.log(cart);
-        res.render('about', {isAuthenticated: req.isAuthenticated(), user: req.user, cartItems: cart});
+        res.render('about', {isAuthenticated: req.isAuthenticated(), user: req.user, cartItems: cart, messages: req.flash('error'), });
     } catch (error) {
         console.error('Error:', error);
     }

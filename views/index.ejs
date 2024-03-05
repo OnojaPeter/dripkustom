@@ -126,10 +126,10 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
             </svg>
         </button>
         <% if (messages && messages.length > 0) { %>
-            <div class="error-message">
+            <div class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
                 <%= messages[0] %>
             </div>
-            <% } %>
+        <% } %>        
             
 
         <form action="/auth/login" id="loginForm" method="post">

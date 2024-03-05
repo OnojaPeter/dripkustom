@@ -120,25 +120,33 @@
         </div>
     </header>
     <div id="loginModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-8 md:px-10 rounded-md relative">
+        <div class="bg-white p-8 md:px-10 rounded-md relative" id="loginModalDiv">
             <button id="closeLoginModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
 
-          <form action="/auth/login" method="post" id="loginForm">
-            <label for="loginEmail" class="block mb-2">Email:</label>
-            <input type="text" id="loginEmail" name="loginEmail" class="block w-full border rounded-md mb-4 p-2" required>
-      
-            <label for="loginPassword" class="block mb-2">Password:</label>
-            <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2">
-      
-            <div class="flex justify-between">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-600 focus:bg-blue-900 text-white py-2 px-4 rounded-md">Login</button>
-                <a href="/forgot-password" class="underline py-2 hover:text-red-400">Reset Password</a>
-            </div>
-          </form>
+            <% if (messages && messages.length > 0) { %>
+                <div class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+                    <%= messages[0] %>
+                </div>
+            <% } %>
+
+            <form action="/auth/login" method="post" id="loginForm">
+                <label for="loginEmail" class="block mb-2">Email:</label>
+                <input type="text" id="loginEmail" name="loginEmail" class="block w-full border rounded-md mb-4 p-2" required>
+        
+                <label for="loginPassword" class="block mb-2">Password:</label>
+                <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2">
+        
+                <input type="hidden" name="source" value="normal">
+
+                <div class="flex justify-between">
+                    <button type="submit" id="loginSubmit" class="bg-blue-500 hover:bg-blue-600 focus:bg-blue-900 text-white py-2 px-4 rounded-md">Login</button>
+                    <a href="/forgot-password" class="underline py-2 hover:text-red-400">Reset Password</a>
+                </div>
+            </form>
           <button  class="underline mt-2 py-2 px-4 rounded-md" id="signup-modal">Dont have an account? Sign up</button>
         </div>
     </div>
@@ -220,48 +228,66 @@
     </div>
 
 
-    <script>
-        $(document).ready(function () {
-            // Add click event listener to checkout button
-            $(document).on('click', '#checkoutButton', function() {
-                // alert('click')
-                // Check if user is authenticated
-                var isAuthenticated = '<%= isAuthenticated %>' === 'true'; // Assuming isAuthenticated is passed to the template
+<script>
+    $(document).ready(function () {
 
-                // Show the login modal if user is not authenticated
-                if (!isAuthenticated) {
-                    console.log('not logged in');
-                    $('#cartModal').addClass('hidden');
-                    $('#loginModal').removeClass('hidden');
-                    // You may need to add code here to properly initialize the modal if it's not already initialized
-                } else {
-                    console.log('logged in');
-                    // Proceed with checkout if user is authenticated
-                    window.location.href = '/checkout';
-                }
+        $(document).on('click', '#loginSubmit', function() {
+            event.preventDefault(); // Prevent the form from submitting normally
 
-                $('#loginForm').submit(function (event) {
-                    event.preventDefault();
-
-                    // Redirect to checkout page after successful login
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        method: $(this).attr('method'),
-                        data: $(this).serialize(),
-                        success: function () {
-                            // console.log('login success to check');
-                            // Redirect to checkout page after successful login
-                            window.location.href = '/checkout';
-                        },
-                        error: function () {
-                            alert('Login failed. Please try again.');
+        // Serialize the form data
+            var formData = $('#loginForm').serialize();
+                // Make an AJAX request to the login endpoint
+            $.ajax({
+                type: 'POST',
+                url: '/auth/login',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.error) {
+                        $('#loginModal').load(location.href + ' #loginModalDiv');
+                    } else {
+                        if (response === 'admin'){
+                            window.location.href = '/admin';
+                            // console.log('response is admin');
+                        } else{
+                            if (response.source === 'checkout'){
+                                window.location.href = '/checkout';
+                                // console.log('checkout was included');
+                            } else {
+                                window.location.href = '/';
+                                // console.log('response is user only');
+                            }
                         }
-                    });
-                });
+                        
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors 
+                    console.error(xhr.responseText);
+                }
             });
         });
 
-    </script>
+
+        // Add click event listener to checkout button
+        $(document).on('click', '#checkoutButton', function() {
+            var isAuthenticated = '<%= isAuthenticated %>' === 'true';
+
+            // Show the login modal if user is not authenticated
+            if (!isAuthenticated) {
+                $('#loginForm input[name="source"]').val('checkout');
+
+                $('#cartModal').addClass('hidden');
+                $('#loginModal').removeClass('hidden');
+            } else {
+                // Proceed with checkout if user is authenticated
+                window.location.href = '/checkout';
+            }
+        });
+    });
+
+</script>
+
     <script>
         const loginButton = document.getElementById('loginButton');
         const desktopLoginButton = document.getElementById('desktopLoginButton');
