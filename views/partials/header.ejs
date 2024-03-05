@@ -147,7 +147,7 @@
                     <a href="/forgot-password" class="underline py-2 hover:text-red-400">Reset Password</a>
                 </div>
             </form>
-          <button  class="underline mt-2 py-2 px-4 rounded-md" id="signup-modal">Dont have an account? Sign up</button>
+          <button  class="underline mt-2 py-1 px-2 hover:text-blue-400" id="signup-modal">Dont have an account? Sign up</button>
         </div>
     </div>
     <div id="signupModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -329,10 +329,15 @@
         if (signupButton) {
             signupButton.addEventListener('click', toggleSignupModal)
         }
-        signupModalFromLoginModal.addEventListener('click', () => {
+        $(document).on('click', '#signup-modal', function() {
+            // console.log('click from loginmodal');
             signupModal.classList.toggle('hidden');
             loginModal.classList.add('hidden');
         });
+        // signupModalFromLoginModal.addEventListener('click', () => {
+        //     signupModal.classList.toggle('hidden');
+        //     loginModal.classList.add('hidden');
+        // });
         loginModalFromSignupModal.addEventListener('click', () => {
             signupModal.classList.add('hidden');
             loginModal.classList.toggle('hidden');

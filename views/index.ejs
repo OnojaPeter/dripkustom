@@ -626,7 +626,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 <script>
     $(document).ready(function () {
 
-            $(document).on('click', '#loginSubmit', function() {
+            $(document).on('click', '#loginSubmit', function(event) {
                 event.preventDefault(); // Prevent the form from submitting normally
     
             // Serialize the form data
@@ -735,10 +735,16 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         // signupButton.addEventListener('click', () => {
         //     signupModal.classList.toggle('hidden');
         // });
-        signupModalFromLoginModal.addEventListener('click', () => {
+        $(document).on('click', '#signup-modal', function() {
+            // console.log('click from loginmodal');
             signupModal.classList.toggle('hidden');
             loginModal.classList.add('hidden');
         });
+        // signupModalFromLoginModal.addEventListener('click', () => {
+        //     console.log('click from loginmodal');
+        //     signupModal.classList.toggle('hidden');
+        //     loginModal.classList.add('hidden');
+        // });
         loginModalFromSignupModal.addEventListener('click', () => {
             signupModal.classList.add('hidden');
             loginModal.classList.toggle('hidden');
