@@ -127,10 +127,12 @@
                 </svg>
             </button>
 
-            <% if (messages && messages.length > 0) { %>
-                <div class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
-                    <%= messages[0] %>
-                </div>
+            <% if (!isAuthenticated) { %>             
+                <% if (messages && messages.length > 0) { %>
+                    <div class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+                        <%= messages[0] %>
+                    </div>
+                <% } %>
             <% } %>
 
             <form action="/auth/login" method="post" id="loginForm">

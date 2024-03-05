@@ -125,12 +125,14 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
-        <% if (messages && messages.length > 0) { %>
-            <div class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
-                <%= messages[0] %>
-            </div>
-        <% } %>        
-            
+
+        <% if (!isAuthenticated) { %>            
+            <% if (messages && messages.length > 0) { %>
+                <div class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+                    <%= messages[0] %>
+                </div>
+            <% } %>
+        <% } %>                 
 
         <form action="/auth/login" id="loginForm" method="post">
         <label for="loginEmail" class="block mb-2">Email:</label>
@@ -591,7 +593,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         <ul class="pt-10  lg:pt-0">
             <div class="flex justify-center">
                 <a href="/">
-                    <img width="200px" height="60px" src="../public/images/DRIPog.png" alt="drip kuston logo">
+                    <img width="200px" height="60px" src="../public/images/whiteDRIP.png" alt="drip kuston logo">
                 </a>
             </div>
             <div class="h-[70px]">
