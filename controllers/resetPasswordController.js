@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 async function forgotPasswordPage (req, res) {
     try {
-        res.render('forgotPassword');
+        res.render('forgotPassword', {messages: req.flash('error')});
     } catch (error) {
         console.error( error);
     }
@@ -46,29 +46,38 @@ async function forgotPassword (req, res) {
     const { email } = req.body;
 
     try {
-        // Generate Token
-        const token = crypto.randomBytes(20).toString('hex');
-        // console.log(token);
-        const user = await User.findOneAndUpdate({ email }, {
-            resetToken: token,
-            resetTokenExpires: Date.now() + 600000 // Token expires in 10 minutes 
-        }, { new: true });
-        // console.log('user after User.findOneAndUpdate:', user);
-        await transporter.sendMail({
-            to: email,
-            subject: 'Password Reset Request',
-            html: `
-                <p>You are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
-                <p>Please click on the following link or paste it into your browser to complete the process:</p>
-                <p><a href="${req.protocol}://${req.get('host')}/reset-password/${token}">Reset Password</a></p>
-                <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
-            `,
-        });
+        const checkIfUserExist = await User.findOne({email})
+        // console.log("user exist:",checkIfUserExist);
 
-        res.status(200).json({ message: 'Reset password email sent' });
+        if (checkIfUserExist) {
+            // Generate Token
+            const token = crypto.randomBytes(20).toString('hex');
+            // console.log(token);
+            const user = await User.findOneAndUpdate({ email }, {
+                resetToken: token,
+                resetTokenExpires: Date.now() + 600000 // Token expires in 10 minutes 
+            }, { new: true });
+            // console.log('user after User.findOneAndUpdate:', user);
+            await transporter.sendMail({
+                to: email,
+                subject: 'Password Reset Request',
+                html: `
+                    <p>You are receiving this email because you (or someone else) have requested the reset of the password for your account.</p>
+                    <p>Please click on the following link or paste it into your browser to complete the process:</p>
+                    <p><a href="${req.protocol}://${req.get('host')}/reset-password/${token}">Reset Password</a></p>
+                    <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>
+                `,
+            });
+
+            res.render('forgotPassword', {messages: 'Reset password link sent to your email'});
+            // res.status(200).json({ message: 'Reset password email sent' });
+        } else {
+            res.render('forgotPassword', {messages: 'User does not exist, please signup'});
+            // res.status(500).json({ message: 'user does not exist, please signup'});
+        }
     } catch (error) {
         console.error('Forgot password error:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        res.status(400).json({ message: 'Internal server error' });
     }
 };
 
