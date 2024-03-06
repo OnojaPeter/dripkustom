@@ -308,9 +308,13 @@
         if (loginButton) {
             loginButton.addEventListener('click', toggleLoginModal)
         }
-        closeLoginModal.addEventListener('click', () => {
+
+        $(document).on('click', '#closeLoginModal', function() {
+            // console.log('close loginmodal');
             loginModal.classList.add('hidden');
+            $('#loginForm input[name="source"]').val('normal');
         });
+
         loginModal.addEventListener('click', (event) => {
             if (event.target === loginModal) {
                 loginModal.classList.add('hidden');
