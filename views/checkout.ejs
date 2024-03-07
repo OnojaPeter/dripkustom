@@ -307,12 +307,7 @@
                         },
                         callback: function(response){
                                     if (response.status === 'success') {                               
-                                        // console.log('response from callback')
-                                        // console.log('ref:', response.reference );
-                                        // console.log('payment method:', selectedPaymentMethod);
                                         sendPaymentDetails(response.reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod, cartItems);
-                                        // Redirect to the Thank You page
-                                        window.location.href = '/thank-you';
                                         clearCartCookies();
                                     } else {
                                         alert('Payment failed. Please try again.');
@@ -344,7 +339,11 @@
                 });
                 
                 if (response.ok) {
-                    console.log('Payment details sent to server successfully.');
+                    const responseData = await response.json();
+                    const savedOrder = responseData.savedOrder;
+                    // console.log('Saved order:', savedOrder);
+                    // console.log('Saved orderId:', savedOrder._id);
+                    window.location.href = '/thank-you?orderId=' + savedOrder._id;
                 } else {
                     console.error('Failed to send payment details to server.');
                 }

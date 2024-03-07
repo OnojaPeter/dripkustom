@@ -12,15 +12,45 @@
 <body> -->
     <%- include ('partials/header') -%>
     <main class="overflow-hidden">
-        <section class="thank-you-section h-[80vh] lg:h-[80vh] flex flex-col items-center relative">
-            <div class="thank-you-blur  lg:h-[80vh] h-[80vh]"></div> <!--removed the absolute from this -->
-            <div class="absolute text-white w-[90%] mt-10">
-                <h1 class="font-bold text-lg md:text-3xl lg:text-5xl mt-5 md:mt-8 mb-2">THANK YOU FOR YOUR ORDER!</h1>
-                <p class="font-semibold text-sm md:text-2xl lg:text-3xl mb-6">Our manager will contact you shortly with your order details</p>
-                <a href="/#shoesCollection" class="bg-gray-700 py-2 md:py-3 px-3 md:px-4 text-white font-semibold rounded-md">
-                    <button class="">Continue Shopping</button>               
+        <section class="flex flex-col items-center relative">
+         
+            <div class="w-[90%] mt-8">
+                <h1 class="font-bold text-lg md:text-3xl lg:text-5xl md:mt-6 mb-2">THANK YOU FOR YOUR ORDER!</h1>
+
+                <div class="mt-3 md:mt-6 mb-2">
+                    <div class="flex flex-col py-5 gap-y-4">
+                        
+                        <span>
+                            <strong class="mr-2">Order Number:</strong><span><%= order.orderNumber %></span>
+                        </span>
+                        <span>
+                            <strong class="mr-2">Selected PaymentMethod:</strong><span><%= order.selectedPaymentMethod %></span>
+                        </span>
+                        <span>
+                            <strong class="mr-2">Payment reference:</strong><span><%= order.reference %></span>
+                        </span>
+                        <span>
+                            <strong class="mr-2">Total Amount:</strong><span><%= order.totalAmount %></span>
+                        </span>
+                        <ul>
+                            <strong class="mr-2">Items:</strong>
+                            <% order.items.forEach(function(item) { %>
+                                <li>
+                                    <span><%= item.name %> (size: <%= item.size %>) x<%= item.quantity %></span>
+                                </li>
+                            <% }); %>
+                        </ul>
+                        <span>
+                            <strong class="mr-2">Order Date:</strong><span><%= order.orderDate %></span>
+                        </span>
+                
+                    </div>  
+                </div>
+                <a href="/#shoesCollection" >
+                    <button class="bg-gray-800 py-2 md:py-3 px-3 md:px-4 text-white font-semibold rounded-md mt-3 md:mt-6">Continue Shopping</button>               
                 </a>
             </div>
+
         </section>
     </main>
     <%- include ('partials/footer') -%>

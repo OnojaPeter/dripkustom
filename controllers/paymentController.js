@@ -36,6 +36,7 @@ async function paymentSuccess (req, res) {
   const { reference, userEmail, totalAmount, selectedAddress, selectedPaymentMethod, cartItems } = req.body;
   // console.log('cartItems:', cartItems);
   // console.log('Total Amount:',totalAmount);
+  console.log('sent to paymentsuccess function');
   try {
     const userId = req.user._id;
     // console.log(userId);
@@ -58,10 +59,9 @@ async function paymentSuccess (req, res) {
 
     // Save the order to the database
     const savedOrder = await order.save();
+    // console.log('saved the order:', savedOrder);
 
-    // console.log('Order saved successfully:', savedOrder);
-
-    res.status(200).send('Payment details received successfully.');
+    res.json({ savedOrder });
   } catch (error) {
     console.error('Error creating order:', error);
     res.status(500).send('Internal Server Error');

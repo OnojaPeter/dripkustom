@@ -289,16 +289,3 @@ footer .footer-links a:nth-last-child(-n+1){
   cursor: pointer;
   margin-right: 10px;
 }
-
-/* THANK YOU PAGE */
-.thank-you-section {
-  width: 100%;
-  background-image: url(/public/images/header2.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.thank-you-blur {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-}
