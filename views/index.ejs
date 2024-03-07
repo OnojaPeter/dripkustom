@@ -41,9 +41,6 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                     <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
                         Home
                     </a>
-                    <!-- <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/collections">
-                        Collections
-                    </a> -->
                     <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
                         About
                     </a>
@@ -53,18 +50,12 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                     <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
                         Faqs
                     </a>
-                    <!-- <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/contact">
-                        Contact
-                    </a> -->
                 </div>
                 <div class="mobileMenu gap-6 lg:gap-0 hidden md:gap-x-6 flex-col flex" id="mobileMenu">
                     <button id="closeBtn" class="close-btn mt-3">×</button>
                     <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
                         Home
                     </a>
-                    <!-- <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/collections">
-                        Collections
-                    </a> -->
                     <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
                         About
                     </a>
@@ -75,7 +66,18 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                         Faqs
                     </a>
                     <% if (isAuthenticated) { %>
-                        <a class=" px-6 " href="/profile/person" id="profileButton"><span class="font-semibold">My Profile</span></a>
+                        <div class="relative inline-block">
+                            <button id="myAccountBtn" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none">
+                                My Account
+                            </button>
+                            <div id="accountSubMenu" class="hidden flex flex-col absolute top-full left-0 z-10 bg-white shadow-md rounded-lg border-2 mt-2">
+                                <a href="/profile/person" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Personal Information</span></a>
+                                <a href="/profile/address" id="addressManagement" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Address Management</span></a>
+                                <a href="/profile/order" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>My Order</span></a>
+                            </div>
+                        </div>
+
+                        <a href="/auth/logout" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none"><span>Logout</span></a>
                     <% } else { %>
                         <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="loginButton">
                             <button class="" >
@@ -627,6 +629,10 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
     $(document).ready(function () {
+            document.getElementById('myAccountBtn').addEventListener('click', function() {
+                var submenu = document.getElementById('accountSubMenu');
+                submenu.classList.toggle('hidden');
+            });
 
             $(document).on('click', '#loginSubmit', function(event) {
                 event.preventDefault(); // Prevent the form from submitting normally
