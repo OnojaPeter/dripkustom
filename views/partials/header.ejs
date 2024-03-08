@@ -174,7 +174,7 @@
       
             <button type="submit" class="bg-green-500 focus:bg-green-800 text-white py-2 px-4 rounded-md">Sign Up</button>
           </form>
-          <button  class="underline py-2 px-4 rounded-md" id="login-modal">Already have an account? Sign in</button>
+          <button  class="underline py-1 px-2 hover:text-blue-400" id="login-modal">Already have an account? Sign in</button>
         </div>
     </div>
     <div id="cartModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -189,20 +189,18 @@
                 <h2 class="font-bold text-2xl">Your cart</h2>
                 <% if (Object.keys(cartItems).length > 0) { %>
                     <% Object.values(cartItems).forEach(function(cartItem) { %>
-                        <div class="mb-4 flex lg:flex justify-between">
+                        <div class="mb-4 flex lg:flex justify-between mt-3">
                             <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[40%] lg:w-[40%]">
-                                <div class="w-[100%]">
-                                    
-                                    <img class="h-20 w-[70%] sm:h-28 sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[50%] rounded-md" src="<%= cartItem.image %>" alt="">
-                                    <button class="remove-btn  text-red-700 font-semibold py-1 px-2 underline" data-shoe-id="<%= cartItem._id %>" data-size="<%= cartItem.size %>">Remove</button>
+                                <div class="w-[100%]">                               
+                                    <img class="h-[100%] w-[100%] sm:h-[100%] sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[100%] rounded-md" src="<%= cartItem.image %>" alt="">                      
                                 </div>
-                               
-                                <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-sm lg:text-lg"><%= cartItem.name %></h2>
+                                
+                                <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-base md:text-lg"><%= cartItem.name %></h2>
                             </div>
-                            <div class="lg:w-[40%] w-[40%] flex flex-col justify-between my-3 sm:my-4 md:my-5 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
+                            <div class="lg:w-[40%] w-[40%] flex flex-col justify-between my-8 sm:my-8 md:my-6 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
                                 <span class="flex flex-row lg:flex-col">
                                     <p>size:</p>
-                                    <p><%= cartItem.size %></p>
+                                    <p> <%= cartItem.size %></p>
                                 </span>
                                 <span class="flex flex-row">
                                     <button class="decrease-btn" data-shoe-id="<%= cartItem._id %>">-</button>
@@ -212,6 +210,7 @@
                                 <span class="price" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
                             </div>
                         </div>
+                        <button class="remove-btn  text-red-700 font-semibold px-2 mb-3 md:mb-8 hover:underline" data-shoe-id="<%= cartItem._id %>" data-size="<%= cartItem.size %>">Remove</button>
                     <% }); %>
                     <button class="bottom-0 right-0 absolute text-center bg-green-500 hover:bg-green-600 py-2 md:py-3 font-semibold text-white text-sm md:text-lg rounded-md w-[100%]" id="checkoutButton">CHECKOUT</button>
                 <% } else { %>
