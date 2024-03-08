@@ -1,5 +1,14 @@
 const Order = require('../models/orders');
 const Address = require('../models/address');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: 'onojapeter90@gmail.com',
+      pass: process.env.TRANSPORTER_PASS,
+  }
+});
 
 async function stripePayment (req, res) {
     try {
@@ -59,7 +68,22 @@ async function paymentSuccess (req, res) {
 
     // Save the order to the database
     const savedOrder = await order.save();
-    // console.log('saved the order:', savedOrder);
+    console.log('order email:', savedOrder.userEmail);
+
+    await transporter.sendMail({
+        to: `"Drip Kustom" <${savedOrder.userEmail}>`,
+        subject: 'Order Confirmation',
+        html: `
+                <p>Thank you for your order!</p>
+                <p>Your order has been successfully placed with the following details:</p>
+                <ul>
+                    <li>Order ID: ${savedOrder.orderNumber}</li>
+                    <li>Total Amount:$ ${savedOrder.totalAmount}</li>
+                </ul>
+                <p>We will keep you updated on the status of your order.</p>
+                <p>Thank you for shopping with us!</p>
+        `,
+    });
 
     res.json({ savedOrder });
   } catch (error) {

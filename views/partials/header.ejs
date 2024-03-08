@@ -235,7 +235,8 @@
 <script>
     $(document).ready(function () {
 
-        document.getElementById('myAccountBtn').addEventListener('click', function() {
+        $(document).on('click', '#myAccountBtn', function() {
+            console.log('my accountbtn');
             var submenu = document.getElementById('accountSubMenu');
             submenu.classList.toggle('hidden');
         });

@@ -446,7 +446,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                     </div>
                     <h4 class="text-lg font-semibold mb-4">Select Size</h4>
                     <select id="sizeDropdown" class="w-full border p-2 mb-4">
-                        <option value="40">40 [available]</option>
+                        <option value="40">40</option>
                         <option value="45">45</option>
                         <option value="50">50</option>
                     </select>
@@ -629,7 +629,8 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script>
     $(document).ready(function () {
-            document.getElementById('myAccountBtn').addEventListener('click', function() {
+            $(document).on('click', '#myAccountBtn', function() {
+                console.log('my accountbtn');
                 var submenu = document.getElementById('accountSubMenu');
                 submenu.classList.toggle('hidden');
             });
