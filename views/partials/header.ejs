@@ -155,26 +155,36 @@
         </div>
     </div>
     <div id="signupModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-8 md:px-10 rounded-md relative">
-          <button id="closeSignupModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        <div class="bg-white p-8 md:px-10 rounded-md relative" id="signupModalDiv">
+            <button id="closeSignupModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
 
-          <form class="w-[100%] md:w-80" action="/auth/signup" method="post">
-            <label for="signupUsername" class="block mb-2">Username:</label>
-            <input type="text" id="signupUsername" name="signupUsername" class="block w-full border rounded-md mb-4 p-2">
-      
-            <label for="signupEmail" class="block mb-2">Email:</label>
-            <input type="email" id="signupEmail" name="signupEmail" class="block w-full border rounded-md mb-4 p-2">
-      
-            <label for="signupPassword" class="block mb-2">Password:</label>
-            <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2">
-      
-            <button type="submit" class="bg-green-500 focus:bg-green-800 text-white py-2 px-4 rounded-md">Sign Up</button>
-          </form>
-          <button  class="underline py-1 px-2 hover:text-blue-400" id="login-modal">Already have an account? Sign in</button>
+            <% if (!isAuthenticated) { %>             
+                <% if (messages && messages.length > 0) { %>
+                    <div class="error-message bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+                        <%= messages[0] %>
+                    </div>
+                <% } %>
+            <% } %>
+
+            <form class="w-[100%] md:w-80" action="/auth/signup" method="post" id="signupForm">
+                <label for="signupUsername" class="block mb-2">Username:</label>
+                <input type="text" id="signupUsername" name="signupUsername" class="block w-full border rounded-md mb-4 p-2">
+        
+                <label for="signupEmail" class="block mb-2">Email:</label>
+                <input type="email" id="signupEmail" name="signupEmail" class="block w-full border rounded-md mb-4 p-2">
+    
+                <input type="hidden" name="source" value="normal">
+
+                <label for="signupPassword" class="block mb-2">Password:</label>
+                <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2">
+        
+                <button type="submit" class="bg-green-500 focus:bg-green-800 text-white py-2 px-4 rounded-md">Sign Up</button>
+            </form>
+            <button  class="underline py-1 px-2 hover:text-blue-400" id="login-modal">Already have an account? Sign in</button>
         </div>
     </div>
     <div id="cartModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -277,6 +287,40 @@
             });
         });
 
+        $(document).on('click', '#signupSubmit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+        // Serialize the form data
+            var formData = $('#signupForm').serialize();
+            // console.log(formData);
+                // Make an AJAX request to the login endpoint
+            $.ajax({
+                type: 'POST',
+                url: '/auth/signup',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.error) {
+                        // const errorFromBack = response.error;
+                        // console.log('error from back:', errorFromBack);
+                        $('#signupModal').load(location.href + ' #signupModalDiv');
+                    } else {
+                        if (response.source === 'checkout'){
+                                window.location.href = '/checkout';
+                                // console.log('checkout was included');
+                        } else {
+                            window.location.href = '/';
+                            // console.log('response is user only');
+                        }
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors 
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+
 
         // Add click event listener to checkout button
         $(document).on('click', '#checkoutButton', function() {
@@ -285,6 +329,7 @@
             // Show the login modal if user is not authenticated
             if (!isAuthenticated) {
                 $('#loginForm input[name="source"]').val('checkout');
+                $('#signupForm input[name="source"]').val('checkout');
 
                 $('#cartModal').addClass('hidden');
                 $('#loginModal').removeClass('hidden');
@@ -320,6 +365,7 @@
             // console.log('close loginmodal');
             loginModal.classList.add('hidden');
             $('#loginForm input[name="source"]').val('normal');
+            $('#signupForm input[name="source"]').val('normal');
         });
 
         loginModal.addEventListener('click', (event) => {
@@ -363,6 +409,8 @@
         signupModal.addEventListener('click', (event) => {
             if (event.target === signupModal) {
                 signupModal.classList.add('hidden');
+                $('#loginForm input[name="source"]').val('normal');
+                $('#signupForm input[name="source"]').val('normal');
             }
         });
 
