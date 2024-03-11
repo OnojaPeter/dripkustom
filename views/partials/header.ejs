@@ -142,7 +142,15 @@
                 <input type="text" id="loginEmail" name="loginEmail" class="block w-full border rounded-md mb-4 p-2" required>
         
                 <label for="loginPassword" class="block mb-2">Password:</label>
-                <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2">
+                <div class="relative">
+                    <input type="password" id="loginPassword" name="loginPassword" class="block w-full border rounded-md mb-4 p-2">
+                    <button type="button" id="toggleLoginPassword" class="absolute top-0 right-0 px-2 py-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14" />
+                        </svg>
+                    </button>
+                </div>
         
                 <input type="hidden" name="source" value="normal">
 
@@ -180,7 +188,15 @@
                 <input type="hidden" name="source" value="normal">
 
                 <label for="signupPassword" class="block mb-2">Password:</label>
-                <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2">
+                <div class="relative">
+                    <input type="password" id="signupPassword" name="signupPassword" class="block w-full border rounded-md mb-4 p-2">
+                    <button type="button" id="toggleSignupPassword" class="absolute top-0 right-0 px-2 py-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14" />
+                        </svg>
+                    </button>
+                </div>
         
                 <button type="submit" class="bg-green-500 focus:bg-green-800 text-white py-2 px-4 rounded-md">Sign Up</button>
             </form>
@@ -248,6 +264,19 @@
             console.log('my accountbtn');
             var submenu = document.getElementById('accountSubMenu');
             submenu.classList.toggle('hidden');
+        });
+
+        $('#toggleLoginPassword').click(function() { 
+            const $passwordField = $('#loginPassword');
+            const fieldType = $passwordField.attr('type');
+            const newType = fieldType === 'password' ? 'text' : 'password';
+            $passwordField.attr('type', newType);
+        });
+        $('#toggleSignupPassword').click(function() { 
+            const $passwordField = $('#signupPassword');
+            const fieldType = $passwordField.attr('type');
+            const newType = fieldType === 'password' ? 'text' : 'password';
+            $passwordField.attr('type', newType);
         });
 
         $(document).on('click', '#loginSubmit', function() {
