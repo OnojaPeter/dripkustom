@@ -1,6 +1,7 @@
 const Address = require ("../models/address")
 const User = require('../models/user');
 const Order = require('../models/orders');
+const bcrypt = require('bcryptjs');
 
 async function person (req,res) {
     try {     
@@ -34,9 +35,48 @@ async function editPassword (req,res) {
     try {
         const cartCookie = req.cookies.cart || '{}';
         const cart = JSON.parse(cartCookie);
-        res.render("edit-password", {cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
+        res.render("edit-password", {messages: req.flash('error'), cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated()});
     } catch (error) {
         console.error(error)
+    }
+}
+
+async function editPasswordPost(req, res) {
+    try {
+        const { oldPassword, newPassword, confirmNewPassword } = req.body;
+        const user = req.user;
+
+        const cartCookie = req.cookies.cart || '{}';
+        const cart = JSON.parse(cartCookie);
+
+        // console.log(user);
+        // console.log("req.body:",req.body);
+
+        // Validate the old password
+        const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
+        if (!isPasswordValid) {
+            // return res.status(400).send('Old password is incorrect');
+            return res.render('edit-password', { messages: ['Old password is incorrect'], cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated() });
+        }
+
+        // Validate that the new password and confirm password match
+        if (newPassword !== confirmNewPassword) {
+            // return res.status(400).send('New password and confirm password do not match');
+            return res.render('edit-password', { messages: ['New password and confirm new password do not match'], cartItems: cart, user: req.user, isAuthenticated: req.isAuthenticated() });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        console.log('haspassword:', hashedPassword);
+
+        // Update the user's password in the database
+        user.password = hashedPassword;
+        await user.save();
+
+        res.redirect('/profile/person');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
     }
 }
 
@@ -164,6 +204,7 @@ module.exports = {
     editPerson,
     editPersonPost,
     editPassword,
+    editPasswordPost,
     address,
     editAddressPage,
     editAddressPost,

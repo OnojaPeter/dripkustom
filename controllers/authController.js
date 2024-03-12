@@ -13,7 +13,10 @@ async function signup(req, res, next) {
       return res.json({ error: 'User already exists' });
     }
 
-    const newUser = new User({ username: signupUsername, email: signupEmail, password: signupPassword });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(signupPassword, salt);
+    console.log('hashedPassword from signup:', hashedPassword);
+    const newUser = new User({ username: signupUsername, email: signupEmail, password: hashedPassword });
     await newUser.save();
 
     req.logIn(newUser, async (err) => {

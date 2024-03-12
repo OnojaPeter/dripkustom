@@ -15,6 +15,8 @@ router.get('/edit-address/:addressId?', isAuthenticated, profileController.editA
 
 router.get("/order", isAuthenticated, profileController.order);
 
+router.post("/edit-password",isAuthenticated, profileController.editPasswordPost);
+
 router.post('/edit-address/:addressId?', isAuthenticated, profileController.editAddressPost);
 
 router.post("/edit-person", isAuthenticated, profileController.editPersonPost);
