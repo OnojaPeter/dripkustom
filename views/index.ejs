@@ -885,7 +885,9 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
             }
             loadMoreCards(4);        
 
-            $('.addToCartBtn').on('click', function () {
+            $(document).on('click', '.addToCartBtn', function() {
+                // console.log('addToCartBtn click');
+            // $('.addToCartBtn').on('click', function () {
                 const shoeId = $(this).data('shoe-id');
                 // console.log(shoeId);
                 $('#sizeSelectionModal').removeClass('hidden');
@@ -894,7 +896,8 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
             });
 
             // Event listener for "Add to Cart" button in the size selection modal
-            $('#addToCartBtnInModal').on('click', function () {
+            $(document).on('click', '#addToCartBtnInModal', function() {
+            // $('#addToCartBtnInModal').on('click', function () {
                 const shoeId = $('#sizeSelectionModal').data('shoe-id');
                 // console.log(shoeId);
                 const selectedSize = $('#sizeDropdown').val(); // Retrieve selected size from the dropdown
@@ -1205,20 +1208,21 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         })
         });
         
-        const closeSizeSelectionModal = document.getElementById('closeSizeModalBtn');
-        const sizeSelectionModal = document.getElementById('sizeSelectionModal');
-        const toggleSizeSelectionModal = () => {
-            sizeSelectionModal.classList.toggle('hidden');
-        }
-        if (closeSizeSelectionModal) {
-            closeSizeSelectionModal.addEventListener('click', toggleSizeSelectionModal)
-        }
-        sizeSelectionModal.addEventListener('click', (event) => {
-            if(event.target === sizeSelectionModal) {
-                console.log(event.target);
-                sizeSelectionModal.classList.add('hidden')
-            }
-        })
+        $(document).ready(function() {
+            const toggleSizeSelectionModal = () => {
+                $('#sizeSelectionModal').toggleClass('hidden');
+            };
+
+            $(document).on('click', '#closeSizeModalBtn', function() {
+                toggleSizeSelectionModal();
+            });
+
+            $(document).on('click', '#sizeSelectionModal', function(event) {
+                if (event.target === this) {
+                    toggleSizeSelectionModal();
+                }
+            });
+        });
     </script>
 </body>
 
