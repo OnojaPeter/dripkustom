@@ -134,7 +134,8 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                     <%= messages[0] %>
                 </div>
             <% } %>
-        <% } %>                 
+        <% } %>    
+        <div id="loginSuccessMessage" ></div>             
 
         <form action="/auth/login" id="loginForm" method="post">
         <label for="loginEmail" class="block mb-2">Email:</label>
@@ -698,7 +699,19 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                                     window.location.href = '/checkout';
                                     // console.log('checkout was included');
                                 } else {
-                                    window.location.href = '/';
+                                    $('#loginModal').load(location.href + ' #loginModalDiv');
+                                        // console.log('signup reloaded');
+
+                                    setTimeout(function() {
+                                        $('#loginSuccessMessage').text('Login successful!').addClass('success-message bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded');
+                                        // console.log('success msg inserted');
+                                    }, 1000);
+                                    
+                                    setTimeout(function() {
+                                        // console.log('reload about to commence');
+                                        window.location.reload();
+                                    }, 3000);
+                                    // window.location.href = '/';
                                     // console.log('response is user only');
                                 }
                             }
