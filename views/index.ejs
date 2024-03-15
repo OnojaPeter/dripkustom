@@ -864,8 +864,13 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
             loginModal.classList.toggle('hidden');
         });
 
-        closeSignupModal.addEventListener('click', () => {
+        // closeSignupModal.addEventListener('click', () => {
+        //     signupModal.classList.add('hidden');
+        // });
+        $(document).on('click', '#closeSignupModal', function() {
+            // console.log('close signupmodal');
             signupModal.classList.add('hidden');
+            $('#loginForm input[name="source"]').val('normal');
         });
 
         signupModal.addEventListener('click', (event) => {
