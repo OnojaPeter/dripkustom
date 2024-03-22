@@ -615,7 +615,9 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 
     <div id="notification" class="fixed top-24 z-50 right-0 text-center bg-green-500 text-white w-[100%] px-4 py-2 rounded-md hidden">
         Item added to cart!
-    </div>        
+    </div>  
+    <button class="px-4 bg-blue-500" id="paymentButton">Pay with Flutterwave</button>
+      
     
 </main>
 <footer class="mt-10 lg:mt-28 px-6 lg:px-0 text-white bg-gray-900">
@@ -652,6 +654,36 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         © DRIPKUSTOM. All Rights Reserved
     </div>
 </footer>
+
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<script>
+    document.getElementById('paymentButton').addEventListener('click', function() {
+      var paymentData = {
+        public_key: 'FLWPUBK_TEST-c4b26304294d14b83b0658d6868cff7b-X',
+        tx_ref: 'YOUR_TRANSACTION_REFERENCE',
+        amount: 100, // Amount in cents (e.g., $1.00 = 100 cents)
+        currency: 'USD',
+        redirect_url: '/',
+        payment_options: 'card, banktransfer, ussd', 
+        customer: {
+          email: 'oonojapeter@gmail.com',
+          phone_number: '+1234567890',
+          name: 'John Doe'
+        },
+        callback: function(response) {
+            console.log('flutter here');
+          console.log(response); // Handle payment response
+        },
+        onclose: function() {
+          console.log('Payment window closed');
+        }
+      };
+  
+      FlutterwaveCheckout(paymentData);
+    });
+  </script>
+  
+
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
