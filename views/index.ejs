@@ -660,12 +660,14 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
     document.getElementById('paymentButton').addEventListener('click',async function() {
         try{
             const countryCurrency = await getUserLocation(); 
+            const priceInUserCurrency = await exampleUsage();
             console.log('country currency:', countryCurrency);
+            console.log('price In User Currency:', priceInUserCurrency);
 
             var paymentData = {
                 public_key: 'FLWPUBK_TEST-c4b26304294d14b83b0658d6868cff7b-X',
                 tx_ref: 'k',
-                amount: 1000, // Amount in cents (e.g., $1.00 = 100 cents)
+                amount: priceInUserCurrency,
                 currency: countryCurrency,
                 redirect_url: '/',
                 payment_options: 'card, banktransfer, ussd', 
@@ -690,23 +692,63 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         
     });
 
+    // const userCurrency = getUserLocation(); 
+    // console.log('userCurrency found');
+    // const priceInUSD = 10;
+    async function exampleUsage() {
+        const userCurrency = await getUserLocation(); 
+        console.log('userCurrency in example:', userCurrency);
+        const priceInUSD = 10; // Price of goods in USD
+        try {
+            const convertedPrice = await convertPriceToUserCurrency(userCurrency, priceInUSD);
+            return convertedPrice
+            // console.log(`Price in user's currency (${userCurrency}): ${convertedPrice}`);
+        } catch (error) {
+            console.error('Error converting price:', error);
+        }
+    }
+
+    // Call the exampleUsage function
+    exampleUsage();
+
+    async function fetchExchangeRate(userCurrency) {
+        const response = await fetch(`https://api.exchangerate-api.com/v4/latest/USD`);
+        const data = await response.json();
+        console.log('data:', data);
+        // const priceInUSD = 10;
+
+        // const userCurrency = await getUserLocation(); 
+        return data.rates[userCurrency];
+    }
+
+    
+    // Function to convert price from USD to the user's currency
+    async function convertPriceToUserCurrency(userCurrency, priceInUSD) {
+        const exchangeRate = await fetchExchangeRate(userCurrency);
+        console.log('exchangeRate:', exchangeRate);
+
+        const convertedPrice = priceInUSD * exchangeRate;
+        return convertedPrice;
+    }
+
+
     async function getUserLocation() {
         try {
             // Fetch the user's IP address
             const response = await fetch('https://api.ipify.org?format=json');
             const data = await response.json();
-            console.log('data:', data);
+            console.log('data from getLocation:', data);
             const ipAddress = data.ip;
             console.log('ipAddress:', ipAddress);
 
             // Use the IP address to fetch the user's location
             const locationResponse = await fetch(`https://ipapi.co/${ipAddress}/json/`);
             const locationData = await locationResponse.json();
-            console.log('locationData:', locationData);
+            // console.log('locationData:', locationData);
 
             const country = locationData.country_name;
             const countryCurrency = locationData.currency;
-            console.log('country:', country);
+            // console.log('country:', country);
             console.log('countryCurrency:', countryCurrency);
 
             return countryCurrency;
