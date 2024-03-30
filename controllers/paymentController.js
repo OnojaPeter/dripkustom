@@ -49,15 +49,24 @@ async function paymentSuccess (req, res) {
   try {
     const userId = req.user._id;
     // console.log(userId);
-    function generateOrderNumber() {
-        return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
+    let generatedOrderNumber;
+    if (selectedPaymentMethod === 'flutterwave') {
+      generatedOrderNumber = reference;
+      console.log('generatedOrderNumber:', generatedOrderNumber);
+    } else {
+        function generateOrderNumber() {
+          return Date.now().toString() + Math.floor(Math.random() * 1000).toString();
+        }
+        generatedOrderNumber = generateOrderNumber();
+        console.log('generatedOrderNumber from paystack:', generatedOrderNumber);
     }
+   
     const address = await Address.findById(selectedAddress);
     // console.log(address);
 
     const order = new Order({
       user: userId,
-      orderNumber : generateOrderNumber(),
+      orderNumber : generatedOrderNumber,
       reference: reference,
       userEmail: userEmail,
       totalAmount: totalAmount,
