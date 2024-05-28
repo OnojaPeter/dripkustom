@@ -25,13 +25,19 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 
 <link rel="stylesheet" href="/public/css/output.css">
 <link rel="stylesheet" href="/public/css/styles.css">
+<style>
+    h1,h2,h3,h4,h5,p,span,button{
+    color: white;
+    }
+</style>
+
 <title>Drip Kustom</title>
 </head>
 
-<body class="pt-24">
+<body class="pt-24 landingPage">
 <header class="py-5 top-0 left-0 right-0 z-50 fixed w-full bg-white">
     <div class="px-4 sm:px-6 lg:px-20 mx-auto max-w-full">
-        <nav class="relative flex justify-between items-center">
+        <nav class="relative flex justify-between items-center font-medium">
             <div class="flex items-center md:gap-x-24">
                 <a aria-label="Home" href="/" class="font-bold">
                     <img width="200px" height="60px" src="/public/images/DRIPog.png" alt="">
@@ -258,7 +264,23 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 </div>
 
 <main class="sm:px-10 lg:px-20">
-    <section class="hero1">
+    <section class="text-white mt-5">
+        <div class="flex flex-col md:flex-row items-center justify-between mx-4 lg:mx-0">
+          <div class="md:w-1/2 text-left">
+            <h1 class="text-4xl sm:text-5xl md:text-4xl lg:text-6xl font-bold ">Selling the Best Kustom Shoes</h1>
+            <p class="mt-4 text-sm sm:text-lg mr-3 md:mr-0">Discover our unique collection of kustom shoes that blend style and comfort. Perfect for any occasion, our shoes are designed to make you stand out.</p>
+            <a href="#shoesCollection">
+                <button class="mt-6 px-6 py-2 bg-red-900 text-white text-lg font-semibold rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">Buy Now!</button>
+            </a>
+            </div>
+
+          <div class="md:w-1/2 sm:mt-8 md:mt-0 flex justify-center -mt-20 md:-mt-0">
+            <img src="/public/images/landing-page-pic.png" alt="Kustom Shoes" class="max-w-full h-auto rounded-2xl "> <!--110d217ff1988b02aa662ca08cb8fb1c.jpg -->
+          </div>
+        </div>
+    </section>
+
+    <!-- <section class="hero1">
         <div>
             <div class="hero1-div-div hidden lg:flex">
                 <div class="">
@@ -290,11 +312,11 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                     <img class=" full-height" src="/public/images/172e1bd6d07474b8c1ad2f3404dc1fc3.jpg" alt="">
                 </div>
                     
-                <!-- Next and previous buttons -->
+               
                 <a class="prev lg:hidden " onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next lg:hidden " onclick="plusSlides(1)">&#10095;</a>
 
-                <!-- The dots/circles -->
+                
                 <div style="text-align:center" class="lg:hidden dot-div">
                     <span class="dot" onclick="currentSlide(1)"></span>
                     <span class="dot" onclick="currentSlide(2)"></span>
@@ -303,121 +325,126 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                 </div>
             </div>
         </div>
-    </section>    
-    <section class="hero2 py-16 lg:py-24">
+    </section>     -->
+
+
+    <section class="hero2 pb-10 md:pb-0 md:pt-16 lg:pt-24">
             <div class="slider">
                 <div class="owl-carousel owl-theme owl-loaded">
                     <div class="owl-stage-outer">
-                    <div class="slider-header mb-10">
-                        <h1 class="text-start font-semibold lg:text-6xl text-3xl mb-6 mx-4 lg:mx-0">
-                            BESTSELLERS
-                        </h1>
-                    </div>                       
-                    <div class="owl-stage">    
-                        <% ShoeBestsellers.forEach(function(shoe) { %>
-                            <article class="owl-item" style="border-radius: 10px;">
+                        <div class="slider-header mb-10">
+                            <h1 class="text-start font-semibold lg:text-6xl text-3xl mb-6 mx-4 lg:mx-0">
+                                BESTSELLERS
+                            </h1>
+                        </div>                       
+                        <div class="owl-stage">    
+                            <% ShoeBestsellers.forEach(function(shoe) { %>
+                                <article class="owl-item rounded-lg overflow-hidden">
+                                  <figure>
+                                    <div class="slider-card bg-gray-800 p-4 rounded-lg shadow-lg">
+                                      <div class="slider-shoe mb-4">
+                                        <a href="/shoe/<%= shoe._id %>">
+                                          <div class="h-64 overflow-hidden rounded-lg flex items-center justify-center">
+                                            <img src="<%= shoe.image %>" alt="<%= shoe.name %>" class="h-full w-full object-contain">
+                                          </div>
+                                        </a>
+                                      </div>
+                                      <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                        <div class="font-semibold">
+                                          <h3><%= shoe.name %></h3>
+                                          <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
+                                        </div>
+                                        <button class="p-2 bg-blue-600 rounded-full hover:bg-blue-700 addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
+                                          <i class="fa-solid fa-cart-shopping fa-lg"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </figure>
+                                </article>
+                              <% }); %>
+                                    
+                                <!-- <article class="owl-item" style="border-radius: 10px;">
                                 <figure>
                                     <div class="slider-card">
                                         <div class="slider-shoe">
-                                            <a href="/shoe/<%= shoe._id %>">
-                                                <img src="<%= shoe.image %>" alt="">
-                                            </a>                                               
+                                            <img src="/public/images/landing-page-pic.png" alt="">
                                         </div>
                                         <div class="shoe-details flex items-center justify-between px-3 text-white">
                                             <div class="font-semibold">
-                                                <h3><%= shoe.name %></h3>
-                                                <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
+                                                <h3>High Tops</h3>
+                                                <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
                                             </div>
-                                            <button style="padding: 10px;" class="addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
-                                                <i class="fa-solid fa-cart-shopping fa-lg"></i>
-                                            </button>
+                                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
                                         </div>
                                     </div>  
                                 </figure>
-                            </article>   
-                        <% }); %>         
-                        
-                        <article class="owl-item" style="border-radius: 10px;">
-                        <figure>
-                            <div class="slider-card">
-                                <div class="slider-shoe">
-                                    <img src="/public/images/4d3411998dd09287beeb434a5e435782.jpg" alt="">
-                                </div>
-                                <div class="shoe-details flex items-center justify-between px-3 text-white">
-                                    <div class="font-semibold">
-                                        <h3>High Tops</h3>
-                                        <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
-                                    </div>
-                                    <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                                </div>
-                            </div>  
-                        </figure>
-                        </article>
-            
-                        <article class="owl-item" style="border-radius: 10px;">
-                        <figure>
-                            <div class="slider-card">
-                                <div class="slider-shoe">
-                                    <img src="/public/images/5eab1bcd63127160c50ba6723e5358d8.jpg" alt="">
-                                </div>
-                                <div class="shoe-details flex items-center justify-between px-3 text-white">
-                                    <div class="font-semibold">
-                                        <h3>Running Shoe</h3>
-                                        <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
-                                    </div>
-                                    <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                                </div>
-                            </div>  
-                        </figure>
-                        </article>
-            
-                        <article class="owl-item" style="border-radius: 10px;">
-                        <figure>
-                            <div class="slider-card">
-                                <div class="slider-shoe">
-                                    <img src="/public/images/4ff9167ec73af7436ba02f8135192578.jpg" alt="">
-                                </div>
-                                <div class="shoe-details flex items-center justify-between px-3 text-white">
-                                    <div class="font-semibold">
-                                        <h3>High AF1</h3>
-                                        <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
-                                    </div>
-                                    <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
-                                </div>
-                            </div>  
-                        </figure>
-                        </article>
-                    </div>
+                                </article>
+                    
+                                <article class="owl-item" style="border-radius: 10px;">
+                                <figure>
+                                    <div class="slider-card">
+                                        <div class="slider-shoe">
+                                            <img src="/public/images/5eab1bcd63127160c50ba6723e5358d8.jpg" alt="">
+                                        </div>
+                                        <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                            <div class="font-semibold">
+                                                <h3>Running Shoe</h3>
+                                                <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                                            </div>
+                                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                        </div>
+                                    </div>  
+                                </figure>
+                                </article>
+                    
+                                <article class="owl-item" style="border-radius: 10px;">
+                                <figure>
+                                    <div class="slider-card">
+                                        <div class="slider-shoe">
+                                            <img src="/public/images/4ff9167ec73af7436ba02f8135192578.jpg" alt="">
+                                        </div>
+                                        <div class="shoe-details flex items-center justify-between px-3 text-white">
+                                            <div class="font-semibold">
+                                                <h3>High AF1</h3>
+                                                <p class="text-base">$ 200 <span class="line-through text-xs">$ 230</span></p>
+                                            </div>
+                                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                                        </div>
+                                    </div>  
+                                </figure>
+                                </article> -->
+                            
+                        </div>
                     </div>
                 </div>
             </div>
         
     </section>
 
-    <section id="shoesCollection">
+    <section id="shoesCollection" class="mt-36">
         <div class="filter-section mb-3 px-3 sm:px-0">
             <div>
                 <h1 class="font-semibold lg:text-5xl md:text-4xl text-3xl mb-4">SHOE COLLECTIONS</h1>
             </div>
             <div class="flex gap-3">
                 <div>
-                    <span id="filter">
+                    <div class="bg-white text-black text-lg px-3 rounded font-medium" id="filter">
                         <button>Filters</button>
                         <i class="fa fa-filter" aria-hidden="true"></i>
-                    </span>
+                    </div>
 
-                    <ul class="hidden selectedCategory" id="filter-menu">
+                    <ul class="hidden selectedCategory bg-white font-medium mt-2" id="filter-menu">
                         <li><button style="padding-right: 30px;" id="showAllBtn" class="category-btn categoryBtn">Show All</button></li>
                         <li><button style="padding-right: 50px;" class="categoryBtn" id="nike" value="nike">Nike</button></li>
                         <li><button style="padding-right: 40px;" class="categoryBtn" id="adidas" value="adidas">Adidas</button></li>
                     </ul>
                 </div>
                 <div>
-                    <span id="sort-by">
+                    <div id="sort-by" class="bg-white text-black text-lg px-3 rounded font-medium">
                         <button>Sort by</button>
                         <i class="fa fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                    <ul class="hidden" id="sort-menu">
+                    </div>
+                    <ul class="hidden bg-white font-medium mt-2" id="sort-menu">
                         <li>
                             <button class="sortByFilter" id="recent" value="Sort by Recently Added">Sort by Recently Added</button>                   
                         </li>
@@ -609,7 +636,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
             </div>
         </div> -->
         <div class="text-center w-[100%] mt-4">               
-            <button id="load-more" class="px-6 py-2 bg-gray-900 text-white rounded-lg load-more">VIEW MORE</button>               
+            <button id="load-more" class="px-6 py-2 bg-white text-black font-semibold rounded-lg load-more">VIEW MORE</button>               
         </div>
     </section>
 
@@ -1286,34 +1313,34 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 
 
 
-        let slideIndex = 1;
-        showSlides(slideIndex);
+        // let slideIndex = 1;
+        // showSlides(slideIndex);
 
-        // Next/previous controls
-        function plusSlides(n) {
-        showSlides(slideIndex += n);
-        }
+        // // Next/previous controls
+        // function plusSlides(n) {
+        // showSlides(slideIndex += n);
+        // }
 
-        // Thumbnail image controls
-        function currentSlide(n) {
-        showSlides(slideIndex = n);
-        }
+        // // Thumbnail image controls
+        // function currentSlide(n) {
+        // showSlides(slideIndex = n);
+        // }
 
-        function showSlides(n) {
-        let i;
-        let slides = document.getElementsByClassName("mySlides");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-        }
+        // function showSlides(n) {
+        // let i;
+        // let slides = document.getElementsByClassName("mySlides");
+        // let dots = document.getElementsByClassName("dot");
+        // if (n > slides.length) {slideIndex = 1}
+        // if (n < 1) {slideIndex = slides.length}
+        // for (i = 0; i < slides.length; i++) {
+        //     slides[i].style.display = "none";
+        // }
+        // for (i = 0; i < dots.length; i++) {
+        //     dots[i].className = dots[i].className.replace(" active", "");
+        // }
+        // slides[slideIndex-1].style.display = "block";
+        // dots[slideIndex-1].className += " active";
+        // }
 
         const hamburgerButton = document.getElementById('hamburgerButton');
         const mobileMenu = document.getElementById('mobileMenu');
