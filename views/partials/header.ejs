@@ -29,21 +29,17 @@
 </head>
 
 <body class="pt-16">
-    <header class="py-2 md:py-3 top-0 left-0 right-0 z-50 fixed w-full bg-white">
-        <div class=" px-4 sm:px-6 lg:px-20 mx-auto max-w-full">
-            <nav class="relative flex justify-between items-center">
+    <header class="py-2 md:py-3 top-0 left-0 right-0 z-40 fixed w-full bg-white">
+        <div class="px-4 sm:px-6 lg:px-20 mx-auto max-w-full">
+            <nav class="relative flex justify-between items-center font-medium">
                 <div class="flex items-center md:gap-x-24">
                     <a aria-label="Home" href="/" class="font-bold">
                         <img width="200px" height="60px" src="/public/images/DRIPog.png" alt="">
-                        <!-- DRIP-KUSTOM -->
                     </a>
                     <div class="hidden md:flex md:gap-x-6" >
                         <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
                             Home
                         </a>
-                        <!-- <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/collections">
-                            Collections
-                        </a> -->
                         <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
                             About
                         </a>
@@ -54,52 +50,14 @@
                             Faqs
                         </a>
                     </div>
-                    <div class="mobileMenu gap-6 lg:gap-0 hidden md:gap-x-6 flex-col flex" id="mobileMenu">
-                        <button id="closeBtn" class="close-btn mt-3">×</button>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
-                            Home
-                        </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
-                            About
-                        </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/store-policy">
-                            Store Policy
-                        </a>
-                        <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
-                            Faqs
-                        </a>
-                        <% if (isAuthenticated) { %>
-                            <div class="relative inline-block">
-                                <button id="myAccountBtn" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none">
-                                    My Account
-                                </button>
-                                <div id="accountSubMenu" class="hidden flex flex-col absolute top-full left-0 z-10 bg-white shadow-md rounded-lg border-2 mt-2">
-                                    <a href="/profile/person" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Personal Information</span></a>
-                                    <a href="/profile/address" id="addressManagement" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Address Management</span></a>
-                                    <a href="/profile/order" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>My Order</span></a>
-                                </div>
-                            </div>
-
-                            <a href="/auth/logout" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none"><span>Logout</span></a>
-                        <% } else { %>
-                            <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" id="loginButton">
-                                <button class="" >
-                                    Login
-                                </button>
-                            </a>
-                            <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" id="signupButton">
-                                <button class="" >
-                                    Sign-up
-                                </button>
-                            </a>
-                        <% } %>
-                    </div>
+    
+                    
                 </div>
                 <div class="flex items-center gap-x-5 md:gap-x-8">
+                    <!-- for desktop -->
                     <div class="hidden md:block">
                         <% if (isAuthenticated) { %>
-                        <!-- Content for authenticated users -->
-                        <a href="/profile/person" id="profileButton" title="Profile"><i class="fa-solid fa-user fa-xl"></i></a>
+                        <a href="/profile/person" id="profileButton" title="Profile"><i class="fa-solid fa-user fa-xl"></i> </a><!--<span class="font-semibold">Person</span>-->
                         <% } else { %>
                         <button class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900"  id="desktopLoginButton">
                             Login
@@ -121,7 +79,55 @@
                 </div>
             </nav>
         </div>
-    </header>
+    </header>  
+    <!-- mobile menu -->
+    <div class="mobileMenu gap-6 lg:gap-0 md:gap-x-6 flex-col flex items-center bg-white z-50" id="mobileMenu">
+        <div id="closeBtn" class="close-btn mt-2 px-4 sm:px-6 flex justify-between">
+            <a aria-label="Home" href="/" class="font-bold">
+                <img width="200px" height="60px" src="/public/images/DRIPog.png" alt="">
+                <!-- DRIP-KUSTOM -->
+            </a>
+            <button  >×</button>
+        </div>
+        <!-- <button id="closeBtn" class="close-btn mt-3 pr-4 sm:pr-6">×</button> -->
+        <a class="nav-link inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
+            Home
+        </a>
+        <a class="nav-link inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
+            About
+        </a>
+        <a class="nav-link inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/store-policy">
+            Store Policy
+        </a>
+        <a class="nav-link inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
+            Faqs
+        </a>
+        <% if (isAuthenticated) { %>
+            <div class="relative inline-block">
+                <button id="myAccountBtn" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none">
+                    My Account
+                </button>
+                <div id="accountSubMenu" class="nav-link hidden flex flex-col absolute top-full left-0 z-10 bg-white shadow-md rounded-lg border-2 mt-2">
+                    <a href="/profile/person" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Personal Information</span></a>
+                    <a href="/profile/address" id="addressManagement" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Address Management</span></a>
+                    <a href="/profile/order" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>My Order</span></a>
+                </div>
+            </div>
+    
+            <a href="/auth/logout" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none"><span>Logout</span></a>
+        <% } else { %>
+            <a class="nav-link inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="loginButton">
+                <button class="" >
+                    Login
+                </button>
+            </a>
+            <a class="nav-link inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="signupButton">
+                <button class="" >
+                    Sign-up
+                </button>
+            </a>
+        <% } %>
+    </div>
     <div id="loginModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white p-8 md:px-10 rounded-md relative" id="loginModalDiv">
             <button id="closeLoginModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
@@ -215,7 +221,7 @@
             </button>
 
             <div id="cartReload" class="overflow-y-scroll" style="height: 400px;">
-                <h2 class="font-bold text-2xl">Your cart</h2>
+                <h2 class="font-bold text-2xl text-black">Your cart</h2>
                 <% if (Object.keys(cartItems).length > 0) { %>
                     <% Object.values(cartItems).forEach(function(cartItem) { %>
                         <div class="mb-4 flex lg:flex justify-between mt-3">
@@ -224,19 +230,19 @@
                                     <img class="h-[100%] w-[100%] sm:h-[100%] sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[100%] rounded-md" src="<%= cartItem.image %>" alt="">                      
                                 </div>
                                 
-                                <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-base md:text-lg"><%= cartItem.name %></h2>
+                                <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-base md:text-lg text-black"><%= cartItem.name %></h2>
                             </div>
                             <div class="lg:w-[40%] w-[40%] flex flex-col justify-between my-8 sm:my-8 md:my-6 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
                                 <span class="flex flex-row lg:flex-col">
-                                    <p>size:</p>
-                                    <p> <%= cartItem.size %></p>
+                                    <p class="text-black">size:</p>
+                                    <p class="text-black"> <%= cartItem.size %></p>
                                 </span>
                                 <span class="flex flex-row">
-                                    <button class="decrease-btn" data-shoe-id="<%= cartItem._id %>">-</button>
-                                    <span class="quantity flex flex-row mx-2 md:mx-3 lg:mx-5" id="quantity_<%= cartItem._id %>"><%= cartItem.quantity %></span>
-                                    <button class="increase-btn" data-shoe-id="<%= cartItem._id %>">+</button>
+                                    <button class="decrease-btn text-black" data-shoe-id="<%= cartItem._id %>">-</button>
+                                    <span class="quantity flex flex-row mx-2 md:mx-3 lg:mx-5 text-black" id="quantity_<%= cartItem._id %>"><%= cartItem.quantity %></span>
+                                    <button class="increase-btn text-black" data-shoe-id="<%= cartItem._id %>">+</button>
                                 </span>
-                                <span class="price" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
+                                <span class="price text-black" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
                             </div>
                         </div>
                         <button class="remove-btn  text-red-700 font-semibold px-2 mb-3 md:mb-8 hover:underline" data-shoe-id="<%= cartItem._id %>" data-size="<%= cartItem.size %>">Remove</button>
@@ -247,7 +253,7 @@
                     <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
                 </div>
                 
-                <p class="font-semibold text-center mb-10">Cart is empty</p>
+                <p class="font-semibold text-center mb-10 text-black">Cart is empty</p>
                 
                 <a href="collections.html" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
                     <button>Continue shopping</button>
@@ -496,10 +502,12 @@
 
             hamburgerButton.addEventListener('click', () => {
                 // alert("working")
-                mobileMenu.classList.toggle("hidden");
+                // mobileMenu.classList.toggle("hidden");
+                mobileMenu.classList.add('open');
             });
             closeBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle("hidden");
+                // mobileMenu.classList.toggle("hidden");
+                mobileMenu.classList.remove('open');
             });
 
             $('.addToCartBtn').on('click', function () {

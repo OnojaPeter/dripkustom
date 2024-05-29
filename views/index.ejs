@@ -34,7 +34,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 <title>Drip Kustom</title>
 </head>
 
-<body class="pt-20 md:pt-0 landingPage">
+<body class="pt-20 md:pt-14 lg:pt-6 xl:pt-0 landingPage">
 <header class="py-2 md:py-3 top-0 left-0 right-0 z-40 fixed w-full bg-white">
     <div class="px-4 sm:px-6 lg:px-20 mx-auto max-w-full">
         <nav class="relative flex justify-between items-center font-medium">
@@ -229,7 +229,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         </button>
 
         <div id="cartReload" class="overflow-y-scroll" style="height: 430px;">
-            <h2 class="font-bold text-2xl">Your cart</h2>
+            <h2 class="font-bold text-2xl text-black">Your cart</h2>
             <% if (Object.keys(cartItems).length > 0) { %>
                 <% Object.values(cartItems).forEach(function(cartItem) { %>
                     <div class="mb-4 flex lg:flex justify-between mt-3">
@@ -238,19 +238,19 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                                 <img class="h-[100%] w-[100%] sm:h-[100%] sm:w-[70%] md:w-[60%] lg:h-[90%] lg:w-[100%] rounded-md" src="<%= cartItem.image %>" alt="">                      
                             </div>
                             
-                            <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-base md:text-lg"><%= cartItem.name %></h2>
+                            <h2 class="w-[100%] mb-2 lg:mb-0 lg:ml-[10%] font-semibold text-base md:text-lg text-black"><%= cartItem.name %></h2>
                         </div>
                         <div class="lg:w-[40%] w-[40%] flex flex-col justify-between my-8 sm:my-8 md:my-6 lg:my-0 lg:flex-row lg:items-center lg:justify-between lg:text-center lg:mx-5">
                             <span class="flex flex-row lg:flex-col">
-                                <p>size:</p>
-                                <p> <%= cartItem.size %></p>
+                                <p class="text-black">size:</p>
+                                <p class="text-black"> <%= cartItem.size %></p>
                             </span>
                             <span class="flex flex-row">
-                                <button class="decrease-btn" data-shoe-id="<%= cartItem._id %>">-</button>
-                                <span class="quantity flex flex-row mx-2 md:mx-3 lg:mx-5" id="quantity_<%= cartItem._id %>"><%= cartItem.quantity %></span>
-                                <button class="increase-btn" data-shoe-id="<%= cartItem._id %>">+</button>
+                                <button class="decrease-btn text-black" data-shoe-id="<%= cartItem._id %>">-</button>
+                                <span class="quantity flex flex-row mx-2 md:mx-3 lg:mx-5 text-black" id="quantity_<%= cartItem._id %>"><%= cartItem.quantity %></span>
+                                <button class="increase-btn text-black" data-shoe-id="<%= cartItem._id %>">+</button>
                             </span>
-                            <span class="price" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
+                            <span class="price text-black" id="price_<%= cartItem._id %>">$<%= cartItem.price * cartItem.quantity %></span> 
                         </div>
                     </div>
                     <button class="remove-btn  text-red-700 font-semibold px-2 mb-3 md:mb-8 hover:underline" data-shoe-id="<%= cartItem._id %>" data-size="<%= cartItem.size %>">Remove</button>
@@ -261,7 +261,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                 <img class="bg-white" src="/public/images/cart.jpg" alt="cart image">
             </div>
             
-            <p class="font-semibold text-center mb-4">Cart is empty</p>
+            <p class="font-semibold text-center mb-4 text-black">Cart is empty</p>
             
             <a href="#shoesCollection" class="rounded-md bg-gray-300 font-semibold text-sm px-3 py-2">
                 <button>Continue shopping</button>
@@ -272,7 +272,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 </div>
 
 <main class="sm:px-10 lg:px-20 ">
-    <section class="text-white mt-5">
+    <section class="text-white mt-5 lg:pl-10">
         <div class="flex flex-col md:flex-row items-center justify-between mx-4 lg:mx-0">
           <div class="md:w-1/2 text-left">
             <h1 class="text-4xl sm:text-5xl md:text-4xl lg:text-6xl font-bold ">Selling the Best Kustom Shoes</h1>
@@ -507,7 +507,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                                 </svg>
                         </button>
                     </div>
-                    <h4 class="text-lg font-semibold mb-4">Select Size</h4>
+                    <h4 class="text-lg font-semibold mb-4 text-black">Select Size</h4>
                     <select id="sizeDropdown" class="w-full border p-2 mb-4">
                         <option value="40">40</option>
                         <option value="45">45</option>
