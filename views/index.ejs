@@ -35,13 +35,12 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 </head>
 
 <body class="pt-20 md:pt-0 landingPage">
-<header class="py-2 md:py-3 top-0 left-0 right-0 z-50 fixed w-full bg-white">
+<header class="py-2 md:py-3 top-0 left-0 right-0 z-40 fixed w-full bg-white">
     <div class="px-4 sm:px-6 lg:px-20 mx-auto max-w-full">
         <nav class="relative flex justify-between items-center font-medium">
             <div class="flex items-center md:gap-x-24">
                 <a aria-label="Home" href="/" class="font-bold">
                     <img width="200px" height="60px" src="/public/images/DRIPog.png" alt="">
-                    <!-- DRIP-KUSTOM -->
                 </a>
                 <div class="hidden md:flex md:gap-x-6" >
                     <a class="inline-block rounded-lg px-2 py-1 text-lg text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
@@ -58,47 +57,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                     </a>
                 </div>
 
-                <!-- mobile menu -->
-                <div class="mobileMenu gap-6 lg:gap-0 hidden md:gap-x-6 flex-col flex" id="mobileMenu">
-                    <button id="closeBtn" class="close-btn mt-3">×</button>
-                    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
-                        Home
-                    </a>
-                    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
-                        About
-                    </a>
-                    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/store-policy">
-                        Store Policy
-                    </a>
-                    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
-                        Faqs
-                    </a>
-                    <% if (isAuthenticated) { %>
-                        <div class="relative inline-block">
-                            <button id="myAccountBtn" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none">
-                                My Account
-                            </button>
-                            <div id="accountSubMenu" class="hidden flex flex-col absolute top-full left-0 z-10 bg-white shadow-md rounded-lg border-2 mt-2">
-                                <a href="/profile/person" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Personal Information</span></a>
-                                <a href="/profile/address" id="addressManagement" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Address Management</span></a>
-                                <a href="/profile/order" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>My Order</span></a>
-                            </div>
-                        </div>
-
-                        <a href="/auth/logout" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none"><span>Logout</span></a>
-                    <% } else { %>
-                        <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="loginButton">
-                            <button class="" >
-                                Login
-                            </button>
-                        </a>
-                        <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="signupButton">
-                            <button class="" >
-                                Sign-up
-                            </button>
-                        </a>
-                    <% } %>
-                </div>
+                
             </div>
             <div class="flex items-center gap-x-5 md:gap-x-8">
                 <!-- for desktop -->
@@ -127,6 +86,54 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         </nav>
     </div>
 </header>  
+<!-- mobile menu -->
+<div class="mobileMenu gap-6 lg:gap-0 md:gap-x-6 flex-col flex items-center bg-white z-50" id="mobileMenu">
+    <div id="closeBtn" class="close-btn mt-3 px-4 sm:px-6 flex justify-between">
+        <a aria-label="Home" href="/" class="font-bold">
+            <img width="200px" height="60px" src="/public/images/DRIPog.png" alt="">
+            <!-- DRIP-KUSTOM -->
+        </a>
+        <button  >×</button>
+    </div>
+    <!-- <button id="closeBtn" class="close-btn mt-3 pr-4 sm:pr-6">×</button> -->
+    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/">
+        Home
+    </a>
+    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/about">
+        About
+    </a>
+    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/store-policy">
+        Store Policy
+    </a>
+    <a class="inline-block rounded-lg px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900" href="/faqs">
+        Faqs
+    </a>
+    <% if (isAuthenticated) { %>
+        <div class="relative inline-block">
+            <button id="myAccountBtn" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none">
+                My Account
+            </button>
+            <div id="accountSubMenu" class="hidden flex flex-col absolute top-full left-0 z-10 bg-white shadow-md rounded-lg border-2 mt-2">
+                <a href="/profile/person" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Personal Information</span></a>
+                <a href="/profile/address" id="addressManagement" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>Address Management</span></a>
+                <a href="/profile/order" class="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"><span>My Order</span></a>
+            </div>
+        </div>
+
+        <a href="/auth/logout" class="px-6 py-1 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 focus:outline-none"><span>Logout</span></a>
+    <% } else { %>
+        <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="loginButton">
+            <button class="" >
+                Login
+            </button>
+        </a>
+        <a class="inline-block rounded-lg px-6 py-1 font-semibold text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 " id="signupButton">
+            <button class="" >
+                Sign-up
+            </button>
+        </a>
+    <% } %>
+</div>
 <div id="loginModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
     <div class="bg-white p-8 md:px-10 rounded-md relative" id="loginModalDiv">
         <button id="closeLoginModal" class="absolute top-0 right-0 p-2 text-gray-500 hover:text-gray-700">
@@ -264,7 +271,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
     </div>
 </div>
 
-<main class="sm:px-10 lg:px-20">
+<main class="sm:px-10 lg:px-20 ">
     <section class="text-white mt-5">
         <div class="flex flex-col md:flex-row items-center justify-between mx-4 lg:mx-0">
           <div class="md:w-1/2 text-left">
@@ -1349,10 +1356,12 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
 
         hamburgerButton.addEventListener('click', () => {
             // alert("working")
-            mobileMenu.classList.toggle("hidden");
+            mobileMenu.classList.add('open');
+            // mobileMenu.classList.toggle("hidden");
         });
         closeBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle("hidden");
+            // mobileMenu.classList.toggle("hidden");
+            mobileMenu.classList.remove('open');
         });
 
         $(document).ready(function(){

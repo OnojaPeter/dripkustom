@@ -8,7 +8,7 @@ html {
 }
 
 /* mobile navigation */
-.mobileMenu {
+/* .mobileMenu {
     position: fixed;
     top: 0;
     right: -300px; 
@@ -18,6 +18,19 @@ html {
     transition: right 0.3s ease;
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+} */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: right 0.5s ease;
+  /* padding-top: 60px; */
+}
+.mobileMenu.open {
+  right: 0;
 }
 .close-btn {
     border: none;
@@ -25,8 +38,9 @@ html {
     cursor: pointer;
     display: grid; 
     place-content: end;
-    right: 20px;
-    width: 180px; 
+    /* right: 20px; */
+    /* margin-right: 40px; */
+    width: 100%; 
     font-size: 30px;
 }
 main {
