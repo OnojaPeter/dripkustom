@@ -32,6 +32,36 @@ html {
 .mobileMenu.open {
   right: 0;
 }
+.nav-link {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.mobileMenu.open .nav-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobileMenu.open .nav-link:nth-child(2) {
+  transition-delay: 0.3s;
+}
+.mobileMenu.open .nav-link:nth-child(3) {
+  transition-delay: 0.5s;
+}
+.mobileMenu.open .nav-link:nth-child(4) {
+  transition-delay: 0.7s;
+}
+.mobileMenu.open .nav-link:nth-child(5) {
+  transition-delay: 0.9s;
+}
+.mobileMenu.open .nav-link:nth-child(6) {
+  transition-delay: 1s;
+}
+.mobileMenu.open .nav-link:nth-child(7) {
+  transition-delay: 1.1s;
+}
+.mobileMenu.open .nav-link:nth-child(8) {
+  transition-delay: 1.2;
+}
 .close-btn {
     border: none;
     background: none;
