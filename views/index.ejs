@@ -349,7 +349,7 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
                             <% ShoeBestsellers.forEach(function(shoe) { %>
                                 <article class="owl-item rounded-lg overflow-hidden">
                                   <figure>
-                                    <div class="slider-card bg-gray-800 p-4 rounded-lg shadow-lg">
+                                    <div class="slider-card bg-gray-200 p-4 rounded-lg shadow-lg">
                                       <div class="slider-shoe mb-4">
                                         <a href="/shoe/<%= shoe._id %>">
                                           <div class="h-64 overflow-hidden rounded-lg flex items-center justify-center">
@@ -478,16 +478,16 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
         </div>
         <div class="" id="shoeContainer">
 
-            <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0" id="shoeCard">
+            <div class="collections w-12/12 flex flex-wrap justify-between lg:justify-between gap-3  px-4 md:px-0 " id="shoeCard">
             <% shoes.forEach(function(shoe) { %>
-                <div class="card hidden w-[48%] md:w-[30%] lg:w-[24%]">
+                <div class="card hidden w-[48%] md:w-[30%] lg:w-[24%] bg-gray-200">
                     <a href="/shoe/<%= shoe._id %>">
                         <img class="h-32 lg:h-40" src="<%= shoe.image %>" alt="Product Image">
                     </a>
                     <div class="flex items-center justify-between">
                         <div class="font-semibold">
-                            <h3><%= shoe.name %></h3>
-                            <p class="text-base">$ <%= shoe.price %> <span class="line-through text-xs">$ 230</span></p>
+                            <h3 class="text-black"><%= shoe.name %></h3>
+                            <p class="text-base text-black">$ <%= shoe.price %> <span class="line-through text-xs text-black">$ 230</span></p>
                         </div>
                         <button style="padding: 10px;" class="addToCartBtn" data-shoe-id="<%= shoe._id %>" aria-hidden="true">
                             <i class="fa-solid fa-cart-shopping fa-lg"></i>
@@ -651,7 +651,8 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
     <div id="notification" class="fixed top-24 z-50 right-0 text-center bg-green-500 text-white w-[100%] px-4 py-2 rounded-md hidden">
         Item added to cart!
     </div>  
-    <button class="px-4 bg-blue-500" id="paymentButton">Pay with Flutterwave</button>
+    <!-- commented this out -->
+    <!-- <button class="px-4 bg-blue-500" id="paymentButton">Pay with Flutterwave</button> -->
       
     
 </main>
