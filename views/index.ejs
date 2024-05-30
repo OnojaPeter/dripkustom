@@ -227,13 +227,13 @@ integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="ano
             </svg>
         </button>
 
-        <div id="cartReload" class="overflow-y modal-body my-5" >
+        <div id="cartReload" class="overflow-y-auto modal-body my-5" >
             <div id="cartcart">
-                <h2 class="font-bold text-2xl text-black sm:text-center">Your cart</h2>
+                <h2 class="font-bold text-2xl text-black text-center ">Your cart</h2>
                 <% if (Object.keys(cartItems).length > 0) { %>
                     <% Object.values(cartItems).forEach(function(cartItem) { %>
-                        <div class="flex flex-col border-b">
-                            <div class="mb-4 flex lg:flex justify-between mt-3 " id="cartShoe">
+                        <div class="flex flex-col border-b mb-3">
+                            <div class="mb-2 flex lg:flex justify-between mt-3 " id="cartShoe">
                                 <div class="flex flex-col-reverse lg:flex-row lg:items-center w-[40%] lg:w-[55%]">
                                     <div class="w-[100%]">                               
                                         <img class="h-[100%] w-[100%] sm:h-[100%] lg:h-[90%] rounded-md" src="<%= cartItem.image %>" alt="">                      

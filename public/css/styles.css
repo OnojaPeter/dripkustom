@@ -88,9 +88,6 @@ html {
 .cartModal.open {
   right: 0;
 }
-.cartModal.close {
-  right:-100%;
-}
 
 .modal-body {
     max-height: 60vh;
